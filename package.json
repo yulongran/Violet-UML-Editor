@@ -1,0 +1,21 @@
+{
+  "name": "cs151_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kimdo7/cs151_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kimdo7/cs151_project/issues"
+  },
+  "homepage": "https://github.com/kimdo7/cs151_project#readme",
+  "dependencies": {}
+}
