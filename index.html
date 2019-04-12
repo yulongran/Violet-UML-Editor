@@ -16,9 +16,55 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
+    <!-- font awemome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- Hover button -->
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 </head>
 
 <body>
 
+    <nav class="navbar navbar-dark bg-dark">
+        <form class="w-100 text-center">
+            <form class="form-inline">
+                <!-- Select Button -->
+                <button class="btn btn-outline-success" type="button" data-toggle="tooltip" data-placement="bottom"
+                    title="Select"><i class="fas fa-vector-square"></i></button>
+
+                <!-- TBD Button -->
+                <button class="btn btn-outline-success" type="button" data-toggle="tooltip" data-placement="bottom"
+                    title="TBD"><i class="fas fa-ruler-vertical"></i></button>
+
+                <!-- Block -->
+                <button class="btn btn-outline-success" type="button" data-toggle="tooltip" data-placement="bottom"
+                    title="Block"><i class="fas fa-stop"></i></button>
+
+                <!-- Note -->
+                <button class="btn btn-outline-success text-warning" type="button" data-toggle="tooltip"
+                    data-placement="bottom" title="Add Note"><i class="fas fa-sticky-note"></i></button>
+
+                <!-- Right Arrow -->
+                <button class="btn btn-outline-success " type="button" data-toggle="tooltip" data-placement="bottom"
+                    title="Right Connection"><i class="fas fa-arrow-right"></i></button>
+
+                <!-- Left Arrow -->
+                <button class="btn btn-outline-success " type="button" data-toggle="tooltip" data-placement="bottom"
+                    title="Left Connection">
+                    <i class="fas fa-arrow-left"></i></button>
+
+                <!-- Delete  -->
+                <button class="btn btn-outline-success text-danger" type="button" data-toggle="tooltip" data-placement="bottom"
+                title="Delete" ><i
+                        class="fas fa-trash-alt"></i></button>
+            </form>
+        </form>
+    </nav>
     <h1>Hello</h1>
 </body>
