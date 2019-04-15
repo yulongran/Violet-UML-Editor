@@ -1,7 +1,6 @@
 h1{
     color: red;
 }
-
 canvas{
     height: calc(100vh - 36px);
 }
