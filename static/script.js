@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // If the callNode button is pressed in the toolbar
     if (callNode === true && selected === undefined) {
-      let n1 = createCallNode(event.x, 0)
+      let n1 = new CallNode(event.x, 0)
       graph.add(n1)
     }
 
@@ -114,45 +114,77 @@ class Graph {
 }
 
 // May change the function to class
-function createCallNode (x, y) {
-  let openBootom = true
-  let signaled
-  const DEFAULT_WIDTH = 75
-  const DEFAULT_HEIGHT = 60
-  const CALL_YGAP = 20
+class CallNode {
+  constructor(x, y)
+  {
+    this.x=x
+    this.y=y
+    this.openBootom = true
+    this.signaled
+    this.DEFAULT_WIDTH = 75
+    this.DEFAULT_HEIGHT = 60
+    this.CALL_YGAP = 20
 
-  return {
-    getBounds: () => {
+  }
+  getBounds()
+  {
       return {
-        x: x,
-        y: y,
-        width: DEFAULT_WIDTH,
-        height: DEFAULT_HEIGHT
+        x: this.x,
+        y: this.y,
+        width: this.DEFAULT_WIDTH,
+        height: this.DEFAULT_HEIGHT
       }
-    },
-    contains: p => {
-      if (p.x > x && p.x < x + DEFAULT_WIDTH && p.y > y && p.y < y + DEFAULT_HEIGHT) {
+  }
+  contains(p)
+  {
+    if (p.x > this.x && p.x < this.x + this.DEFAULT_WIDTH && p.y > this.y && p.y < this.y + this.DEFAULT_HEIGHT) {
         return true
       }
       return undefined
-    },
-    translate: (dx, dy) => {
-      x += dx
-    },
-    draw: () => {
-      ctx.strokeRect(x, 2, DEFAULT_WIDTH, DEFAULT_HEIGHT)
-      ctx.lineWidth = '3'
-      ctx.strokeStyle = 'black'
+    }
 
-      // ctx.beginPath();
-      // ctx.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
-      // ctx.moveTo(x+DEFAULT_WIDTH/2,DEFAULT_HEIGHT);
-      // ctx.lineTo(x+DEFAULT_WIDTH/2, DEFAULT_HEIGHT+ 50);
-      // ctx.stroke();
-      // ctx.closePath();
+  translate (dx, dy)
+  {
+      this.x += dx
+  }
+
+  draw()
+    {
+      // Top Horizontal line of the rectangle
+      ctx.beginPath();
+      ctx.setLineDash([]);
+      ctx.moveTo(this.x,this.y);
+      ctx.lineTo(this.x+this.DEFAULT_WIDTH,this.y);
+      ctx.stroke();
+
+      // Left vertical
+      ctx.beginPath();
+      ctx.setLineDash([]);
+      ctx.moveTo(this.x,this.y);
+      ctx.lineTo(this.x,this.y+this.DEFAULT_HEIGHT);
+      ctx.stroke();
+
+      // Right vertical
+      ctx.beginPath();
+      ctx.setLineDash([]);
+      ctx.moveTo(this.x+this.DEFAULT_WIDTH,this.y);
+      ctx.lineTo(this.x+this.DEFAULT_WIDTH,this.y+this.DEFAULT_HEIGHT);
+      ctx.stroke();
+
+      // Bottom Horizontal
+      ctx.beginPath();
+      ctx.setLineDash([]);
+      ctx.moveTo(this.x,this.y+this.DEFAULT_HEIGHT);
+      ctx.lineTo(this.x+this.DEFAULT_WIDTH,this.y+this.DEFAULT_HEIGHT);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
+      ctx.moveTo(this.x+this.DEFAULT_WIDTH/2,this.DEFAULT_HEIGHT);
+      ctx.lineTo(this.x+this.DEFAULT_WIDTH/2, this.DEFAULT_HEIGHT+ 50);
+      ctx.stroke();
     }
   }
-}
 
 function drawGrabber (x, y) {
   const size = 6
