@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // If the callNode button is pressed in the toolbar
     if (callNode === true && selected === undefined) {
-      let n1 = new CallNode(event.x, 0)
+      let n1 = new ImplicitParameterNode(event.x, 0)
       graph.add(n1)
     }
 
@@ -186,6 +186,8 @@ class CallNode {
     }
   }
 
+
+
 function drawGrabber (x, y) {
   const size = 6
   ctx.fillRect(x - size / 2, y - size / 2, size, size)
@@ -195,6 +197,10 @@ function drawGrabber (x, y) {
 function center (rect) {
   return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 }
 }
+
+
+//*****************************************************************************
+// Framework
 
 // Action listener for jquery
 $('#callNode').on('click', function () {

@@ -4,13 +4,13 @@ ArrowHead
 ArrowHeadEditor
 CallEdge
 CallEdgeBeanInfo
-CallNode
-CallNodeBeanInfo
+CallNode : Yulong
+CallNodeBeanInfo : Yulong
 NoteEdge
 NoteNode
 PointNode
 ReturnEdge
-ImplicitParameterNode
+ImplicitParameterNode : Yulong
 SequenceDiagramGraph
 
 
@@ -23,10 +23,10 @@ Framework:
 
 SeriablizableEnumeration
 SegmentedLineEdge
-RectangularNode
+RectangularNode : Yulong
 SimpleBeanInfo
 ShapeEdge
-AbstractNode
+AbstractNode : Yulong
 Graph
 TooBar
 Grid ?
