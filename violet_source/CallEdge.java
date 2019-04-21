@@ -61,8 +61,8 @@ public class CallEdge extends SegmentedLineEdge
    {
       ArrayList a = new ArrayList();
       Node n = getEnd();
-      Rectangle2D start = getStart().getRectangle2D();
-      Rectangle2D end = n.getRectangle2D();
+      Rectangle2D start = getStart().getBounds();
+      Rectangle2D end = n.getBounds();
       
       if (n instanceof CallNode &&
          ((CallNode)n).getImplicitParameter() ==

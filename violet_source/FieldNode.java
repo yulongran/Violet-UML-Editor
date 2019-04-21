@@ -43,39 +43,39 @@ public class FieldNode extends RectangularNode
       name = new MultiLineString();
       name.setJustification(MultiLineString.RIGHT);
       value = new MultiLineString();
-      setRectangle2D(new Rectangle2D.Double(0, 0, 
+      setBounds(new Rectangle2D.Double(0, 0, 
          DEFAULT_WIDTH, DEFAULT_HEIGHT));
    }
 
    public void draw(Graphics2D g2)
    {
       super.draw(g2);
-      Rectangle2D b = getRectangle2D();
-      double leftWidth = name.getRectangle2D(g2).getWidth();
+      Rectangle2D b = getBounds();
+      double leftWidth = name.getBounds(g2).getWidth();
       MultiLineString equal = new MultiLineString();
       equal.setText(" = ");
-      double midWidth = equal.getRectangle2D(g2).getWidth();
+      double midWidth = equal.getBounds(g2).getWidth();
       
-      double rightWidth = value.getRectangle2D(g2).getWidth();
+      double rightWidth = value.getBounds(g2).getWidth();
       if (rightWidth == 0) rightWidth = DEFAULT_WIDTH / 2;
       rightWidth = Math.max(rightWidth, boxWidth - midWidth / 2);
 
-      nameRectangle2D = new Rectangle2D.Double(b.getX(),
+      nameBounds = new Rectangle2D.Double(b.getX(),
          b.getY(), leftWidth, b.getHeight());
-      name.draw(g2, nameRectangle2D);
+      name.draw(g2, nameBounds);
       Rectangle2D mid = new Rectangle2D.Double(b.getX() + 
          leftWidth, b.getY(), 
          midWidth,
          b.getHeight());
       equal.draw(g2, mid);
-      valueRectangle2D = new Rectangle2D.Double(b.getMaxX() -
+      valueBounds = new Rectangle2D.Double(b.getMaxX() -
          rightWidth, b.getY(), rightWidth, b.getHeight());
       if (boxedValue)
          value.setJustification(MultiLineString.CENTER);
       else
          name.setJustification(MultiLineString.LEFT);
-      value.draw(g2, valueRectangle2D);
-      if (boxedValue) g2.draw(valueRectangle2D);
+      value.draw(g2, valueBounds);
+      if (boxedValue) g2.draw(valueBounds);
    }
 
    public boolean addEdge(Edge e, Point2D p1, Point2D p2)
@@ -96,7 +96,7 @@ public class FieldNode extends RectangularNode
 
    public Point2D getConnectionPoint(Direction d)
    {
-      Rectangle2D b = getRectangle2D();
+      Rectangle2D b = getBounds();
       return new Point2D.Double(
          (b.getMaxX() + b.getX() + axisX) / 2,
          b.getCenterY());
@@ -104,25 +104,25 @@ public class FieldNode extends RectangularNode
 
    public void layout(Graph g, Graphics2D g2, Grid grid)
    {
-      nameRectangle2D = name.getRectangle2D(g2); 
-      valueRectangle2D = value.getRectangle2D(g2);
+      nameBounds = name.getBounds(g2); 
+      valueBounds = value.getBounds(g2);
       MultiLineString equal = new MultiLineString();
       equal.setText(" = ");
-      Rectangle2D e = equal.getRectangle2D(g2);
-      double leftWidth = nameRectangle2D.getWidth();
+      Rectangle2D e = equal.getBounds(g2);
+      double leftWidth = nameBounds.getWidth();
       double midWidth = e.getWidth();
-      double rightWidth = valueRectangle2D.getWidth();
+      double rightWidth = valueBounds.getWidth();
       if (rightWidth == 0) rightWidth = DEFAULT_WIDTH / 2;
       rightWidth = Math.max(rightWidth, boxWidth - midWidth / 2);
       double width = leftWidth + midWidth + rightWidth;
-      double height = Math.max(nameRectangle2D.getHeight(), Math.max(
-         valueRectangle2D.getHeight(), e.getHeight()));
+      double height = Math.max(nameBounds.getHeight(), Math.max(
+         valueBounds.getHeight(), e.getHeight()));
 
-      Rectangle2D b = getRectangle2D();
-      setRectangle2D(new Rectangle2D.Double(b.getX(), b.getY(), width, height));
+      Rectangle2D b = getBounds();
+      setBounds(new Rectangle2D.Double(b.getX(), b.getY(), width, height));
       axisX = leftWidth + midWidth / 2;
       
-      valueRectangle2D.setFrame(b.getMaxX() - rightWidth, b.getY(), valueRectangle2D.getWidth(), valueRectangle2D.getHeight());
+      valueBounds.setFrame(b.getMaxX() - rightWidth, b.getY(), valueBounds.getWidth(), valueBounds.getHeight());
    }
 
    
@@ -209,14 +209,14 @@ public class FieldNode extends RectangularNode
    
    public Shape getShape()
    {
-      if (boxedValue) return valueRectangle2D; else return null;
+      if (boxedValue) return valueBounds; else return null;
    }
 
    private double axisX;
    private MultiLineString name;
    private MultiLineString value;
-   private Rectangle2D nameRectangle2D;
-   private Rectangle2D valueRectangle2D;
+   private Rectangle2D nameBounds;
+   private Rectangle2D valueBounds;
    private boolean boxedValue;
    private double boxWidth;
 

@@ -70,9 +70,9 @@ public class StateTransitionEdge extends ShapeEdge
    */
    private void drawLabel(Graphics2D g2)
    {
-      Rectangle2D labelRectangle2D = getLabelRectangle2D(g2);
-      double x = labelRectangle2D.getX();
-      double y = labelRectangle2D.getY();
+      Rectangle2D labelBounds = getLabelBounds(g2);
+      double x = labelBounds.getX();
+      double y = labelBounds.getY();
       
       g2.translate(x, y);
       label.paint(g2);
@@ -81,11 +81,11 @@ public class StateTransitionEdge extends ShapeEdge
 
    
    /**
-      Gets the Rectangle2D of the label text 
+      Gets the bounds of the label text 
       @param g2 the graphics context
-      @return the Rectangle2D of the label text
+      @return the bounds of the label text
    */
-   private Rectangle2D getLabelRectangle2D(Graphics2D g2)
+   private Rectangle2D getLabelBounds(Graphics2D g2)
    {
       Line2D line = getConnectionPoints();
       Point2D control = getControlPoint();
@@ -95,7 +95,7 @@ public class StateTransitionEdge extends ShapeEdge
       label.setText("<html>" + labelText + "</html>");
       label.setFont(g2.getFont());
       Dimension d = label.getPreferredSize();
-      label.setRectangle2D(0, 0, d.width, d.height);
+      label.setBounds(0, 0, d.width, d.height);
    
       final int GAP = 3;
       if (line.getY1() == line.getY2())
@@ -138,10 +138,10 @@ public class StateTransitionEdge extends ShapeEdge
       return p;
    }
 
-   public Rectangle2D getRectangle2D(Graphics2D g2)
+   public Rectangle2D getBounds(Graphics2D g2)
    {
-      Rectangle2D r = super.getRectangle2D(g2);
-      r.add(getLabelRectangle2D(g2));
+      Rectangle2D r = super.getBounds(g2);
+      r.add(getLabelBounds(g2));
       return r;
    }
    
@@ -159,8 +159,8 @@ public class StateTransitionEdge extends ShapeEdge
       else
       {
          angle = 10;
-         Rectangle2D start = getStart().getRectangle2D();
-         Rectangle2D end = getEnd().getRectangle2D();
+         Rectangle2D start = getStart().getBounds();
+         Rectangle2D end = getEnd().getBounds();
          Point2D startCenter = new Point2D.Double(
             start.getCenterX(),
             start.getCenterY());

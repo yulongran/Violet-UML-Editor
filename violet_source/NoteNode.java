@@ -43,7 +43,7 @@ public class NoteNode extends RectangularNode
    */
    public NoteNode()
    {
-      setRectangle2D(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+      setBounds(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
       text = new MultiLineString();
       text.setJustification(MultiLineString.LEFT);
       color = DEFAULT_COLOR;
@@ -64,14 +64,14 @@ public class NoteNode extends RectangularNode
 
    public void layout(Graph g, Graphics2D g2, Grid grid)
    {
-      Rectangle2D b = text.getRectangle2D(g2); // getMultiLineRectangle2D(name, g2);
-      Rectangle2D Rectangle2D = getRectangle2D();
-      b = new Rectangle2D.Double(Rectangle2D.getX(),
-         Rectangle2D.getY(), 
+      Rectangle2D b = text.getBounds(g2); // getMultiLineBounds(name, g2);
+      Rectangle2D bounds = getBounds();
+      b = new Rectangle2D.Double(bounds.getX(),
+         bounds.getY(), 
          Math.max(b.getWidth(), DEFAULT_WIDTH),
          Math.max(b.getHeight(), DEFAULT_HEIGHT));
       grid.snap(b);
-      setRectangle2D(b);
+      setBounds(b);
    }
 
    /**
@@ -121,11 +121,11 @@ public class NoteNode extends RectangularNode
       g2.setColor(oldColor);
       g2.draw(path);
 
-      Rectangle2D Rectangle2D = getRectangle2D();
+      Rectangle2D bounds = getBounds();
       GeneralPath fold = new GeneralPath();
-      fold.moveTo((float)(Rectangle2D.getMaxX() - FOLD_X), (float)Rectangle2D.getY());
-      fold.lineTo((float)Rectangle2D.getMaxX() - FOLD_X, (float)Rectangle2D.getY() + FOLD_X);
-      fold.lineTo((float)Rectangle2D.getMaxX(), (float)(Rectangle2D.getY() + FOLD_Y));
+      fold.moveTo((float)(bounds.getMaxX() - FOLD_X), (float)bounds.getY());
+      fold.lineTo((float)bounds.getMaxX() - FOLD_X, (float)bounds.getY() + FOLD_X);
+      fold.lineTo((float)bounds.getMaxX(), (float)(bounds.getY() + FOLD_Y));
       fold.closePath();
       oldColor = g2.getColor();
       g2.setColor(g2.getBackground());
@@ -133,18 +133,18 @@ public class NoteNode extends RectangularNode
       g2.setColor(oldColor);      
       g2.draw(fold);      
       
-      text.draw(g2, getRectangle2D());
+      text.draw(g2, getBounds());
    }
    
    public Shape getShape()
    {
-      Rectangle2D Rectangle2D = getRectangle2D();
+      Rectangle2D bounds = getBounds();
       GeneralPath path = new GeneralPath();
-      path.moveTo((float)Rectangle2D.getX(), (float)Rectangle2D.getY());
-      path.lineTo((float)(Rectangle2D.getMaxX() - FOLD_X), (float)Rectangle2D.getY());
-      path.lineTo((float)Rectangle2D.getMaxX(), (float)(Rectangle2D.getY() + FOLD_Y));
-      path.lineTo((float)Rectangle2D.getMaxX(), (float)Rectangle2D.getMaxY());
-      path.lineTo((float)Rectangle2D.getX(), (float)Rectangle2D.getMaxY());
+      path.moveTo((float)bounds.getX(), (float)bounds.getY());
+      path.lineTo((float)(bounds.getMaxX() - FOLD_X), (float)bounds.getY());
+      path.lineTo((float)bounds.getMaxX(), (float)(bounds.getY() + FOLD_Y));
+      path.lineTo((float)bounds.getMaxX(), (float)bounds.getMaxY());
+      path.lineTo((float)bounds.getX(), (float)bounds.getMaxY());
       path.closePath();
       return path;
    }

@@ -59,7 +59,7 @@ public class PointNode extends AbstractNode
       return point.distance(p) < THRESHOLD;
    }
 
-   public Rectangle2D getRectangle2D()
+   public Rectangle2D getBounds()
    {
       return new Rectangle2D.Double(point.getX(), 
          point.getY(), 0, 0);

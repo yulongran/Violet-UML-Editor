@@ -94,38 +94,38 @@ public class EditorFrame extends JFrame
       resources)
    */
    public EditorFrame(Class appClass)
-   {
+   {  
       String appClassName = appClass.getName();
       appResources = ResourceBundle.getBundle(appClassName + "Strings");
       appFactory = new ResourceFactory(appResources);
       versionResources = ResourceBundle.getBundle(appClassName + "Version");
-      editorResources =
-         ResourceBundle.getBundle("com.horstmann.violet.framework.EditorStrings");
+      editorResources = 
+         ResourceBundle.getBundle("com.horstmann.violet.framework.EditorStrings");      
       ResourceFactory factory = new ResourceFactory(editorResources);
 
       preferences = PreferencesService.getInstance(appClass);
-
+      
       String laf = preferences.get("laf", null);
       if (laf != null) changeLookAndFeel(laf);
 
-      recentFiles = new ArrayList();
+      recentFiles = new ArrayList(); 
       File lastDir = new File(".");
       String recent = preferences.get("recent", "").trim();
       if (recent.length() > 0)
       {
-         recentFiles.addAll(Arrays.asList(recent.split("[|]")));
+         recentFiles.addAll(Arrays.asList(recent.split("[|]")));         
          lastDir = new File((String) recentFiles.get(0)).getParentFile();
       }
-      fileService = FileService.getInstance(lastDir);
-
+      fileService = FileService.getInstance(lastDir);      
+      
       setTitle(appResources.getString("app.name"));
-      Dimension screenSize
+      Dimension screenSize 
          = Toolkit.getDefaultToolkit().getScreenSize();
-
+  
       int screenWidth = (int)screenSize.getWidth();
       int screenHeight = (int)screenSize.getHeight();
 
-      setRectangle2D(screenWidth / 16, screenHeight / 16,
+      setBounds(screenWidth / 16, screenHeight / 16,
          screenWidth * 7 / 8, screenHeight * 7 / 8);
 
       setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -144,15 +144,15 @@ public class EditorFrame extends JFrame
       defaultExtension = appResources.getString("files.extension");
 
       violetFilter = new ExtensionFilter(
-         appResources.getString("files.name"),
+         appResources.getString("files.name"), 
          new String[] { defaultExtension });
       exportFilter = new ExtensionFilter(
-         editorResources.getString("files.image.name"),
+         editorResources.getString("files.image.name"), 
          editorResources.getString("files.image.extension"));
 
       // set up menus
 
-
+      
       JMenuBar menuBar = new JMenuBar();
       setJMenuBar(menuBar);
       JMenu fileMenu = factory.createMenu("file");
@@ -162,26 +162,26 @@ public class EditorFrame extends JFrame
       fileMenu.add(newMenu);
 
       JMenuItem fileOpenItem = factory.createMenuItem(
-            "file.open", this, "openFile");
-      fileMenu.add(fileOpenItem);
+            "file.open", this, "openFile"); 
+      fileMenu.add(fileOpenItem);      
 
       recentFilesMenu = factory.createMenu("file.recent");
       buildRecentFilesMenu();
       fileMenu.add(recentFilesMenu);
-
+      
       JMenuItem fileSaveItem = factory.createMenuItem(
-            "file.save", this, "save");
+            "file.save", this, "save"); 
       fileMenu.add(fileSaveItem);
       JMenuItem fileSaveAsItem = factory.createMenuItem(
             "file.save_as", this, "saveAs");
       fileMenu.add(fileSaveAsItem);
 
       JMenuItem fileExportItem = factory.createMenuItem(
-            "file.export_image", this, "exportImage");
+            "file.export_image", this, "exportImage"); 
       fileMenu.add(fileExportItem);
 
       JMenuItem filePrintItem = factory.createMenuItem(
-            "file.print", this, "print");
+            "file.print", this, "print"); 
       fileMenu.add(filePrintItem);
 
       JMenuItem fileExitItem = factory.createMenuItem(
@@ -197,12 +197,12 @@ public class EditorFrame extends JFrame
          fileExitItem.setEnabled(false);
       }
 
-      if (fileService == null || fileService.isWebStart())
+      if (fileService == null || fileService.isWebStart()) 
       {
          recentFilesMenu.setEnabled(false);
          fileSaveItem.setEnabled(false);
       }
-
+                  
       JMenu editMenu = factory.createMenu("edit");
       menuBar.add(editMenu);
 
@@ -212,7 +212,7 @@ public class EditorFrame extends JFrame
          {
             public void actionPerformed(ActionEvent event)
             {
-               final GraphFrame frame
+               final GraphFrame frame 
                   = (GraphFrame)desktop.getSelectedFrame();
                if (frame == null) return;
                GraphPanel panel = frame.getGraphPanel();
@@ -225,7 +225,7 @@ public class EditorFrame extends JFrame
          {
             public void actionPerformed(ActionEvent event)
             {
-               GraphFrame frame
+               GraphFrame frame 
                   = (GraphFrame)desktop.getSelectedFrame();
                if (frame == null) return;
                GraphPanel panel = frame.getGraphPanel();
@@ -239,7 +239,7 @@ public class EditorFrame extends JFrame
          {
             public void actionPerformed(ActionEvent event)
             {
-               GraphFrame frame
+               GraphFrame frame 
                   = (GraphFrame)desktop.getSelectedFrame();
                if (frame == null) return;
                GraphPanel panel = frame.getGraphPanel();
@@ -253,7 +253,7 @@ public class EditorFrame extends JFrame
          {
             public void actionPerformed(ActionEvent event)
             {
-               GraphFrame frame
+               GraphFrame frame 
                   = (GraphFrame)desktop.getSelectedFrame();
                if (frame == null) return;
                Graph graph = frame.getGraph();
@@ -271,7 +271,7 @@ public class EditorFrame extends JFrame
          {
             public void actionPerformed(ActionEvent event)
             {
-               GraphFrame frame
+               GraphFrame frame 
                   = (GraphFrame)desktop.getSelectedFrame();
                if (frame == null) return;
                GraphPanel panel = frame.getGraphPanel();
@@ -285,46 +285,46 @@ public class EditorFrame extends JFrame
          {
             public void actionPerformed(ActionEvent event)
             {
-               GraphFrame frame
+               GraphFrame frame 
                   = (GraphFrame)desktop.getSelectedFrame();
                if (frame == null) return;
                GraphPanel panel = frame.getGraphPanel();
                panel.changeZoom(1);
             }
          }));
-
+      
       viewMenu.add(factory.createMenuItem(
             "view.grow_drawing_area", new
             ActionListener()
             {
                public void actionPerformed(ActionEvent event)
                {
-                  GraphFrame frame
+                  GraphFrame frame 
                      = (GraphFrame) desktop.getSelectedFrame();
                   if (frame == null) return;
                   Graph g = frame.getGraph();
-                  Rectangle2D Rectangle2D = g.getRectangle2D((Graphics2D) frame.getGraphics());
-                  Rectangle2D.add(frame.getGraphPanel().getRectangle2D());
-                  g.setMinRectangle2D(new Rectangle2D.Double(0, 0,
-                        GROW_SCALE_FACTOR * Rectangle2D.getWidth(),
-                        GROW_SCALE_FACTOR * Rectangle2D.getHeight()));
+                  Rectangle2D bounds = g.getBounds((Graphics2D) frame.getGraphics());
+                  bounds.add(frame.getGraphPanel().getBounds());
+                  g.setMinBounds(new Rectangle2D.Double(0, 0, 
+                        GROW_SCALE_FACTOR * bounds.getWidth(), 
+                        GROW_SCALE_FACTOR * bounds.getHeight()));
                   frame.getGraphPanel().revalidate();
                   frame.repaint();
                }
             }));
-
+      
       viewMenu.add(factory.createMenuItem(
             "view.clip_drawing_area", new
             ActionListener()
             {
                public void actionPerformed(ActionEvent event)
                {
-                  GraphFrame frame
+                  GraphFrame frame 
                      = (GraphFrame) desktop.getSelectedFrame();
                   if (frame == null) return;
                   Graph g = frame.getGraph();
-                  Rectangle2D Rectangle2D = g.getRectangle2D((Graphics2D) frame.getGraphics());
-                  g.setMinRectangle2D(null);
+                  Rectangle2D bounds = g.getBounds((Graphics2D) frame.getGraphics());
+                  g.setMinBounds(null); 
                   frame.getGraphPanel().revalidate();
                   frame.repaint();
                }
@@ -336,7 +336,7 @@ public class EditorFrame extends JFrame
          {
             public void actionPerformed(ActionEvent event)
             {
-               GraphFrame frame
+               GraphFrame frame 
                   = (GraphFrame)desktop.getSelectedFrame();
                if (frame == null) return;
                GraphPanel panel = frame.getGraphPanel();
@@ -350,7 +350,7 @@ public class EditorFrame extends JFrame
          {
             public void actionPerformed(ActionEvent event)
             {
-               GraphFrame frame
+               GraphFrame frame 
                   = (GraphFrame)desktop.getSelectedFrame();
                if (frame == null) return;
                GraphPanel panel = frame.getGraphPanel();
@@ -365,11 +365,11 @@ public class EditorFrame extends JFrame
          {
             public void actionPerformed(ActionEvent event)
             {
-               GraphFrame frame
+               GraphFrame frame 
                   = (GraphFrame)desktop.getSelectedFrame();
                if (frame == null) return;
                GraphPanel panel = frame.getGraphPanel();
-               JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) event.getSource();
+               JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) event.getSource();               
                panel.setHideGrid(menuItem.isSelected());
             }
          }));
@@ -379,7 +379,7 @@ public class EditorFrame extends JFrame
             {
                public void menuSelected(MenuEvent event)
                {
-                  GraphFrame frame
+                  GraphFrame frame 
                      = (GraphFrame) desktop.getSelectedFrame();
                   if (frame == null) return;
                   GraphPanel panel = frame.getGraphPanel();
@@ -389,13 +389,13 @@ public class EditorFrame extends JFrame
                {
                }
                public void menuCanceled(MenuEvent event)
-               {
+               {                  
                }
             });
-
+      
       JMenu lafMenu = factory.createMenu("view.change_laf");
       viewMenu.add(lafMenu);
-
+      
       UIManager.LookAndFeelInfo[] infos =
          UIManager.getInstalledLookAndFeels();
       for (int i = 0; i < infos.length; i++)
@@ -429,12 +429,12 @@ public class EditorFrame extends JFrame
                {
                   if (frames[i] == desktop.getSelectedFrame())
                   {
-                     i++;
+                     i++; 
                      if (i == frames.length) i = 0;
                      try
                      {
                         frames[i].toFront();
-                        frames[i].setSelected(true);
+                        frames[i].setSelected(true); 
                      }
                      catch (PropertyVetoException exception)
                      {
@@ -457,11 +457,11 @@ public class EditorFrame extends JFrame
                   if (frames[i] == desktop.getSelectedFrame())
                   {
                      if (i == 0) i = frames.length;
-                     i--;
+                     i--; 
                      try
                      {
                         frames[i].toFront();
-                        frames[i].setSelected(true);
+                        frames[i].setSelected(true); 
                      }
                      catch (PropertyVetoException exception)
                      {
@@ -478,7 +478,7 @@ public class EditorFrame extends JFrame
          {
             public void actionPerformed(ActionEvent event)
             {
-               GraphFrame frame
+               GraphFrame frame 
                   = (GraphFrame)desktop.getSelectedFrame();
                if (frame == null) return;
                try
@@ -497,7 +497,7 @@ public class EditorFrame extends JFrame
          {
             public void actionPerformed(ActionEvent event)
             {
-               GraphFrame frame
+               GraphFrame frame 
                   = (GraphFrame)desktop.getSelectedFrame();
                if (frame == null) return;
                try
@@ -516,7 +516,7 @@ public class EditorFrame extends JFrame
          {
             public void actionPerformed(ActionEvent event)
             {
-               GraphFrame frame
+               GraphFrame frame 
                   = (GraphFrame)desktop.getSelectedFrame();
                if (frame == null) return;
                try
@@ -543,7 +543,7 @@ public class EditorFrame extends JFrame
             {
                try
                {
-                  BufferedReader reader
+                  BufferedReader reader 
                      = new BufferedReader(
                         new InputStreamReader(
                            getClass().getResourceAsStream(
@@ -554,13 +554,13 @@ public class EditorFrame extends JFrame
                   {
                      text.append(line);
                      text.append("\n");
-                  }
+                  }   
                   text.setCaretPosition(0);
                   text.setEditable(false);
                   JOptionPane.showInternalMessageDialog(
-                     desktop,
+                     desktop, 
                      new JScrollPane(text),
-                     null,
+                     null, 
                      JOptionPane.INFORMATION_MESSAGE);
                }
                catch (IOException exception) {}
@@ -584,7 +584,7 @@ public class EditorFrame extends JFrame
       catch (IllegalAccessException ex) {}
       catch (UnsupportedLookAndFeelException ex) {}
    }
-
+   
    /**
       Adds a graph type to the File->New menu.
       @param resourceName the name of the menu item resource
@@ -626,10 +626,10 @@ public class EditorFrame extends JFrame
          {
             open(args[i]);
          }
-      }
+      }   
       setTitle();
    }
-
+   
    /**
     * Opens a file with the given name, or switches to the frame if it is already open.
     * @param name the file name
@@ -642,12 +642,12 @@ public class EditorFrame extends JFrame
          if (frames[i] instanceof GraphFrame)
          {
             GraphFrame frame = (GraphFrame)frames[i];
-            if (frame.getFileName().equals(name))
+            if (frame.getFileName().equals(name)) 
             {
                try
                {
                   frame.toFront();
-                  frame.setSelected(true);
+                  frame.setSelected(true); 
                }
                catch (PropertyVetoException exception)
                {
@@ -655,21 +655,21 @@ public class EditorFrame extends JFrame
                return;
             }
          }
-      }
-
+      }      
+      
       try
-      {
+      {              
          Graph graph = read(new FileInputStream(name));
          GraphFrame frame = new GraphFrame(graph);
          addInternalFrame(frame);
-         frame.setFileName(name);
+         frame.setFileName(name);              
       }
       catch (IOException exception)
       {
-         JOptionPane.showInternalMessageDialog(desktop,
+         JOptionPane.showInternalMessageDialog(desktop, 
                exception);
-      }
-   }
+      }      
+   }   
 
    /**
       Creates an internal frame on the desktop.
@@ -677,22 +677,22 @@ public class EditorFrame extends JFrame
       @param t the title of the internal frame.
    */
    private void addInternalFrame(final JInternalFrame iframe)
-   {
+   {  
       iframe.setResizable(true);
       iframe.setClosable(true);
       iframe.setMaximizable(true);
       iframe.setIconifiable(true);
-      int frameCount = desktop.getAllFrames().length;
+      int frameCount = desktop.getAllFrames().length;      
       desktop.add(iframe);
       // position frame
-      int emptySpace
+      int emptySpace 
          = FRAME_GAP * Math.max(ESTIMATED_FRAMES, frameCount);
-      int width = Math.max(desktop.getWidth() / 2,
-            desktop.getWidth() - emptySpace);
-      int height = Math.max(desktop.getHeight() / 2,
+      int width = Math.max(desktop.getWidth() / 2, 
+            desktop.getWidth() - emptySpace);            
+      int height = Math.max(desktop.getHeight() / 2, 
          desktop.getHeight() - emptySpace);
 
-      iframe.reshape(frameCount * FRAME_GAP,
+      iframe.reshape(frameCount * FRAME_GAP, 
          frameCount * FRAME_GAP, width, height);
       iframe.show();
 
@@ -711,7 +711,7 @@ public class EditorFrame extends JFrame
 
       // select the frame--might be vetoed
       try
-      {
+      {  
          iframe.setSelected(true);
       }
       catch(PropertyVetoException e)
@@ -726,7 +726,7 @@ public class EditorFrame extends JFrame
    {
       String appName = appResources.getString("app.name");
       JInternalFrame iframe = desktop.getSelectedFrame();
-      if (iframe instanceof GraphFrame)
+      if (iframe instanceof GraphFrame) 
       {
          GraphFrame frame = (GraphFrame) iframe;
          String fileName = frame.getFileName();
@@ -738,9 +738,9 @@ public class EditorFrame extends JFrame
       else
          setTitle(appName);
    }
-
+   
    /**
-    * Adds a file name to the "recent files" list and rebuilds the "recent files" menu.
+    * Adds a file name to the "recent files" list and rebuilds the "recent files" menu. 
     * @param newFile the file name to add
     */
    private void addRecentFile(final String newFile)
@@ -750,7 +750,7 @@ public class EditorFrame extends JFrame
       recentFiles.add(0, newFile);
       buildRecentFilesMenu();
    }
-
+   
    /**
     * Rebuilds the "recent files" menu.
     */
@@ -759,10 +759,10 @@ public class EditorFrame extends JFrame
       recentFilesMenu.removeAll();
       for (int i = 0; i < recentFiles.size(); i++)
       {
-         final String file = (String) recentFiles.get(i);
+         final String file = (String) recentFiles.get(i); 
          String name = new File(file).getName();
          if (i < 10) name = i + " " + name;
-         else if (i == 10) name = "0 " + name;
+         else if (i == 10) name = "0 " + name;         
          JMenuItem item = new JMenuItem(name);
          if (i < 10) item.setMnemonic((char)('0' + i));
          else if (i == 10) item.setMnemonic('0');
@@ -775,43 +775,43 @@ public class EditorFrame extends JFrame
                      open(file);
                   }
                });
-      }
+      }      
    }
 
    /**
       Asks the user to open a graph file.
    */
    public void openFile()
-   {
+   {  
       try
       {
          FileService.Open open = fileService.open(null, null, violetFilter);
          InputStream in = open.getInputStream();
          if (in != null)
-         {
+         {      
             Graph graph = read(in);
             GraphFrame frame = new GraphFrame(graph);
             addInternalFrame(frame);
             frame.setFileName(open.getName());
             addRecentFile(open.getName());
             setTitle();
-         }
+         }               
       }
       catch (IOException exception)      {
-         JOptionPane.showInternalMessageDialog(desktop,
+         JOptionPane.showInternalMessageDialog(desktop, 
             exception);
       }
    }
 
    /**
     * Open a file from an URL--used by applet
-    * @param url the URL
+    * @param url the URL 
     */
    public void openURL(URL url) throws IOException
    {
       InputStream in = url.openStream();
       if (in != null)
-      {
+      {      
          Graph graph = read(in);
          GraphFrame frame = new GraphFrame(graph);
          addInternalFrame(frame);
@@ -820,37 +820,37 @@ public class EditorFrame extends JFrame
             frame.setMaximum(true);
          }
          catch (PropertyVetoException ex) {}
-      }
+      }               
    }
-
+   
    public void save()
    {
-      GraphFrame frame
+      GraphFrame frame 
          = (GraphFrame) desktop.getSelectedFrame();
       if (frame == null) return;
-      String fileName = frame.getFileName();
+      String fileName = frame.getFileName(); 
       if (fileName == null) { saveAs(); return; }
       try
       {
       	saveFile(frame.getGraph(), new FileOutputStream(fileName));
          frame.getGraphPanel().setModified(false);
-      }
+      }        
       catch (Exception exception)
       {
-         JOptionPane.showInternalMessageDialog(desktop,
+         JOptionPane.showInternalMessageDialog(desktop, 
             exception);
-      }
+      }        
    }
-
+   
    /**
       Saves the current graph as a new file.
    */
    public void saveAs()
    {
-      GraphFrame frame
+      GraphFrame frame 
          = (GraphFrame)desktop.getSelectedFrame();
       if (frame == null) return;
-      Graph graph = frame.getGraph();
+      Graph graph = frame.getGraph();    
       try
       {
       	FileService.Save save = fileService.save(null, frame.getFileName(), violetFilter, null, defaultExtension);
@@ -872,7 +872,7 @@ public class EditorFrame extends JFrame
       }
       catch (IOException exception)
       {
-         JOptionPane.showInternalMessageDialog(desktop,
+         JOptionPane.showInternalMessageDialog(desktop, 
             exception);
       }
    }
@@ -882,14 +882,14 @@ public class EditorFrame extends JFrame
    */
    public void exportImage()
    {
-      GraphFrame frame
+      GraphFrame frame 
          = (GraphFrame)desktop.getSelectedFrame();
       if (frame == null) return;
 
       try
       {
          String imageExtensions = editorResources.getString("files.image.extension");
-      	FileService.Save save = fileService.save(null, frame.getFileName(), exportFilter,
+      	FileService.Save save = fileService.save(null, frame.getFileName(), exportFilter, 
                defaultExtension, imageExtensions);
       	OutputStream out = save.getOutputStream();
       	if (out != null)
@@ -909,11 +909,11 @@ public class EditorFrame extends JFrame
             {
                MessageFormat formatter = new MessageFormat(
                   editorResources.getString("error.unsupported_image"));
-               JOptionPane.showInternalMessageDialog(desktop,
+               JOptionPane.showInternalMessageDialog(desktop, 
                   formatter.format(new Object[] { format }));
                return;
             }
-
+         
             Graph graph = frame.getGraph();
             try
             {
@@ -927,9 +927,9 @@ public class EditorFrame extends JFrame
       }
       catch (Exception exception)
       {
-         JOptionPane.showInternalMessageDialog(desktop,
+         JOptionPane.showInternalMessageDialog(desktop, 
             exception);
-      }
+      }      
    }
 
    /**
@@ -937,14 +937,14 @@ public class EditorFrame extends JFrame
    */
    public void print()
    {
-      GraphFrame frame
+      GraphFrame frame 
          = (GraphFrame)desktop.getSelectedFrame();
       if (frame == null) return;
 
       PrintDialog dialog = new PrintDialog(frame.getGraph());
       dialog.setVisible(true);
    }
-
+   
    /**
       Reads a graph file
       @param in the input stream to read
@@ -953,7 +953,7 @@ public class EditorFrame extends JFrame
    public static Graph read(InputStream in)
       throws IOException
    {
-      XMLDecoder reader
+      XMLDecoder reader 
          = new XMLDecoder(in);
       Graph graph = (Graph) reader.readObject();
       in.close();
@@ -970,18 +970,18 @@ public class EditorFrame extends JFrame
    private static void saveFile(Graph graph, OutputStream out)
    {
       XMLEncoder encoder = new XMLEncoder(out);
-
-      encoder.setExceptionListener(new
-         ExceptionListener()
+         
+      encoder.setExceptionListener(new 
+         ExceptionListener() 
          {
-            public void exceptionThrown(Exception ex)
+            public void exceptionThrown(Exception ex) 
             {
                ex.printStackTrace();
             }
          });
       /*
       The following does not work due to bug #4741757
-
+        
       encoder.setPersistenceDelegate(
          Point2D.Double.class,
          new DefaultPersistenceDelegate(
@@ -990,11 +990,11 @@ public class EditorFrame extends JFrame
       encoder.setPersistenceDelegate(Point2D.Double.class, new
             DefaultPersistenceDelegate()
             {
-               protected void initialize(Class type,
-                  Object oldInstance, Object newInstance,
-                  Encoder out)
+               protected void initialize(Class type, 
+                  Object oldInstance, Object newInstance, 
+                  Encoder out) 
                {
-                  super.initialize(type, oldInstance,
+                  super.initialize(type, oldInstance, 
                      newInstance, out);
                   Point2D p = (Point2D)oldInstance;
                   out.writeStatement(
@@ -1002,17 +1002,17 @@ public class EditorFrame extends JFrame
                            "setLocation", new Object[]{ new Double(p.getX()), new Double(p.getY()) }) );
                }
             });
-
+      
       encoder.setPersistenceDelegate(BentStyle.class,
          staticFieldDelegate);
       encoder.setPersistenceDelegate(LineStyle.class,
          staticFieldDelegate);
       encoder.setPersistenceDelegate(ArrowHead.class,
          staticFieldDelegate);
-
+      
       Graph.setPersistenceDelegate(encoder);
       AbstractNode.setPersistenceDelegate(encoder);
-
+      
       encoder.writeObject(graph);
       encoder.close();
    }
@@ -1030,26 +1030,26 @@ public class EditorFrame extends JFrame
          BufferedImage.TYPE_INT_RGB);
       // need a dummy image to get a Graphics to
       // measure the size
-      Rectangle2D Rectangle2D = graph.getRectangle2D(
+      Rectangle2D bounds = graph.getBounds(
          (Graphics2D) dummy.getGraphics());
-      BufferedImage image
-         = new BufferedImage((int)Rectangle2D.getWidth() + 1,
-            (int)Rectangle2D.getHeight() + 1,
+      BufferedImage image 
+         = new BufferedImage((int)bounds.getWidth() + 1,
+            (int)bounds.getHeight() + 1, 
             BufferedImage.TYPE_INT_RGB);
       Graphics2D g2 = (Graphics2D)image.getGraphics();
-      g2.translate(-Rectangle2D.getX(), -Rectangle2D.getY());
+      g2.translate(-bounds.getX(), -bounds.getY());
       g2.setColor(Color.WHITE);
       g2.fill(new Rectangle2D.Double(
-                 Rectangle2D.getX(),
-                 Rectangle2D.getY(),
-                 Rectangle2D.getWidth() + 1,
-                 Rectangle2D.getHeight() + 1));
+                 bounds.getX(),
+                 bounds.getY(), 
+                 bounds.getWidth() + 1,
+                 bounds.getHeight() + 1));
       g2.setColor(Color.BLACK);
       g2.setBackground(Color.WHITE);
       graph.draw(g2, null);
       ImageIO.write(image, format, out);
    }
-
+   
    /**
       Displays the About dialog box.
    */
@@ -1057,17 +1057,17 @@ public class EditorFrame extends JFrame
    {
       MessageFormat formatter = new MessageFormat(
             editorResources.getString("dialog.about.version"));
-      JOptionPane.showInternalMessageDialog(desktop,
-         formatter.format(new Object[] {
+      JOptionPane.showInternalMessageDialog(desktop, 
+         formatter.format(new Object[] { 
                appResources.getString("app.name"),
                versionResources.getString("version.number"),
                versionResources.getString("version.date"),
                appResources.getString("app.copyright"),
                editorResources.getString("dialog.about.license")}),
-         null,
+         null, 
          JOptionPane.INFORMATION_MESSAGE,
          new ImageIcon(
-            getClass().getResource(appResources.getString("app.icon"))));
+            getClass().getResource(appResources.getString("app.icon"))));  
    }
 
    /**
@@ -1091,12 +1091,12 @@ public class EditorFrame extends JFrame
          // ask user if it is ok to close
          int result
             = JOptionPane.showInternalConfirmDialog(
-               desktop,
+               desktop, 
                MessageFormat.format(editorResources.getString("dialog.exit.ok"),
                      new Object[] { new Integer(modcount) }),
-               null,
+               null, 
                JOptionPane.YES_NO_OPTION);
-
+         
          // if the user doesn't agree, veto the close
          if (result != JOptionPane.YES_OPTION)
             return;
@@ -1104,19 +1104,19 @@ public class EditorFrame extends JFrame
       savePreferences();
       System.exit(0);
    }
-
+   
    /**
     * Saves the user preferences before exiting.
     */
    public void savePreferences()
    {
-      String recent = "";
+      String recent = "";     
       for (int i = 0; i < Math.min(recentFiles.size(), maxRecentFiles); i++)
       {
          if (recent.length() > 0) recent += "|";
          recent += recentFiles.get(i);
-      }
-      preferences.put("recent", recent);
+      }      
+      preferences.put("recent", recent);   
    }
 
    private ResourceFactory appFactory;
@@ -1140,11 +1140,11 @@ public class EditorFrame extends JFrame
    private static final int DEFAULT_MAX_RECENT_FILES = 5;
    private static final double GROW_SCALE_FACTOR = Math.sqrt(2);
 
-   private static PersistenceDelegate staticFieldDelegate
-      = new
+   private static PersistenceDelegate staticFieldDelegate 
+      = new 
          DefaultPersistenceDelegate()
          {
-            protected Expression instantiate(Object
+            protected Expression instantiate(Object 
                oldInstance, Encoder out)
             {
                try
@@ -1157,19 +1157,19 @@ public class EditorFrame extends JFrame
                             fields[i].getModifiers()) &&
                         fields[i].get(null) == oldInstance)
                      {
-                        return new Expression(fields[i],
+                        return new Expression(fields[i], 
                            "get",
                            new Object[] { null });
                      }
                   }
                }
-               catch (IllegalAccessException ex)
+               catch (IllegalAccessException ex) 
                {
                   ex.printStackTrace();
                }
                return null;
             }
-
+            
             protected boolean mutatesTo(
                Object oldInstance, Object newInstance)
             {
@@ -1177,7 +1177,7 @@ public class EditorFrame extends JFrame
             }
          };
 
-
+   
    // workaround for bug #4646747 in J2SE SDK 1.4.0
    private static java.util.HashMap beanInfos;
    static
@@ -1196,9 +1196,9 @@ public class EditorFrame extends JFrame
       {
          try
          {
-            beanInfos.put(cls[i],
+            beanInfos.put(cls[i], 
                java.beans.Introspector.getBeanInfo(cls[i]));
-         }
+         }         
          catch (java.beans.IntrospectionException ex)
          {
          }

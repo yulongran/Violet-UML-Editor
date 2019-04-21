@@ -46,7 +46,7 @@ public class ClassNode extends RectangularNode
       attributes.setJustification(MultiLineString.LEFT);
       methods = new MultiLineString();
       methods.setJustification(MultiLineString.LEFT);
-      setRectangle2D(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+      setBounds(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
       midHeight = DEFAULT_COMPARTMENT_HEIGHT;
       botHeight = DEFAULT_COMPARTMENT_HEIGHT;
    }
@@ -54,9 +54,9 @@ public class ClassNode extends RectangularNode
    public void draw(Graphics2D g2)
    {
       super.draw(g2);
-      Rectangle2D top = new Rectangle2D.Double(getRectangle2D().getX(),
-         getRectangle2D().getY(), getRectangle2D().getWidth(), 
-         getRectangle2D().getHeight() - midHeight - botHeight);
+      Rectangle2D top = new Rectangle2D.Double(getBounds().getX(),
+         getBounds().getY(), getBounds().getWidth(), 
+         getBounds().getHeight() - midHeight - botHeight);
       g2.draw(top);
       name.draw(g2, top);
       Rectangle2D mid = new Rectangle2D.Double(top.getX(),
@@ -73,10 +73,10 @@ public class ClassNode extends RectangularNode
    {
       Rectangle2D min = new Rectangle2D.Double(0, 0,
          DEFAULT_WIDTH, DEFAULT_COMPARTMENT_HEIGHT);
-      Rectangle2D top = name.getRectangle2D(g2); 
+      Rectangle2D top = name.getBounds(g2); 
       top.add(min);
-      Rectangle2D mid = attributes.getRectangle2D(g2);
-      Rectangle2D bot = methods.getRectangle2D(g2);
+      Rectangle2D mid = attributes.getBounds(g2);
+      Rectangle2D bot = methods.getBounds(g2);
 
       midHeight = mid.getHeight();
       botHeight = bot.getHeight();
@@ -95,12 +95,12 @@ public class ClassNode extends RectangularNode
       }
 
       Rectangle2D b = new Rectangle2D.Double(
-         getRectangle2D().getX(), getRectangle2D().getY(),
+         getBounds().getX(), getBounds().getY(),
          Math.max(top.getWidth(), Math.max(mid.getWidth(),
             bot.getWidth())), 
          top.getHeight() + midHeight + botHeight);
       grid.snap(b);
-      setRectangle2D(b);
+      setBounds(b);
    }
 
    public boolean addNode(Node n, Point2D p)

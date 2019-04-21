@@ -48,7 +48,7 @@ public class CallNode extends RectangularNode
    */
    public CallNode()
    {
-      setRectangle2D(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+      setBounds(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
    }
 
    public void draw(Graphics2D g2)
@@ -56,11 +56,11 @@ public class CallNode extends RectangularNode
       super.draw(g2);
       Color oldColor = g2.getColor();
       g2.setColor(Color.WHITE);
-      g2.fill(getRectangle2D());
+      g2.fill(getBounds());
       g2.setColor(oldColor);
       if (openBottom)
       {
-         Rectangle2D b = getRectangle2D();
+         Rectangle2D b = getBounds();
          double x1 = b.getX();
          double x2 = x1 + b.getWidth();
          double y1 = b.getY();
@@ -80,7 +80,7 @@ public class CallNode extends RectangularNode
          g2.setStroke(oldStroke);
       }
       else
-         g2.draw(getRectangle2D());
+         g2.draw(getBounds());
    }
 
    /**
@@ -104,11 +104,11 @@ public class CallNode extends RectangularNode
    public Point2D getConnectionPoint(Direction d)
    {
       if (d.getX() > 0)
-         return new Point2D.Double(getRectangle2D().getMaxX(),
-            getRectangle2D().getMinY());
+         return new Point2D.Double(getBounds().getMaxX(),
+            getBounds().getMinY());
       else
-         return new Point2D.Double(getRectangle2D().getX(),
-            getRectangle2D().getMinY());
+         return new Point2D.Double(getBounds().getX(),
+            getBounds().getMinY());
    }
 
    public boolean addEdge(Edge e, Point2D p1, Point2D p2)
@@ -160,7 +160,7 @@ public class CallNode extends RectangularNode
 
       int i = 0;
       List calls = getChildren();
-      while (i < calls.size() && ((Node)calls.get(i)).getRectangle2D().getY() <= p1.getY()) 
+      while (i < calls.size() && ((Node)calls.get(i)).getBounds().getY() <= p1.getY()) 
          i++;
       addChild(i, n);
       return true;
@@ -194,15 +194,15 @@ public class CallNode extends RectangularNode
    {
       
       if (implicitParameter == null) return;
-      double xmid = implicitParameter.getRectangle2D().getCenterX();
+      double xmid = implicitParameter.getBounds().getCenterX();
 
       for (CallNode c = (CallNode)getParent(); 
            c != null; c = (CallNode)c.getParent())
          if (c.implicitParameter == implicitParameter)
-            xmid += getRectangle2D().getWidth() / 2;
+            xmid += getBounds().getWidth() / 2;
 
-      translate(xmid - getRectangle2D().getCenterX(), 0);
-      double ytop = getRectangle2D().getY() + CALL_YGAP;
+      translate(xmid - getBounds().getCenterX(), 0);
+      double ytop = getBounds().getY() + CALL_YGAP;
 
       List calls = getChildren();
       for (int i = 0; i < calls.size(); i++)
@@ -219,29 +219,29 @@ public class CallNode extends RectangularNode
             // compute height of call edge
             if (callEdge != null)
             {
-               Rectangle2D edgeRectangle2D = callEdge.getRectangle2D(g2);
-               ytop += edgeRectangle2D.getHeight() - CALL_YGAP;
+               Rectangle2D edgeBounds = callEdge.getBounds(g2);
+               ytop += edgeBounds.getHeight() - CALL_YGAP;
             }
             
-            n.translate(0, ytop - n.getRectangle2D().getY());
+            n.translate(0, ytop - n.getBounds().getY());
             n.layout(g, g2, grid);
             if (((CallNode) n).signaled)
                ytop += CALL_YGAP;
             else
-               ytop += n.getRectangle2D().getHeight() + CALL_YGAP;
+               ytop += n.getBounds().getHeight() + CALL_YGAP;
          }
       }
       if (openBottom) ytop += 2 * CALL_YGAP;
-      Rectangle2D b = getRectangle2D();
+      Rectangle2D b = getBounds();
       
       double minHeight = DEFAULT_HEIGHT;
       Edge returnEdge = findEdge(g, this, getParent());
       if (returnEdge != null)
       {
-         Rectangle2D edgeRectangle2D = returnEdge.getRectangle2D(g2);
-         minHeight = Math.max(minHeight, edgeRectangle2D.getHeight());         
+         Rectangle2D edgeBounds = returnEdge.getBounds(g2);
+         minHeight = Math.max(minHeight, edgeBounds.getHeight());         
       }
-      setRectangle2D(new Rectangle2D.Double(b.getX(), b.getY(), b.getWidth(), 
+      setBounds(new Rectangle2D.Double(b.getX(), b.getY(), b.getWidth(), 
             Math.max(minHeight, ytop - b.getY())));
    }
 

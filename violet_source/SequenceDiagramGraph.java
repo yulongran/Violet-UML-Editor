@@ -110,7 +110,7 @@ public class SequenceDiagramGraph extends Graph
       for (int i = 0; i < objects.size(); i++)
       {
          ImplicitParameterNode n = (ImplicitParameterNode)objects.get(i);
-         n.translate(0, -n.getRectangle2D().getY());
+         n.translate(0, -n.getBounds().getY());
          top = Math.max(top, n.getTopRectangle().getHeight());
       }
 
@@ -124,8 +124,8 @@ public class SequenceDiagramGraph extends Graph
             {
                CallNode c1 = (CallNode)o1;
                CallNode c2 = (CallNode)o2;
-               double diff = c1.getRectangle2D().getY()
-                  - c2.getRectangle2D().getY();
+               double diff = c1.getBounds().getY()
+                  - c2.getBounds().getY();
                if (diff < 0) return -1;
                if (diff > 0) return 1;
                return 0;
@@ -137,9 +137,9 @@ public class SequenceDiagramGraph extends Graph
          CallNode call = (CallNode)topLevelCalls.get(i);
          top += CallNode.CALL_YGAP;
 
-         call.translate(0, top - call.getRectangle2D().getY());
+         call.translate(0, top - call.getBounds().getY());
          call.layout(this, g2, grid);
-         top += call.getRectangle2D().getHeight();
+         top += call.getBounds().getHeight();
       }
       */
 
@@ -154,8 +154,8 @@ public class SequenceDiagramGraph extends Graph
       {
          Node n = (Node)iter.next();
          if (n instanceof CallNode)
-            top = Math.max(top, n.getRectangle2D().getY()
-               + n.getRectangle2D().getHeight());
+            top = Math.max(top, n.getBounds().getY()
+               + n.getBounds().getHeight());
       }
 
       top += CallNode.CALL_YGAP;
@@ -163,8 +163,8 @@ public class SequenceDiagramGraph extends Graph
       for (int i = 0; i < objects.size(); i++)
       {
          ImplicitParameterNode n = (ImplicitParameterNode) objects.get(i);
-         Rectangle2D b = n.getRectangle2D();
-         n.setRectangle2D(new Rectangle2D.Double(
+         Rectangle2D b = n.getBounds();
+         n.setBounds(new Rectangle2D.Double(
             b.getX(), b.getY(), 
             b.getWidth(), top - b.getY()));         
       }

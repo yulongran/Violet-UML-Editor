@@ -156,7 +156,7 @@ public class MultiLineString implements Cloneable, Serializable
       @param g2 the graphics context
       @return the bounding rectangle (with top left corner (0,0))
    */
-   public Rectangle2D getRectangle2D(Graphics2D g2)
+   public Rectangle2D getBounds(Graphics2D g2)
    {
       if (text.length() == 0) return new Rectangle2D.Double();
       // setLabelText();
@@ -173,7 +173,7 @@ public class MultiLineString implements Cloneable, Serializable
    {
       // setLabelText();
       label.setFont(g2.getFont());
-      label.setRectangle2D(0, 0, (int) r.getWidth(), (int) r.getHeight());
+      label.setBounds(0, 0, (int) r.getWidth(), (int) r.getHeight());
       g2.translate(r.getX(), r.getY());
       label.paint(g2);
       g2.translate(-r.getX(), -r.getY());        

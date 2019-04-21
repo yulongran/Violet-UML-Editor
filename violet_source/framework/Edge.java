@@ -72,11 +72,11 @@ public interface Edge extends Serializable, Cloneable
    Line2D getConnectionPoints();
 
    /**
-      Gets the smallest rectangle that Rectangle2D this edge.
+      Gets the smallest rectangle that bounds this edge.
       The bounding rectangle contains all labels.
       @return the bounding rectangle
    */
-   Rectangle2D getRectangle2D(Graphics2D g2);
+   Rectangle2D getBounds(Graphics2D g2);
 
    Object clone();
 }

@@ -8,8 +8,8 @@ canvas.width = canvas.clientWidth
 canvas.height = canvas.clientHeight
 
 // Keep track if the callNode button in the tool is pressed
-var callNode = false
-var ImplicitParameterNode=false;
+var callNode_button = false
+var implicitParameterNode_button=false;
 
 document.addEventListener('DOMContentLoaded', function () {
   const graph = new Graph()
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     selected = graph.findNode(mousePoint)
 
     // If the callNode button is pressed in the toolbar
-    if (ImplicitParameterNode === true && selected === undefined) {
+    if (implicitParameterNode_button === true && selected === undefined) {
       let n1 = new ImplicitParameterNode()
       graph.add(n1,  mousePoint);
     }
@@ -635,10 +635,7 @@ class CallNode {
     }
   }
 
-
-
-
 // Action listener for jquery
 $('#callNode').on('click', function () {
-  ImplicitParameterNode = true
+  implicitParameterNode_button = true
 })

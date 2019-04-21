@@ -38,59 +38,59 @@ public abstract class RectangularNode extends AbstractNode
    public Object clone()
    {
       RectangularNode cloned = (RectangularNode)super.clone();
-      cloned.Rectangle2D = (Rectangle2D)Rectangle2D.clone();
+      cloned.bounds = (Rectangle2D)bounds.clone();
       return cloned;
    }
 
    public void translate(double dx, double dy)
    {
-      Rectangle2D.setFrame(Rectangle2D.getX() + dx,
-         Rectangle2D.getY() + dy, 
-         Rectangle2D.getWidth(), 
-         Rectangle2D.getHeight());
+      bounds.setFrame(bounds.getX() + dx,
+         bounds.getY() + dy, 
+         bounds.getWidth(), 
+         bounds.getHeight());
       super.translate(dx, dy);
    }
 
    public boolean contains(Point2D p)
    {
-      return Rectangle2D.contains(p);
+      return bounds.contains(p);
    }
 
-   public Rectangle2D getRectangle2D()
+   public Rectangle2D getBounds()
    {
-      return (Rectangle2D)Rectangle2D.clone();
+      return (Rectangle2D)bounds.clone();
    }
 
-   public void setRectangle2D(Rectangle2D newRectangle2D)
+   public void setBounds(Rectangle2D newBounds)
    {
-      Rectangle2D = newRectangle2D;
+      bounds = newBounds;
    }
 
    public void layout(Graph g, Graphics2D g2, Grid grid)
    {
-      grid.snap(Rectangle2D);
+      grid.snap(bounds);
    }
 
    public Point2D getConnectionPoint(Direction d)
    {
-      double slope = Rectangle2D.getHeight() / Rectangle2D.getWidth();
+      double slope = bounds.getHeight() / bounds.getWidth();
       double ex = d.getX();
       double ey = d.getY();
-      double x = Rectangle2D.getCenterX();
-      double y = Rectangle2D.getCenterY();
+      double x = bounds.getCenterX();
+      double y = bounds.getCenterY();
       
       if (ex != 0 && -slope <= ey / ex && ey / ex <= slope)
       {  
          // intersects at left or right boundary
          if (ex > 0) 
          {
-            x = Rectangle2D.getMaxX();
-            y += (Rectangle2D.getWidth() / 2) * ey / ex;
+            x = bounds.getMaxX();
+            y += (bounds.getWidth() / 2) * ey / ex;
          }
          else
          {
-            x = Rectangle2D.getX();
-            y -= (Rectangle2D.getWidth() / 2) * ey / ex;
+            x = bounds.getX();
+            y -= (bounds.getWidth() / 2) * ey / ex;
          }
       }
       else if (ey != 0)
@@ -98,13 +98,13 @@ public abstract class RectangularNode extends AbstractNode
          // intersects at top or bottom
          if (ey > 0) 
          {
-            x += (Rectangle2D.getHeight() / 2) * ex / ey;
-            y = Rectangle2D.getMaxY();
+            x += (bounds.getHeight() / 2) * ex / ey;
+            y = bounds.getMaxY();
          }
          else
          {
-            x -= (Rectangle2D.getHeight() / 2) * ex / ey;
-            y = Rectangle2D.getY();
+            x -= (bounds.getHeight() / 2) * ex / ey;
+            y = bounds.getY();
          }
       }
       return new Point2D.Double(x, y);
@@ -114,7 +114,7 @@ public abstract class RectangularNode extends AbstractNode
       throws IOException
    {
       out.defaultWriteObject();
-      writeRectangularShape(out, Rectangle2D);
+      writeRectangularShape(out, bounds);
    }
 
    /**
@@ -139,8 +139,8 @@ public abstract class RectangularNode extends AbstractNode
       throws IOException, ClassNotFoundException
    {
       in.defaultReadObject();
-      Rectangle2D = new Rectangle2D.Double();
-      readRectangularShape(in, Rectangle2D);
+      bounds = new Rectangle2D.Double();
+      readRectangularShape(in, bounds);
    }
    
    /**
@@ -163,8 +163,8 @@ public abstract class RectangularNode extends AbstractNode
 
    public Shape getShape()
    {
-      return Rectangle2D;
+      return bounds;
    }
    
-   private transient Rectangle2D Rectangle2D;
+   private transient Rectangle2D bounds;
 }

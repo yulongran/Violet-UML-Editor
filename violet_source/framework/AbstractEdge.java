@@ -60,7 +60,7 @@ abstract class AbstractEdge implements Edge
       return end;
    }
 
-   public Rectangle2D getRectangle2D(Graphics2D g2)
+   public Rectangle2D getBounds(Graphics2D g2)
    {
       Line2D conn = getConnectionPoints();
       Rectangle2D r = new Rectangle2D.Double();
@@ -71,12 +71,12 @@ abstract class AbstractEdge implements Edge
 
    public Line2D getConnectionPoints()
    {
-      Rectangle2D startRectangle2D = start.getRectangle2D();
-      Rectangle2D endRectangle2D = end.getRectangle2D();
+      Rectangle2D startBounds = start.getBounds();
+      Rectangle2D endBounds = end.getBounds();
       Point2D startCenter = new Point2D.Double(
-         startRectangle2D.getCenterX(), startRectangle2D.getCenterY());
+         startBounds.getCenterX(), startBounds.getCenterY());
       Point2D endCenter = new Point2D.Double(
-         endRectangle2D.getCenterX(), endRectangle2D.getCenterY());
+         endBounds.getCenterX(), endBounds.getCenterY());
       Direction toEnd = new Direction(startCenter, endCenter);
       return new Line2D.Double(
          start.getConnectionPoint(toEnd),

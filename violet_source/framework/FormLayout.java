@@ -74,10 +74,10 @@ class FormLayout implements LayoutManager
          int height = Math.max(dleft.height,
             dright.height);
 
-         cleft.setRectangle2D(xcenter - dleft.width, y + (height -
+         cleft.setBounds(xcenter - dleft.width, y + (height -
             dleft.height) / 2, dleft.width, dleft.height);
 
-         cright.setRectangle2D(xcenter + GAP, y + (height 
+         cright.setBounds(xcenter + GAP, y + (height 
             - dright.height) / 2, dright.width, dright.height);
          y += height;
       }

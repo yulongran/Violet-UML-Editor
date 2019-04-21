@@ -42,8 +42,8 @@ public class ReturnEdge extends SegmentedLineEdge
    {
       ArrayList a = new ArrayList();
       Node n = getEnd();
-      Rectangle2D start = getStart().getRectangle2D();
-      Rectangle2D end = getEnd().getRectangle2D();
+      Rectangle2D start = getStart().getBounds();
+      Rectangle2D end = getEnd().getBounds();
       if (n instanceof PointNode) // show nicely in tool bar
       {
          a.add(new Point2D.Double(end.getX(), end.getY()));

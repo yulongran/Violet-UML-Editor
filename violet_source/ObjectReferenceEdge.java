@@ -85,7 +85,7 @@ public class ObjectReferenceEdge extends ShapeEdge
 
    public Line2D getConnectionPoints()
    {
-      Rectangle2D b = getEnd().getRectangle2D();
+      Rectangle2D b = getEnd().getBounds();
       Point2D p = getStart().getConnectionPoint(Direction.EAST);
       if (isSShaped())
          return new Line2D.Double(p, getEnd().getConnectionPoint(Direction.WEST));
@@ -99,7 +99,7 @@ public class ObjectReferenceEdge extends ShapeEdge
    */
    private boolean isSShaped()
    {
-      Rectangle2D b = getEnd().getRectangle2D();
+      Rectangle2D b = getEnd().getBounds();
       Point2D p = getStart().getConnectionPoint(Direction.EAST);
       return b.getX() >= p.getX() + 2 * ENDSIZE;
    }

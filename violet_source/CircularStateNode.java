@@ -39,7 +39,7 @@ public class CircularStateNode extends RectangularNode
    */
    public CircularStateNode()
    {     
-      setRectangle2D(new Rectangle2D.Double(0, 0,
+      setBounds(new Rectangle2D.Double(0, 0,
             DEFAULT_DIAMETER, DEFAULT_DIAMETER));      
    }
    
@@ -51,28 +51,28 @@ public class CircularStateNode extends RectangularNode
    public void setFinal(boolean newValue)
    {
       finalState = newValue;
-      Rectangle2D Rectangle2D = getRectangle2D();
-      double x = Rectangle2D.getX();
-      double y = Rectangle2D.getY();
+      Rectangle2D bounds = getBounds();
+      double x = bounds.getX();
+      double y = bounds.getY();
       
       if (finalState)
-         setRectangle2D(new Rectangle2D.Double(x - DEFAULT_GAP, y - DEFAULT_GAP,
+         setBounds(new Rectangle2D.Double(x - DEFAULT_GAP, y - DEFAULT_GAP,
                DEFAULT_DIAMETER + 2 * DEFAULT_GAP, 
                DEFAULT_DIAMETER + 2 * DEFAULT_GAP));
       else
-         setRectangle2D(new Rectangle2D.Double(x + DEFAULT_GAP, y + DEFAULT_GAP,
+         setBounds(new Rectangle2D.Double(x + DEFAULT_GAP, y + DEFAULT_GAP,
                DEFAULT_DIAMETER, DEFAULT_DIAMETER));
    }
    
    public Point2D getConnectionPoint(Direction d)
    {
-      Rectangle2D Rectangle2D = getRectangle2D();
-      double a = Rectangle2D.getWidth() / 2;
-      double b = Rectangle2D.getHeight() / 2;
+      Rectangle2D bounds = getBounds();
+      double a = bounds.getWidth() / 2;
+      double b = bounds.getHeight() / 2;
       double x = d.getX();
       double y = d.getY();
-      double cx = Rectangle2D.getCenterX();
-      double cy = Rectangle2D.getCenterY();
+      double cx = bounds.getCenterX();
+      double cy = bounds.getCenterY();
       
       if (a != 0 && b != 0 && !(x == 0 && y == 0))
       {
@@ -90,18 +90,18 @@ public class CircularStateNode extends RectangularNode
       super.draw(g2);
       Ellipse2D circle
       = new Ellipse2D.Double(
-            getRectangle2D().getX(), getRectangle2D().getY(),
-            getRectangle2D().getWidth(), getRectangle2D().getHeight());
+            getBounds().getX(), getBounds().getY(),
+            getBounds().getWidth(), getBounds().getHeight());
       
       if (finalState)
       {
-         Rectangle2D Rectangle2D = getRectangle2D();
+         Rectangle2D bounds = getBounds();
          Ellipse2D inside
             = new Ellipse2D.Double(
-               Rectangle2D.getX() + DEFAULT_GAP,
-               Rectangle2D.getY() + DEFAULT_GAP,
-               Rectangle2D.getWidth() - 2 * DEFAULT_GAP,
-               Rectangle2D.getHeight() - 2 * DEFAULT_GAP);
+               bounds.getX() + DEFAULT_GAP,
+               bounds.getY() + DEFAULT_GAP,
+               bounds.getWidth() - 2 * DEFAULT_GAP,
+               bounds.getHeight() - 2 * DEFAULT_GAP);
          g2.fill(inside);
          g2.draw(circle);
       }
@@ -112,8 +112,8 @@ public class CircularStateNode extends RectangularNode
    public Shape getShape()
    {
       return new Ellipse2D.Double(
-            getRectangle2D().getX(), getRectangle2D().getY(),
-            getRectangle2D().getWidth() - 1, getRectangle2D().getHeight() - 1);
+            getBounds().getX(), getBounds().getY(),
+            getBounds().getWidth() - 1, getBounds().getHeight() - 1);
    }
 
    private boolean finalState; // final is a keyword

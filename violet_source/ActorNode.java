@@ -41,7 +41,7 @@ public class ActorNode extends RectangularNode
    {
       name = new MultiLineString();
       name.setText("Actor");
-      setRectangle2D(new Rectangle2D.Double(0, 0,
+      setBounds(new Rectangle2D.Double(0, 0,
          DEFAULT_WIDTH, DEFAULT_HEIGHT));
    }
    
@@ -49,24 +49,24 @@ public class ActorNode extends RectangularNode
    {
       Rectangle2D top = new Rectangle2D.Double(0, 0,
          DEFAULT_WIDTH, DEFAULT_HEIGHT);
-      Rectangle2D bot = name.getRectangle2D(g2);
+      Rectangle2D bot = name.getBounds(g2);
       Rectangle2D b = new Rectangle2D.Double(
-            getRectangle2D().getX(), getRectangle2D().getY(),
+            getBounds().getX(), getBounds().getY(),
             Math.max(top.getWidth(), bot.getWidth()), 
             top.getHeight() + bot.getHeight());
       grid.snap(b);
-      setRectangle2D(b);
+      setBounds(b);
    }
       
    public void draw(Graphics2D g2)
    {
-      Rectangle2D Rectangle2D = getRectangle2D();
+      Rectangle2D bounds = getBounds();
 
       // Draw stick person
 
       GeneralPath path = new GeneralPath();
-      float neckX = (float) (Rectangle2D.getX() + Rectangle2D.getWidth() / 2);
-      float neckY = (float) (Rectangle2D.getY() + HEAD_SIZE + GAP_ABOVE);
+      float neckX = (float) (bounds.getX() + bounds.getWidth() / 2);
+      float neckY = (float) (bounds.getY() + HEAD_SIZE + GAP_ABOVE);
       // head
       path.moveTo(neckX, neckY);
       path.quadTo(neckX + HEAD_SIZE / 2, neckY, neckX + HEAD_SIZE / 2, neckY - HEAD_SIZE / 2);
@@ -92,10 +92,10 @@ public class ActorNode extends RectangularNode
       g2.draw(path);
 
       // Draw name
-      Rectangle2D bot = name.getRectangle2D(g2);
+      Rectangle2D bot = name.getBounds(g2);
 
       Rectangle2D namebox = new Rectangle2D.Double(
-         Rectangle2D.getX() + (Rectangle2D.getWidth() - bot.getWidth()) / 2, Rectangle2D.getY() + DEFAULT_HEIGHT,
+         bounds.getX() + (bounds.getWidth() - bot.getWidth()) / 2, bounds.getY() + DEFAULT_HEIGHT,
          bot.getWidth(), bot.getHeight());
       name.draw(g2, namebox);
    }
