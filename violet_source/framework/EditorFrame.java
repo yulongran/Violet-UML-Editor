@@ -125,7 +125,7 @@ public class EditorFrame extends JFrame
       int screenWidth = (int)screenSize.getWidth();
       int screenHeight = (int)screenSize.getHeight();
 
-      setBounds(screenWidth / 16, screenHeight / 16,
+      setRectangle2D(screenWidth / 16, screenHeight / 16,
          screenWidth * 7 / 8, screenHeight * 7 / 8);
 
       setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -303,11 +303,11 @@ public class EditorFrame extends JFrame
                      = (GraphFrame) desktop.getSelectedFrame();
                   if (frame == null) return;
                   Graph g = frame.getGraph();
-                  Rectangle2D bounds = g.getBounds((Graphics2D) frame.getGraphics());
-                  bounds.add(frame.getGraphPanel().getBounds());
-                  g.setMinBounds(new Rectangle2D.Double(0, 0,
-                        GROW_SCALE_FACTOR * bounds.getWidth(),
-                        GROW_SCALE_FACTOR * bounds.getHeight()));
+                  Rectangle2D Rectangle2D = g.getRectangle2D((Graphics2D) frame.getGraphics());
+                  Rectangle2D.add(frame.getGraphPanel().getRectangle2D());
+                  g.setMinRectangle2D(new Rectangle2D.Double(0, 0,
+                        GROW_SCALE_FACTOR * Rectangle2D.getWidth(),
+                        GROW_SCALE_FACTOR * Rectangle2D.getHeight()));
                   frame.getGraphPanel().revalidate();
                   frame.repaint();
                }
@@ -323,8 +323,8 @@ public class EditorFrame extends JFrame
                      = (GraphFrame) desktop.getSelectedFrame();
                   if (frame == null) return;
                   Graph g = frame.getGraph();
-                  Rectangle2D bounds = g.getBounds((Graphics2D) frame.getGraphics());
-                  g.setMinBounds(null);
+                  Rectangle2D Rectangle2D = g.getRectangle2D((Graphics2D) frame.getGraphics());
+                  g.setMinRectangle2D(null);
                   frame.getGraphPanel().revalidate();
                   frame.repaint();
                }
@@ -1030,20 +1030,20 @@ public class EditorFrame extends JFrame
          BufferedImage.TYPE_INT_RGB);
       // need a dummy image to get a Graphics to
       // measure the size
-      Rectangle2D bounds = graph.getBounds(
+      Rectangle2D Rectangle2D = graph.getRectangle2D(
          (Graphics2D) dummy.getGraphics());
       BufferedImage image
-         = new BufferedImage((int)bounds.getWidth() + 1,
-            (int)bounds.getHeight() + 1,
+         = new BufferedImage((int)Rectangle2D.getWidth() + 1,
+            (int)Rectangle2D.getHeight() + 1,
             BufferedImage.TYPE_INT_RGB);
       Graphics2D g2 = (Graphics2D)image.getGraphics();
-      g2.translate(-bounds.getX(), -bounds.getY());
+      g2.translate(-Rectangle2D.getX(), -Rectangle2D.getY());
       g2.setColor(Color.WHITE);
       g2.fill(new Rectangle2D.Double(
-                 bounds.getX(),
-                 bounds.getY(),
-                 bounds.getWidth() + 1,
-                 bounds.getHeight() + 1));
+                 Rectangle2D.getX(),
+                 Rectangle2D.getY(),
+                 Rectangle2D.getWidth() + 1,
+                 Rectangle2D.getHeight() + 1));
       g2.setColor(Color.BLACK);
       g2.setBackground(Color.WHITE);
       graph.draw(g2, null);

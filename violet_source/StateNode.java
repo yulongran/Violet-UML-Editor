@@ -42,7 +42,7 @@ public class StateNode extends RectangularNode
    public StateNode()
    {
       name = new MultiLineString();
-      setBounds(new Rectangle2D.Double(0, 0, 
+      setRectangle2D(new Rectangle2D.Double(0, 0, 
          DEFAULT_WIDTH, DEFAULT_HEIGHT));
    }
 
@@ -50,26 +50,26 @@ public class StateNode extends RectangularNode
    {
       super.draw(g2);
       g2.draw(getShape());
-      name.draw(g2, getBounds());
+      name.draw(g2, getRectangle2D());
    }
    
    public Shape getShape()
    {       
-      return new RoundRectangle2D.Double(getBounds().getX(),
-         getBounds().getY(), getBounds().getWidth(), 
-         getBounds().getHeight(), ARC_SIZE, ARC_SIZE);
+      return new RoundRectangle2D.Double(getRectangle2D().getX(),
+         getRectangle2D().getY(), getRectangle2D().getWidth(), 
+         getRectangle2D().getHeight(), ARC_SIZE, ARC_SIZE);
    }
 
    public void layout(Graph g, Graphics2D g2, Grid grid)
    {
-      Rectangle2D b = name.getBounds(g2);
-      b = new Rectangle2D.Double(getBounds().getX(), 
-         getBounds().getY(),
+      Rectangle2D b = name.getRectangle2D(g2);
+      b = new Rectangle2D.Double(getRectangle2D().getX(), 
+         getRectangle2D().getY(),
          Math.max(b.getWidth(), DEFAULT_WIDTH),
          Math.max(b.getHeight(), DEFAULT_HEIGHT));
 
       grid.snap(b);
-      setBounds(b);
+      setRectangle2D(b);
    }
 
    /**

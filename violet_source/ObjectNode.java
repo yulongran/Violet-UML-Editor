@@ -46,7 +46,7 @@ public class ObjectNode extends RectangularNode
       name = new MultiLineString();
       name.setUnderlined(true);
       name.setSize(MultiLineString.LARGE);
-      setBounds(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+      setRectangle2D(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
    }
 
    public void draw(Graphics2D g2)
@@ -54,7 +54,7 @@ public class ObjectNode extends RectangularNode
       super.draw(g2);
       Rectangle2D top = getTopRectangle();
       g2.draw(top);
-      g2.draw(getBounds());
+      g2.draw(getRectangle2D());
       name.draw(g2, top);
    }
 
@@ -65,8 +65,8 @@ public class ObjectNode extends RectangularNode
    */
    public Rectangle2D getTopRectangle()
    {
-      return new Rectangle2D.Double(getBounds().getX(),
-         getBounds().getY(), getBounds().getWidth(), topHeight);
+      return new Rectangle2D.Double(getRectangle2D().getX(),
+         getRectangle2D().getY(), getRectangle2D().getWidth(), topHeight);
    }
 
    public boolean addEdge(Edge e, Point2D p1, Point2D p2)
@@ -77,16 +77,16 @@ public class ObjectNode extends RectangularNode
    public Point2D getConnectionPoint(Direction d)
    {
       if (d.getX() > 0)
-         return new Point2D.Double(getBounds().getMaxX(),
-            getBounds().getMinY() + topHeight / 2);
+         return new Point2D.Double(getRectangle2D().getMaxX(),
+            getRectangle2D().getMinY() + topHeight / 2);
       else
-         return new Point2D.Double(getBounds().getX(),
-            getBounds().getMinY() + topHeight / 2);
+         return new Point2D.Double(getRectangle2D().getX(),
+            getRectangle2D().getMinY() + topHeight / 2);
    }
 
    public void layout(Graph g, Graphics2D g2, Grid grid)
    {
-      Rectangle2D b = name.getBounds(g2); 
+      Rectangle2D b = name.getRectangle2D(g2); 
       b.add(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH,
                DEFAULT_HEIGHT - YGAP));
       double leftWidth = 0;
@@ -97,8 +97,8 @@ public class ObjectNode extends RectangularNode
       {
          FieldNode f = (FieldNode)fields.get(i);
          f.layout(g, g2, grid);
-         Rectangle2D b2 = f.getBounds();
-         height += b2.getBounds().getHeight() + YGAP;   
+         Rectangle2D b2 = f.getRectangle2D();
+         height += b2.getRectangle2D().getHeight() + YGAP;   
          double axis = f.getAxisX();
          leftWidth = Math.max(leftWidth, axis);
          rightWidth = Math.max(rightWidth, b2.getWidth() - axis);
@@ -106,23 +106,23 @@ public class ObjectNode extends RectangularNode
       double width = 2 * Math.max(leftWidth, rightWidth) + 2 * XGAP;
       width = Math.max(width, b.getWidth());
       width = Math.max(width, DEFAULT_WIDTH);
-      b = new Rectangle2D.Double(getBounds().getX(),
-         getBounds().getY(), width, 
+      b = new Rectangle2D.Double(getRectangle2D().getX(),
+         getRectangle2D().getY(), width, 
          b.getHeight() + height);
       grid.snap(b);
-      setBounds(b);
+      setRectangle2D(b);
       topHeight = b.getHeight() - height;
       double ytop = b.getY() + topHeight + YGAP;
       double xmid = b.getCenterX();
       for (int i = 0; i < fields.size(); i++)
       {
          FieldNode f = (FieldNode)fields.get(i);
-         Rectangle2D b2 = f.getBounds();
-         f.setBounds(new Rectangle2D.Double(
+         Rectangle2D b2 = f.getRectangle2D();
+         f.setRectangle2D(new Rectangle2D.Double(
             xmid - f.getAxisX(), ytop,
             f.getAxisX() + rightWidth, b2.getHeight()));
          f.setBoxWidth(rightWidth);
-         ytop += f.getBounds().getHeight() + YGAP;
+         ytop += f.getRectangle2D().getHeight() + YGAP;
       }
    }
 
@@ -158,7 +158,7 @@ public class ObjectNode extends RectangularNode
       if (!(n instanceof FieldNode)) return false;
       if (fields.contains(n)) return true;
       int i = 0;
-      while (i < fields.size() && ((Node)fields.get(i)).getBounds().getY() < p.getY())
+      while (i < fields.size() && ((Node)fields.get(i)).getRectangle2D().getY() < p.getY())
          i++;
       addChild(i, n);
       return true;
@@ -183,11 +183,11 @@ public class ObjectNode extends RectangularNode
    public void addChild(Node n)
    {
       super.addChild(n);
-      Rectangle2D b = getBounds();
+      Rectangle2D b = getRectangle2D();
       b.add(new Rectangle2D.Double(b.getX(), b.getY() + b.getHeight(),
                FieldNode.DEFAULT_WIDTH,
                FieldNode.DEFAULT_HEIGHT));
-      setBounds(b);
+      setRectangle2D(b);
    }
 
    private double topHeight;

@@ -48,7 +48,7 @@ public class PackageNode extends RectangularNode
    {
       name = "";
       contents = new MultiLineString();
-      setBounds(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+      setRectangle2D(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
       top = new Rectangle2D.Double(0, 0, DEFAULT_TOP_WIDTH, DEFAULT_TOP_HEIGHT);
       bot = new Rectangle2D.Double(0, DEFAULT_TOP_HEIGHT, DEFAULT_WIDTH, DEFAULT_HEIGHT - DEFAULT_TOP_HEIGHT);
    }
@@ -56,17 +56,17 @@ public class PackageNode extends RectangularNode
    public void draw(Graphics2D g2)
    {
       super.draw(g2);
-      Rectangle2D bounds = getBounds();
+      Rectangle2D Rectangle2D = getRectangle2D();
 
       label.setText("<html>" + name + "</html>");
       label.setFont(g2.getFont());
       Dimension d = label.getPreferredSize();
-      label.setBounds(0, 0, d.width, d.height);
+      label.setRectangle2D(0, 0, d.width, d.height);
 
       g2.draw(top);
 
-      double textX = bounds.getX() + NAME_GAP;
-      double textY = bounds.getY() + (top.getHeight() - d.getHeight()) / 2;
+      double textX = Rectangle2D.getX() + NAME_GAP;
+      double textY = Rectangle2D.getY() + (top.getHeight() - d.getHeight()) / 2;
       
       g2.translate(textX, textY);
       label.paint(g2);
@@ -86,17 +86,17 @@ public class PackageNode extends RectangularNode
 
    public void layout(Graph g, Graphics2D g2, Grid grid)
    {
-      Rectangle2D bounds = getBounds();
+      Rectangle2D Rectangle2D = getRectangle2D();
 
       label.setText("<html>" + name + "</html>");
       label.setFont(g2.getFont());
       Dimension d = label.getPreferredSize();
       
-      top = new Rectangle2D.Double(bounds.getX(), bounds.getY(),
+      top = new Rectangle2D.Double(Rectangle2D.getX(), Rectangle2D.getY(),
          Math.max(d.getWidth(), DEFAULT_TOP_WIDTH), 
          Math.max(d.getHeight(), DEFAULT_TOP_HEIGHT));
 
-      bot = contents.getBounds(g2);
+      bot = contents.getRectangle2D(g2);
       Rectangle2D min = new Rectangle2D.Double(0, 0,
          DEFAULT_WIDTH, DEFAULT_HEIGHT - DEFAULT_TOP_HEIGHT);
       bot.add(min);
@@ -106,32 +106,32 @@ public class PackageNode extends RectangularNode
       List children = getChildren();
       if (children.size() > 0)
       {
-         Rectangle2D childBounds = new Rectangle2D.Double(
-            bounds.getX(), bounds.getY(), 0, 0);
+         Rectangle2D childRectangle2D = new Rectangle2D.Double(
+            Rectangle2D.getX(), Rectangle2D.getY(), 0, 0);
          for (int i = 0; i < children.size(); i++)
          {
             Node child = (Node)children.get(i);
             child.layout(g, g2, grid);
-            childBounds.add(child.getBounds());
+            childRectangle2D.add(child.getRectangle2D());
          }
          width = Math.max(width, 
-            childBounds.getWidth() + XGAP);
+            childRectangle2D.getWidth() + XGAP);
          height = Math.max(height, 
-            childBounds.getHeight() + YGAP);
+            childRectangle2D.getHeight() + YGAP);
       }
       Rectangle2D b = new Rectangle2D.Double(
-         bounds.getX(), bounds.getY(), width, height);
+         Rectangle2D.getX(), Rectangle2D.getY(), width, height);
       grid.snap(b);
-      setBounds(b);
+      setRectangle2D(b);
       
       top = new Rectangle2D.Double(
-            bounds.getX(), bounds.getY(),
+            Rectangle2D.getX(), Rectangle2D.getY(),
             Math.max(d.getWidth() + 2 * NAME_GAP, DEFAULT_TOP_WIDTH), 
             Math.max(d.getHeight(), DEFAULT_TOP_HEIGHT));
       
-      bot = new Rectangle2D.Double(bounds.getX(),
-            bounds.getY() + top.getHeight(), 
-            bounds.getWidth(), bounds.getHeight() - top.getHeight());
+      bot = new Rectangle2D.Double(Rectangle2D.getX(),
+            Rectangle2D.getY() + top.getHeight(), 
+            Rectangle2D.getWidth(), Rectangle2D.getHeight() - top.getHeight());
    }
 
    /**

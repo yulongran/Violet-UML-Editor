@@ -158,8 +158,8 @@ public class ToolBar extends JPanel
             public void paintIcon(Component c, Graphics g,
                   int x, int y)
             {
-               double width = n.getBounds().getWidth();
-               double height = n.getBounds().getHeight();
+               double width = n.getRectangle2D().getWidth();
+               double height = n.getRectangle2D().getHeight();
                Graphics2D g2 = (Graphics2D)g;
                double scaleX = (BUTTON_SIZE - OFFSET)/ width;
                double scaleY = (BUTTON_SIZE - OFFSET)/ height;
@@ -245,13 +245,13 @@ public class ToolBar extends JPanel
                q.translate(BUTTON_SIZE - OFFSET, BUTTON_SIZE - OFFSET);
                e.connect(p, q);
                
-               Rectangle2D bounds = new Rectangle2D.Double();
-               bounds.add(p.getBounds());
-               bounds.add(q.getBounds());
-               bounds.add(e.getBounds(g2));
+               Rectangle2D Rectangle2D = new Rectangle2D.Double();
+               Rectangle2D.add(p.getRectangle2D());
+               Rectangle2D.add(q.getRectangle2D());
+               Rectangle2D.add(e.getRectangle2D(g2));
                
-               double width = bounds.getWidth();
-               double height = bounds.getHeight();
+               double width = Rectangle2D.getWidth();
+               double height = Rectangle2D.getHeight();
                double scaleX = (BUTTON_SIZE - OFFSET)/ width;
                double scaleY = (BUTTON_SIZE - OFFSET)/ height;
                double scale = Math.min(scaleX, scaleY);

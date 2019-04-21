@@ -171,9 +171,9 @@ public abstract class SegmentedLineEdge extends ShapeEdge
       label.setText("<html>" + s + "</html>");
       label.setFont(g2.getFont());
       Dimension d = label.getPreferredSize();      
-      label.setBounds(0, 0, d.width, d.height);
+      label.setRectangle2D(0, 0, d.width, d.height);
 
-      Rectangle2D b = getStringBounds(g2, p, q, arrow, s, center);
+      Rectangle2D b = getStringRectangle2D(g2, p, q, arrow, s, center);
       
       Color oldColor = g2.getColor();
       g2.setColor(g2.getBackground());
@@ -192,7 +192,7 @@ public abstract class SegmentedLineEdge extends ShapeEdge
       draw the string
       @param q the other endpoint of the segment along which to
       draw the string
-      @param b the bounds of the string to draw
+      @param b the Rectangle2D of the string to draw
       @param center true if the string should be centered
       along the segment
       @return the point at which to draw the string
@@ -231,14 +231,14 @@ public abstract class SegmentedLineEdge extends ShapeEdge
          }
          if (arrow != null)
          {
-            Rectangle2D arrowBounds = arrow.getPath(p, q).getBounds2D();
+            Rectangle2D arrowRectangle2D = arrow.getPath(p, q).getRectangle2D2D();
             if (p.getX() < q.getX())
             {
-               xoff -= arrowBounds.getWidth();
+               xoff -= arrowRectangle2D.getWidth();
             }
             else
             {
-               xoff += arrowBounds.getWidth();
+               xoff += arrowRectangle2D.getWidth();
             }
          }
       }
@@ -257,7 +257,7 @@ public abstract class SegmentedLineEdge extends ShapeEdge
       along the segment
       @return the rectangle enclosing the string
    */
-   private static Rectangle2D getStringBounds(Graphics2D g2, 
+   private static Rectangle2D getStringRectangle2D(Graphics2D g2, 
       Point2D p, Point2D q, ArrowHead arrow, String s, boolean center)
    {
       if (g2 == null) return new Rectangle2D.Double();
@@ -269,18 +269,18 @@ public abstract class SegmentedLineEdge extends ShapeEdge
       return new Rectangle2D.Double(a.getX(), a.getY(), d.getWidth(), d.getHeight());
    }
 
-   public Rectangle2D getBounds(Graphics2D g2)
+   public Rectangle2D getRectangle2D(Graphics2D g2)
    {
       ArrayList points = getPoints();
-      Rectangle2D r = super.getBounds(g2);
-      r.add(getStringBounds(g2, 
+      Rectangle2D r = super.getRectangle2D(g2);
+      r.add(getStringRectangle2D(g2, 
                (Point2D) points.get(1), (Point2D) points.get(0), 
                startArrowHead, startLabel, false));
-      r.add(getStringBounds(g2, 
+      r.add(getStringRectangle2D(g2, 
                (Point2D) points.get(points.size() / 2 - 1),
                (Point2D) points.get(points.size() / 2), 
                null, middleLabel, true));
-      r.add(getStringBounds(g2, 
+      r.add(getStringRectangle2D(g2, 
                (Point2D) points.get(points.size() - 2),
                (Point2D) points.get(points.size() - 1), 
                endArrowHead, endLabel, false));

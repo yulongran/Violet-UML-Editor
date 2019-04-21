@@ -46,8 +46,8 @@ public class NoteEdge extends ShapeEdge
 
    public Line2D getConnectionPoints()
    {
-      Rectangle2D start = getStart().getBounds();
-      Rectangle2D end = getEnd().getBounds();
+      Rectangle2D start = getStart().getRectangle2D();
+      Rectangle2D end = getEnd().getRectangle2D();
       Direction d = new Direction(end.getCenterX() - start.getCenterX(), end.getCenterY() - start.getCenterY());
 
       return new Line2D.Double(getStart().getConnectionPoint(d), getEnd().getConnectionPoint(d.turn(180)));

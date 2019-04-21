@@ -83,9 +83,9 @@ public abstract class Graph implements Serializable
    */
    public boolean add(Node n, Point2D p)
    {
-      Rectangle2D bounds = n.getBounds();
-      n.translate(p.getX() - bounds.getX(), 
-         p.getY() - bounds.getY()); 
+      Rectangle2D Rectangle2D = n.getRectangle2D();
+      n.translate(p.getX() - Rectangle2D.getX(), 
+         p.getY() - Rectangle2D.getY()); 
 
       boolean accepted = false;
       boolean insideANode = false;
@@ -232,27 +232,27 @@ public abstract class Graph implements Serializable
       @param g2 the graphics context
       @return the bounding rectangle
    */
-   public Rectangle2D getBounds(Graphics2D g2)
+   public Rectangle2D getRectangle2D(Graphics2D g2)
    {
-      Rectangle2D r = minBounds;
+      Rectangle2D r = minRectangle2D;
       for (int i = 0; i < nodes.size(); i++)
       {
          Node n = (Node)nodes.get(i);
-         Rectangle2D b = n.getBounds();
+         Rectangle2D b = n.getRectangle2D();
          if (r == null) r = b;
          else r.add(b);
       }
       for (int i = 0; i < edges.size(); i++)
       {
          Edge e = (Edge)edges.get(i);
-         r.add(e.getBounds(g2));
+         r.add(e.getRectangle2D(g2));
       }
       return r == null ? new Rectangle2D.Double() : new Rectangle2D.Double(r.getX(), r.getY(), 
             r.getWidth() + AbstractNode.SHADOW_GAP, r.getHeight() + AbstractNode.SHADOW_GAP);
    }
    
-   public Rectangle2D getMinBounds() { return minBounds; }
-   public void setMinBounds(Rectangle2D newValue) { minBounds = newValue; }
+   public Rectangle2D getMinRectangle2D() { return minRectangle2D; }
+   public void setMinRectangle2D(Rectangle2D newValue) { minRectangle2D = newValue; }
 
    /**
       Gets the node types of a particular graph type.
@@ -287,9 +287,9 @@ public abstract class Graph implements Serializable
                for (int i = 0; i < g.nodes.size(); i++)
                {
                   Node n = (Node)g.nodes.get(i);
-                  Rectangle2D bounds = n.getBounds();
-                  Point2D p = new Point2D.Double(bounds.getX(),
-                     bounds.getY());
+                  Rectangle2D Rectangle2D = n.getRectangle2D();
+                  Point2D p = new Point2D.Double(Rectangle2D.getX(),
+                     Rectangle2D.getY());
                   out.writeStatement(
                      new Statement(oldInstance,
                         "addNode", new Object[]{ n, p }) );
@@ -326,9 +326,9 @@ public abstract class Graph implements Serializable
    */
    public void addNode(Node n, Point2D p)
    {
-      Rectangle2D bounds = n.getBounds();
-      n.translate(p.getX() - bounds.getX(), 
-         p.getY() - bounds.getY()); 
+      Rectangle2D Rectangle2D = n.getRectangle2D();
+      n.translate(p.getX() - Rectangle2D.getX(), 
+         p.getY() - Rectangle2D.getY()); 
       nodes.add(n); 
    }
 
@@ -350,7 +350,7 @@ public abstract class Graph implements Serializable
    private transient ArrayList nodesToBeRemoved;
    private transient ArrayList edgesToBeRemoved;
    private transient boolean needsLayout;
-   private transient Rectangle2D minBounds;
+   private transient Rectangle2D minRectangle2D;
 }
 
 

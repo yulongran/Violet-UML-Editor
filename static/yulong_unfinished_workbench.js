@@ -114,7 +114,7 @@ class RectangularNode extends AbstractNode
 {
   constructor()
   {
-    this.bounds = new bounds(0,0,0,0);
+    this.Rectangle2D = new Rectangle2D(0,0,0,0);
   }
   clone()
   {
@@ -128,42 +128,42 @@ class RectangularNode extends AbstractNode
 
   contains(p)
   {
-    if (p.x > this.bounds.x && p.x < this.bounds.x + this.bounds.width && p.y > this.bounds.y && p.y < this.y + this.bounds.height) {
+    if (p.x > this.Rectangle2D.x && p.x < this.Rectangle2D.x + this.Rectangle2D.width && p.y > this.Rectangle2D.y && p.y < this.y + this.Rectangle2D.height) {
         return true
       }
       return undefined
   }
 
-  getBounds()
+  getRectangle2D()
   {
-    return bounds;
+    return Rectangle2D;
   }
 
-  setBounds(newBounds) // arguemnts is a rectangle
+  setRectangle2D(newRectangle2D) // arguemnts is a rectangle
   {
-     bounds=newBounds;
+     Rectangle2D=newRectangle2D;
   }
 
   getConnectionPoint(d)
    {
-      let slope = bounds.getHeight() / bounds.getWidth();
+      let slope = Rectangle2D.getHeight() / Rectangle2D.getWidth();
       let ex = d.getX();
       let ey = d.getY();
-      let x = bounds.getCenterX();
-      let y = bounds.getCenterY();
+      let x = Rectangle2D.getCenterX();
+      let y = Rectangle2D.getCenterY();
 
       if (ex != 0 && -slope <= ey / ex && ey / ex <= slope)
       {
          // intersects at left or right boundary
          if (ex > 0)
          {
-            x = bounds.getMaxX();
-            y += (bounds.getWidth() / 2) * ey / ex;
+            x = Rectangle2D.getMaxX();
+            y += (Rectangle2D.getWidth() / 2) * ey / ex;
          }
          else
          {
-            x = bounds.getX();
-            y -= (bounds.getWidth() / 2) * ey / ex;
+            x = Rectangle2D.getX();
+            y -= (Rectangle2D.getWidth() / 2) * ey / ex;
          }
       }
       else if (ey != 0)
@@ -171,13 +171,13 @@ class RectangularNode extends AbstractNode
          // intersects at top or bottom
          if (ey > 0)
          {
-            x += (bounds.getHeight() / 2) * ex / ey;
-            y = bounds.getMaxY();
+            x += (Rectangle2D.getHeight() / 2) * ex / ey;
+            y = Rectangle2D.getMaxY();
          }
          else
          {
-            x -= (bounds.getHeight() / 2) * ex / ey;
-            y = bounds.getY();
+            x -= (Rectangle2D.getHeight() / 2) * ex / ey;
+            y = Rectangle2D.getY();
          }
       }
       return new point(x,y);
@@ -201,7 +201,7 @@ class RectangularNode extends AbstractNode
    }
    getShape()
    {
-     return this.bounds;
+     return this.Rectangle2D;
    }
 
 }
@@ -215,7 +215,7 @@ class point
   }
 }
 
-class bounds
+class Rectangle2D
 {
   constructor(x,y,height, width)
   {
@@ -308,14 +308,14 @@ class ImplicitParameterNode extends RectangularNode
     this.DEFAULT_TOP_HEIGHT = 60;
     this.DEFAULT_WIDTH = 80;
     this.DEFAULT_HEIGHT = 120;
-    setBounds(new bounds(x,y, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+    setRectangle2D(new Rectangle2D(x,y, DEFAULT_WIDTH, DEFAULT_HEIGHT));
   }
 
   contains(p)
   {
-      let bounds =getBounds();
-      return bounds.getX() <= p.getX() &&
-         p.getX() <= bounds.getX() + bounds.getWidth();
+      let Rectangle2D =getRectangle2D();
+      return Rectangle2D.getX() <= p.getX() &&
+         p.getX() <= Rectangle2D.getX() + Rectangle2D.getWidth();
   }
 
   draw()
@@ -326,8 +326,8 @@ class ImplicitParameterNode extends RectangularNode
 
   getTopRectangle()
   {
-    return new bounds(getBounds().getX(),
-         getBounds().getY(), getBounds().getWidth(), this.topHeight);
+    return new Rectangle2D(getRectangle2D().getX(),
+         getRectangle2D().getY(), getRectangle2D().getWidth(), this.topHeight);
   }
 
   getShape()

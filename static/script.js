@@ -9,12 +9,12 @@ canvas.height = canvas.clientHeight
 
 // Keep track if the callNode button in the tool is pressed
 var callNode = false
+var ImplicitParameterNode=false;
 
 document.addEventListener('DOMContentLoaded', function () {
   const graph = new Graph()
   let selected
   let dragStartPoint
-  let dragStartBounds
   graph.draw()
 
   function repaint () {
@@ -42,15 +42,15 @@ document.addEventListener('DOMContentLoaded', function () {
     selected = graph.findNode(mousePoint)
 
     // If the callNode button is pressed in the toolbar
-    if (callNode === true && selected === undefined) {
-      let n1 = new ImplicitParameterNode(event.x, 0)
-      graph.add(n1)
+    if (ImplicitParameterNode === true && selected === undefined) {
+      let n1 = new ImplicitParameterNode()
+      graph.add(n1,  mousePoint);
     }
 
     // If we unselected, the callNode button get reset
     if (selected !== undefined) {
       dragStartPoint = mousePoint
-      dragStartBounds = selected.getBounds()
+       = selected.getBounds()
       callNode = false
     }
     repaint()
@@ -60,12 +60,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (dragStartPoint === undefined) return
     let mousePoint = mouseLocation(event)
     if (selected !== undefined) {
-      const bounds = selected.getBounds()
+    const bounds = selected.getBounds()
 
-      selected.translate(
-        dragStartBounds.x - bounds.x +
+
+    selected.translate(
+        dragStartPoint.x - bounds.x +
         mousePoint.x - dragStartPoint.x,
-        dragStartBounds.y - bounds.y +
+        dragStartPoint.y - bounds.y +
         mousePoint.y - dragStartPoint.y)
     }
     repaint()
@@ -73,9 +74,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   canvas.addEventListener('mouseup', event => {
     dragStartPoint = undefined
-    dragStartBounds = undefined
+     = undefined
   })
 })
+
+//******************************************************************************
+//*******************************Framework**************************************
+//******************************************************************************
 
 
 class Graph {
@@ -83,8 +88,12 @@ class Graph {
     this.nodes = []
     this.edges = []
   }
-  add (n) {
-    this.nodes.push(n)
+  add (n1, p) {
+    this.nodes.push(n1)
+    console.log(p.x-n1.x);
+    n1.translate(p.x - n1.x,
+ p.y - n1.y);
+
   }
   findNode (p) {
     for (let i = this.nodes.length - 1; i >= 0; i--) {
@@ -111,6 +120,446 @@ class Graph {
     }
     return false
   }
+}
+
+function drawGrabber (x, y) {
+  const size = 6
+  ctx.fillRect(x - size / 2, y - size / 2, size, size)
+  ctx.fillStyle = 'red'
+}
+
+function center (rect) {
+  return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 }
+}
+
+
+class AbstractNode
+{
+  constructor()
+  {
+    this.children = [];
+    parent = undefined;
+    this.SHADOW_GAP=4;
+    this.SHADOW_COLOR='gray';
+  }
+
+  translate(dx, dy)
+  {
+    for(let i=0; i<this.children.length; i++)
+    {
+       let n = this.children[i];
+       n.translate(dx,dy);
+    }
+  }
+
+  addEdge(e, p1, p2)
+  {
+    return e.getEnd() !=undefined;
+  }
+
+  removeEdge(g, e)
+  {
+
+  }
+
+  removeNode(g, e)
+  {
+    if(e === parent)
+    {
+      parent = undefined;
+    }
+    if(e.getParenet() === this)
+    {
+      for(let i=0; i< children.length ; i++)
+      {
+        if(children[i] === e)
+        {
+          children.splice(i, e);
+        }
+      }
+    }
+  }
+
+  addNode(n, p)
+  {
+    return false;
+  }
+
+  getParent()
+  {
+    return parent;
+  }
+
+  setParent(n)
+  {
+    parent=n;
+  }
+
+  getChildren()
+  {
+    return children;
+  }
+
+  addChild(index , node)
+  {
+      let oldParent = node.getParent();
+      if(oldParent === undefined)
+      {
+        oldParent.removeChild(node);
+      }
+      children.add(index, node);
+      node.setParent(this);
+  }
+
+  addChild(node)
+  {
+    addChild(children.length, node);
+  }
+
+  removeChild(node)
+  {
+    if(node.getParent() !==this)
+    {
+      return;
+    }
+    for(let i=0; i< children.length ; i++)
+    {
+      if(children[i] === e)
+      {
+        children.splice(i, e);
+      }
+    }
+    node.setParent(undefined);
+  }
+
+  getShape()
+  {
+    return undefined;
+  }
+
+  setPersistenceDelegate(encode)
+  {
+
+  }
+}
+
+
+
+class RectangularNode extends AbstractNode
+{
+  constructor()
+  {
+    super();
+    this.bounds = new Rectangle2D(0,0,0,0);
+  }
+  clone()
+  {
+
+  }
+
+  translate(dx, dy)
+  {
+    this.bounds.setX(this.bounds.getX()+dx);
+    this.bounds.setY(this.bounds.getY()+dy);
+    this.bounds.setHeight(this.bounds.getHeight());
+    this.bounds.setWidth(this.bounds.getWidth());
+    super.translate(dx,dy);
+  }
+
+  contains(p)
+  {
+    if (p.x > this.bounds.x && p.x < this.bounds.x + this.bounds.width && p.y > this.bounds.y && p.y < this.y + this.bounds.height) {
+        return true
+      }
+      return undefined
+  }
+
+  getBounds()
+  {
+    //console.log("My rect width is " + this..getWidth())
+    return this.bounds;
+  }
+
+  setBounds(newBounds) // arguemnts is a rectangle
+  {
+     this.bounds=newBounds;
+  }
+
+  getConnectionPoint(d)
+   {
+      let slope = this.bounds.getHeight() / this.bounds.getWidth();
+      let ex = d.getX();
+      let ey = d.getY();
+      let x = this.bounds.getCenterX();
+      let y = this.bounds.getCenterY();
+
+      if (ex != 0 && -slope <= ey / ex && ey / ex <= slope)
+      {
+         // intersects at left or right boundary
+         if (ex > 0)
+         {
+            x = this.bounds.getMaxX();
+            y += (this.bounds.getWidth() / 2) * ey / ex;
+         }
+         else
+         {
+            x = this.bounds.getX();
+            y -= (this.bounds.getWidth() / 2) * ey / ex;
+         }
+      }
+      else if (ey != 0)
+      {
+         // intersects at top or bottom
+         if (ey > 0)
+         {
+            x += (this.bounds.getHeight() / 2) * ex / ey;
+            y = this.bounds.getMaxY();
+         }
+         else
+         {
+            x -= (this.bounds.getHeight() / 2) * ex / ey;
+            y = this.bounds.getY();
+         }
+      }
+      return new point(x,y);
+   }
+
+   writeObject(out)
+   {
+
+   }
+   writeRectangularShape()
+   {
+
+   }
+   readObject()
+   {
+
+   }
+   readRectangularShape()
+   {
+
+   }
+   getShape()
+   {
+     return this.bounds;
+   }
+
+}
+
+//******************************************************************************
+//*******************************UtilityClass**************************************
+//******************************************************************************
+
+/**
+ A point object similar to Point2D in java
+*/
+class Point2D
+{
+  constructor(x, y)
+  {
+    this.x=x;
+    this.y=y;
+  }
+}
+
+/**
+ A rectangle object similar Rectangle2D in java
+*/
+class Rectangle2D
+{
+  constructor(x,y, width, height)
+  {
+    this.x=x;
+    this.y=y;
+    this.height=height;
+    this.width=width;
+  }
+
+    getX()
+    {
+      return this.x;
+    }
+    getY()
+    {
+      return this.y;
+    }
+
+    getHeight()
+    {
+      return this.height;
+    }
+
+    getWidth()
+    {
+      return this.width;
+    }
+
+    setX(x)
+    {
+      this.x=x;
+    }
+    setY(y)
+    {
+      this.y=y;
+    }
+    setHeight(h)
+    {
+      this.height=h;
+    }
+    setWidth(w)
+    {
+      this.width=w;
+    }
+    getCenterX()
+    {
+      return this.x+this.width/2;
+    }
+    getCenterY()
+    {
+      return this.y+this.width/2;
+    }
+    getMaxX()
+    {
+      return this.x+this.width;
+    }
+    getMaxY()
+    {
+      return this.y+this.height;
+    }
+
+  draw()
+  {
+    // Top Horizontal line of the rectangle
+    ctx.beginPath();
+    ctx.setLineDash([]);
+    ctx.moveTo(this.x,this.y);
+    ctx.lineTo(this.x+this.width,this.y);
+    ctx.stroke();
+
+    // Left vertical
+    ctx.beginPath();
+    ctx.setLineDash([]);
+    ctx.moveTo(this.x,this.y);
+    ctx.lineTo(this.x,this.y+this.height);
+    ctx.stroke();
+
+    // Right vertical
+    ctx.beginPath();
+    ctx.setLineDash([]);
+    ctx.moveTo(this.x+this.width,this.y);
+    ctx.lineTo(this.x+this.width,this.y+this.height);
+    ctx.stroke();
+
+    // Bottom Horizontal
+    ctx.beginPath();
+    ctx.setLineDash([]);
+    ctx.moveTo(this.x,this.y+this.height);
+    ctx.lineTo(this.x+this.width,this.y+this.height);
+    ctx.stroke();
+
+  }
+}
+
+class ImplicitParameterNode extends RectangularNode
+{
+  constructor()
+  {
+    super();
+    this.x=0;
+    this.y=0;
+    this.name; // MultiLineString
+    this.DEFAULT_WIDTH = 80;
+    this.DEFAULT_HEIGHT = 120;
+    this.DEFAULT_TOP_HEIGHT = 60;
+    super.setBounds(new Rectangle2D(0,0, this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT));
+    this.topHeight=this.DEFAULT_TOP_HEIGHT;
+  }
+
+  contains(p)
+  {
+      let bounds = super.getBounds();
+      return bounds.getX() <= p.x &&
+         p.x <= bounds.getX() + bounds.getWidth();
+  }
+
+  draw()
+  {
+      let top = this.getTopRectangle();
+      top.draw();
+      let xmid=super.getBounds().getCenterX();
+      ctx.beginPath();
+      ctx.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
+      ctx.moveTo(xmid, top.getMaxY());
+      ctx.lineTo(xmid, super.getBounds().getMaxY());
+      ctx.stroke()
+
+  }
+
+  getTopRectangle()
+  {
+    //console.log(super.getBounds().getWidth());
+    let tRectangle= new Rectangle2D(super.getBounds().getX(),super.getBounds().getY(), super.getBounds().getWidth(), this.topHeight);
+    return tRectangle;
+  }
+
+  getShape()
+  {
+    return getTopRectangle();
+  }
+
+  addEdge(e, p1, p2)
+  {
+    return false;
+  }
+
+  getConnectionPoint(d)
+  {
+    if(d.get()>0)
+    {
+      return new point(super.getBounds().getMaxX(), super.getBounds().getMinY()+topHeight/2);
+    }
+    else {
+      return new point(super.getBounds().getX(), super.getBounds().getMinY()+topHeight/2)
+    }
+  }
+
+  layout(g, g2, grid)
+  {
+
+  }
+
+  setName(n)
+  {
+    name=n;
+  }
+
+  getName()
+  {
+    return name;
+  }
+
+  clone()
+  {
+
+  }
+
+  addNode(n, p)
+  {
+    return typeof n === CallNode || typeof n === PointNode;
+  }
+
+  translate(dx, dy)
+  {
+    //console.log(dx);
+    //console.log(this.bounds.getX());
+    this.bounds.setX(this.bounds.getX()+dx);
+    this.bounds.setY(0);
+    this.bounds.setHeight(this.bounds.getHeight());
+    this.bounds.setWidth(this.bounds.getWidth());
+    //super.translate(dx,dy);
+  }
+
 }
 
 // May change the function to class
@@ -188,21 +637,8 @@ class CallNode {
 
 
 
-function drawGrabber (x, y) {
-  const size = 6
-  ctx.fillRect(x - size / 2, y - size / 2, size, size)
-  ctx.fillStyle = 'red'
-}
-
-function center (rect) {
-  return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 }
-}
-
-
-//*****************************************************************************
-// Framework
 
 // Action listener for jquery
 $('#callNode').on('click', function () {
-  callNode = true
+  ImplicitParameterNode = true
 })

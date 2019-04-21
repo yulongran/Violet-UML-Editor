@@ -46,7 +46,7 @@ public class InterfaceNode extends RectangularNode
       name.setText("\u00ABinterface\u00BB");
       methods = new MultiLineString();
       methods.setJustification(MultiLineString.LEFT);
-      setBounds(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+      setRectangle2D(new Rectangle2D.Double(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
       midHeight = DEFAULT_COMPARTMENT_HEIGHT;
       botHeight = DEFAULT_COMPARTMENT_HEIGHT;
    }
@@ -54,9 +54,9 @@ public class InterfaceNode extends RectangularNode
    public void draw(Graphics2D g2)
    {
       super.draw(g2);
-      Rectangle2D top = new Rectangle2D.Double(getBounds().getX(),
-         getBounds().getY(), getBounds().getWidth(), 
-         getBounds().getHeight() - midHeight - botHeight);
+      Rectangle2D top = new Rectangle2D.Double(getRectangle2D().getX(),
+         getRectangle2D().getY(), getRectangle2D().getWidth(), 
+         getRectangle2D().getHeight() - midHeight - botHeight);
       g2.draw(top);
       name.draw(g2, top);
       Rectangle2D mid = new Rectangle2D.Double(top.getX(),
@@ -72,9 +72,9 @@ public class InterfaceNode extends RectangularNode
    {
       Rectangle2D min = new Rectangle2D.Double(0, 0, 
          DEFAULT_WIDTH, DEFAULT_COMPARTMENT_HEIGHT);
-      Rectangle2D top = name.getBounds(g2); 
+      Rectangle2D top = name.getRectangle2D(g2); 
       top.add(min);
-      Rectangle2D bot = methods.getBounds(g2);
+      Rectangle2D bot = methods.getRectangle2D(g2);
 
       botHeight = bot.getHeight();
       if (botHeight == 0)
@@ -92,11 +92,11 @@ public class InterfaceNode extends RectangularNode
       }
 
       Rectangle2D b = new Rectangle2D.Double(
-         getBounds().getX(), getBounds().getY(),
+         getRectangle2D().getX(), getRectangle2D().getY(),
          Math.max(top.getWidth(), bot.getWidth()), 
          top.getHeight() + midHeight + botHeight);
       grid.snap(b);
-      setBounds(b);
+      setRectangle2D(b);
    }
 
    public boolean addNode(Node n, Point2D p)

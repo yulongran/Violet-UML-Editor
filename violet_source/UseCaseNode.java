@@ -40,7 +40,7 @@ public class UseCaseNode extends RectangularNode
    public UseCaseNode()
    {
       name = new MultiLineString();
-      setBounds(new Rectangle2D.Double(0, 0,
+      setRectangle2D(new Rectangle2D.Double(0, 0,
          DEFAULT_WIDTH, DEFAULT_HEIGHT));
    }
 
@@ -48,14 +48,14 @@ public class UseCaseNode extends RectangularNode
    {
       super.draw(g2);      
       g2.draw(getShape());
-      name.draw(g2, getBounds());
+      name.draw(g2, getRectangle2D());
    }
    
    public Shape getShape()
    {
       return new Ellipse2D.Double(
-            getBounds().getX(), getBounds().getY(),
-            getBounds().getWidth(), getBounds().getHeight());
+            getRectangle2D().getX(), getRectangle2D().getY(),
+            getRectangle2D().getWidth(), getRectangle2D().getHeight());
    }
    
    /**

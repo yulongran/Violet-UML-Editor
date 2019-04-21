@@ -46,9 +46,9 @@ public abstract class ShapeEdge extends AbstractEdge
    */
    public abstract Shape getShape();
 
-   public Rectangle2D getBounds(Graphics2D g2)
+   public Rectangle2D getRectangle2D(Graphics2D g2)
    {
-      return getShape().getBounds();
+      return getShape().getRectangle2D();
    }
 
    public boolean contains(Point2D aPoint)

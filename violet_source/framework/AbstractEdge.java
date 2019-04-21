@@ -27,11 +27,11 @@ import java.awt.geom.Rectangle2D;
 
 
 /**
-   A class that supplies convenience implementations for 
+   A class that supplies convenience implementations for
    a number of methods in the Edge interface
 */
 abstract class AbstractEdge implements Edge
-{  
+{
    public Object clone()
    {
       try
@@ -45,7 +45,7 @@ abstract class AbstractEdge implements Edge
    }
 
    public void connect(Node s, Node e)
-   {  
+   {
       start = s;
       end = e;
    }
@@ -60,9 +60,9 @@ abstract class AbstractEdge implements Edge
       return end;
    }
 
-   public Rectangle2D getBounds(Graphics2D g2)
+   public Rectangle2D getRectangle2D(Graphics2D g2)
    {
-      Line2D conn = getConnectionPoints();      
+      Line2D conn = getConnectionPoints();
       Rectangle2D r = new Rectangle2D.Double();
       r.setFrameFromDiagonal(conn.getX1(), conn.getY1(),
          conn.getX2(), conn.getY2());
@@ -71,12 +71,12 @@ abstract class AbstractEdge implements Edge
 
    public Line2D getConnectionPoints()
    {
-      Rectangle2D startBounds = start.getBounds();
-      Rectangle2D endBounds = end.getBounds();
+      Rectangle2D startRectangle2D = start.getRectangle2D();
+      Rectangle2D endRectangle2D = end.getRectangle2D();
       Point2D startCenter = new Point2D.Double(
-         startBounds.getCenterX(), startBounds.getCenterY());
+         startRectangle2D.getCenterX(), startRectangle2D.getCenterY());
       Point2D endCenter = new Point2D.Double(
-         endBounds.getCenterX(), endBounds.getCenterY());
+         endRectangle2D.getCenterX(), endRectangle2D.getCenterY());
       Direction toEnd = new Direction(startCenter, endCenter);
       return new Line2D.Double(
          start.getConnectionPoint(toEnd),

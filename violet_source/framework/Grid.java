@@ -55,18 +55,18 @@ public class Grid
    /**
       Draws this grid inside a rectangle.
       @param g2 the graphics context
-      @param bounds the bounding rectangle
+      @param Rectangle2D the bounding rectangle
    */
-   public void draw(Graphics2D g2, Rectangle2D bounds)
+   public void draw(Graphics2D g2, Rectangle2D Rectangle2D)
    {
       Color PALE_BLUE = new Color(0.9F, 0.8F, 0.9F);
       Color oldColor = g2.getColor();
       g2.setColor(PALE_BLUE);
       Stroke oldStroke = g2.getStroke();
-      for (double x = bounds.getX(); x < bounds.getMaxX(); x += gridx)
-         g2.draw(new Line2D.Double(x, bounds.getY(), x, bounds.getMaxY()));
-      for (double y = bounds.getY(); y < bounds.getMaxY(); y += gridy)
-         g2.draw(new Line2D.Double(bounds.getX(), y, bounds.getMaxX(), y));
+      for (double x = Rectangle2D.getX(); x < Rectangle2D.getMaxX(); x += gridx)
+         g2.draw(new Line2D.Double(x, Rectangle2D.getY(), x, Rectangle2D.getMaxY()));
+      for (double y = Rectangle2D.getY(); y < Rectangle2D.getMaxY(); y += gridy)
+         g2.draw(new Line2D.Double(Rectangle2D.getX(), y, Rectangle2D.getMaxX(), y));
       g2.setStroke(oldStroke);
       g2.setColor(oldColor);
    }

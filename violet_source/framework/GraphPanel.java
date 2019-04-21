@@ -64,7 +64,7 @@ public class GraphPanel extends JPanel
       setBackground(Color.WHITE);
 
       selectedItems = new HashSet();
-      
+
       addMouseListener(new MouseAdapter()
       {
          public void mousePressed(MouseEvent event)
@@ -72,7 +72,7 @@ public class GraphPanel extends JPanel
             requestFocus();
             final Point2D mousePoint = new Point2D.Double(event.getX() / zoom,
                   event.getY() / zoom);
-            boolean isCtrl = (event.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0; 
+            boolean isCtrl = (event.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0;
             Node n = graph.findNode(mousePoint);
             Edge e = graph.findEdge(mousePoint);
             Object tool = toolBar.getSelectedTool();
@@ -196,70 +196,70 @@ public class GraphPanel extends JPanel
       {
          public void mouseDragged(MouseEvent event)
          {
-            Point2D mousePoint = new Point2D.Double(event.getX() / zoom, 
+            Point2D mousePoint = new Point2D.Double(event.getX() / zoom,
                   event.getY() / zoom);
-            boolean isCtrl = (event.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0; 
+            boolean isCtrl = (event.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0;
 
             if (dragMode == DRAG_MOVE && lastSelected instanceof Node)
-            {               
+            {
                Node lastNode = (Node) lastSelected;
-               Rectangle2D bounds = lastNode.getBounds();
+               Rectangle2D Rectangle2D = lastNode.getRectangle2D();
                double dx = mousePoint.getX() - lastMousePoint.getX();
                double dy = mousePoint.getY() - lastMousePoint.getY();
-                            
+
                // we don't want to drag nodes into negative coordinates
-               // particularly with multiple selection, we might never be 
+               // particularly with multiple selection, we might never be
                // able to get them back.
                Iterator iter = selectedItems.iterator();
                while (iter.hasNext())
                {
-                  Object selected = iter.next();                 
+                  Object selected = iter.next();
                   if (selected instanceof Node)
                   {
                      Node n = (Node) selected;
-                     bounds.add(n.getBounds());
+                     Rectangle2D.add(n.getRectangle2D());
                   }
                }
-               dx = Math.max(dx, -bounds.getX());
-               dy = Math.max(dy, -bounds.getY());
-               
+               dx = Math.max(dx, -Rectangle2D.getX());
+               dy = Math.max(dy, -Rectangle2D.getY());
+
                iter = selectedItems.iterator();
                while (iter.hasNext())
                {
-                  Object selected = iter.next();                 
+                  Object selected = iter.next();
                   if (selected instanceof Node)
                   {
                      Node n = (Node) selected;
-                     n.translate(dx, dy);                           
+                     n.translate(dx, dy);
                   }
                }
                // we don't want continuous layout any more because of multiple selection
                // graph.layout();
-            }            
+            }
             else if (dragMode == DRAG_LASSO)
             {
                double x1 = mouseDownPoint.getX();
                double y1 = mouseDownPoint.getY();
                double x2 = mousePoint.getX();
                double y2 = mousePoint.getY();
-               Rectangle2D.Double lasso = new Rectangle2D.Double(Math.min(x1, x2), 
+               Rectangle2D.Double lasso = new Rectangle2D.Double(Math.min(x1, x2),
                      Math.min(y1, y2), Math.abs(x1 - x2) , Math.abs(y1 - y2));
                Iterator iter = graph.getNodes().iterator();
                while (iter.hasNext())
                {
                   Node n = (Node) iter.next();
-                  Rectangle2D bounds = n.getBounds();
-                  if (!isCtrl && !lasso.contains(n.getBounds())) 
+                  Rectangle2D Rectangle2D = n.getRectangle2D();
+                  if (!isCtrl && !lasso.contains(n.getRectangle2D()))
                   {
                      removeSelectedItem(n);
                   }
-                  else if (lasso.contains(n.getBounds())) 
+                  else if (lasso.contains(n.getRectangle2D()))
                   {
                      addSelectedItem(n);
                   }
                }
             }
-            
+
             lastMousePoint = mousePoint;
             repaint();
          }
@@ -289,8 +289,8 @@ public class GraphPanel extends JPanel
             repaint();
          }
       });
-      JOptionPane.showInternalMessageDialog(this, sheet, 
-            ResourceBundle.getBundle("com.horstmann.violet.framework.EditorStrings").getString("dialog.properties"),            
+      JOptionPane.showInternalMessageDialog(this, sheet,
+            ResourceBundle.getBundle("com.horstmann.violet.framework.EditorStrings").getString("dialog.properties"),
             JOptionPane.QUESTION_MESSAGE);
       setModified(true);
    }
@@ -303,7 +303,7 @@ public class GraphPanel extends JPanel
       Iterator iter = selectedItems.iterator();
       while (iter.hasNext())
       {
-         Object selected = iter.next();                 
+         Object selected = iter.next();
          if (selected instanceof Node)
          {
             graph.removeNode((Node) selected);
@@ -334,31 +334,31 @@ public class GraphPanel extends JPanel
       super.paintComponent(g);
       Graphics2D g2 = (Graphics2D) g;
       g2.scale(zoom, zoom);
-      Rectangle2D bounds = getBounds();
-      Rectangle2D graphBounds = graph.getBounds(g2);
-      if (!hideGrid) grid.draw(g2, new Rectangle2D.Double(0, 0, 
-            Math.max(bounds.getMaxX() / zoom, graphBounds.getMaxX()), 
-            Math.max(bounds.getMaxY() / zoom, graphBounds.getMaxY())));
+      Rectangle2D Rectangle2D = getRectangle2D();
+      Rectangle2D graphRectangle2D = graph.getRectangle2D(g2);
+      if (!hideGrid) grid.draw(g2, new Rectangle2D.Double(0, 0,
+            Math.max(Rectangle2D.getMaxX() / zoom, graphRectangle2D.getMaxX()),
+            Math.max(Rectangle2D.getMaxY() / zoom, graphRectangle2D.getMaxY())));
       graph.draw(g2, grid);
 
       Iterator iter = selectedItems.iterator();
       Set toBeRemoved = new HashSet();
       while (iter.hasNext())
       {
-         Object selected = iter.next();                 
-      
+         Object selected = iter.next();
+
          if (!graph.getNodes().contains(selected)
-               && !graph.getEdges().contains(selected)) 
+               && !graph.getEdges().contains(selected))
          {
             toBeRemoved.add(selected);
          }
          else if (selected instanceof Node)
          {
-            Rectangle2D grabberBounds = ((Node) selected).getBounds();
-            drawGrabber(g2, grabberBounds.getMinX(), grabberBounds.getMinY());
-            drawGrabber(g2, grabberBounds.getMinX(), grabberBounds.getMaxY());
-            drawGrabber(g2, grabberBounds.getMaxX(), grabberBounds.getMinY());
-            drawGrabber(g2, grabberBounds.getMaxX(), grabberBounds.getMaxY());
+            Rectangle2D grabberRectangle2D = ((Node) selected).getRectangle2D();
+            drawGrabber(g2, grabberRectangle2D.getMinX(), grabberRectangle2D.getMinY());
+            drawGrabber(g2, grabberRectangle2D.getMinX(), grabberRectangle2D.getMaxY());
+            drawGrabber(g2, grabberRectangle2D.getMaxX(), grabberRectangle2D.getMinY());
+            drawGrabber(g2, grabberRectangle2D.getMaxX(), grabberRectangle2D.getMaxY());
          }
          else if (selected instanceof Edge)
          {
@@ -369,16 +369,16 @@ public class GraphPanel extends JPanel
       }
 
       iter = toBeRemoved.iterator();
-      while (iter.hasNext())      
-         removeSelectedItem(iter.next());                 
-      
+      while (iter.hasNext())
+         removeSelectedItem(iter.next());
+
       if (dragMode == DRAG_RUBBERBAND)
       {
          Color oldColor = g2.getColor();
          g2.setColor(PURPLE);
          g2.draw(new Line2D.Double(mouseDownPoint, lastMousePoint));
          g2.setColor(oldColor);
-      }      
+      }
       else if (dragMode == DRAG_LASSO)
       {
          Color oldColor = g2.getColor();
@@ -387,11 +387,11 @@ public class GraphPanel extends JPanel
          double y1 = mouseDownPoint.getY();
          double x2 = lastMousePoint.getX();
          double y2 = lastMousePoint.getY();
-         Rectangle2D.Double lasso = new Rectangle2D.Double(Math.min(x1, x2), 
+         Rectangle2D.Double lasso = new Rectangle2D.Double(Math.min(x1, x2),
                Math.min(y1, y2), Math.abs(x1 - x2) , Math.abs(y1 - y2));
          g2.draw(lasso);
          g2.setColor(oldColor);
-      }      
+      }
    }
 
    /**
@@ -411,9 +411,9 @@ public class GraphPanel extends JPanel
 
    public Dimension getPreferredSize()
    {
-      Rectangle2D bounds = graph.getBounds((Graphics2D) getGraphics());
-      return new Dimension((int) (zoom * bounds.getMaxX()),
-            (int) (zoom * bounds.getMaxY()));
+      Rectangle2D Rectangle2D = graph.getRectangle2D((Graphics2D) getGraphics());
+      return new Dimension((int) (zoom * Rectangle2D.getMaxX()),
+            (int) (zoom * Rectangle2D.getMaxY()));
    }
 
    /**
@@ -467,9 +467,9 @@ public class GraphPanel extends JPanel
             double y1;
             if (obj1 instanceof Node)
             {
-               Rectangle2D bounds = ((Node) obj1).getBounds();
-               x1 = bounds.getX();
-               y1 = bounds.getY();
+               Rectangle2D Rectangle2D = ((Node) obj1).getRectangle2D();
+               x1 = Rectangle2D.getX();
+               y1 = Rectangle2D.getY();
             }
             else
             {
@@ -481,9 +481,9 @@ public class GraphPanel extends JPanel
             double y2;
             if (obj2 instanceof Node)
             {
-               Rectangle2D bounds = ((Node) obj2).getBounds();
-               x2 = bounds.getX();
-               y2 = bounds.getY();
+               Rectangle2D Rectangle2D = ((Node) obj2).getRectangle2D();
+               x2 = Rectangle2D.getX();
+               y2 = Rectangle2D.getY();
             }
             else
             {
@@ -551,30 +551,30 @@ public class GraphPanel extends JPanel
 
    private void addSelectedItem(Object obj)
    {
-      lastSelected = obj;      
+      lastSelected = obj;
       selectedItems.add(obj);
    }
-   
+
    private void removeSelectedItem(Object obj)
    {
       if (obj == lastSelected)
          lastSelected = null;
       selectedItems.remove(obj);
    }
-   
+
    private void setSelectedItem(Object obj)
    {
       selectedItems.clear();
       lastSelected = obj;
       if (obj != null) selectedItems.add(obj);
    }
-   
+
    private void clearSelection()
    {
       selectedItems.clear();
       lastSelected = null;
    }
-   
+
    /**
     * Sets the value of the hideGrid property
     * @param newValue true if the grid is being hidden
@@ -608,14 +608,14 @@ public class GraphPanel extends JPanel
    private Set selectedItems;
 
    private Point2D lastMousePoint;
-   private Point2D mouseDownPoint;   
+   private Point2D mouseDownPoint;
    private int dragMode;
-      
+
    private static final int DRAG_NONE = 0;
    private static final int DRAG_MOVE = 1;
    private static final int DRAG_RUBBERBAND = 2;
    private static final int DRAG_LASSO = 3;
-   
+
    private static final int GRID = 10;
 
    private static final int CONNECT_THRESHOLD = 8;

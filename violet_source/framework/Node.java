@@ -66,7 +66,7 @@ public interface Node extends Serializable, Cloneable
       Get the bounding rectangle of the shape of this node
       @return the bounding rectangle
    */
-   Rectangle2D getBounds();
+   Rectangle2D getRectangle2D();
 
    /**
       Adds an edge that originates at this node.

@@ -177,7 +177,7 @@ public class PrintDialog extends JDialog
                g2.clip(new Rectangle2D.Double(0, 0, px, py));
                g2.translate(-col * px, -row * py);
                g2.scale((float) scaleGraph, (float) scaleGraph);
-               g2.translate((float) -bounds.getX(), (float) -bounds.getY());
+               g2.translate((float) -Rectangle2D.getX(), (float) -Rectangle2D.getY());
                g2.setColor(Color.BLACK);
                g2.setBackground(Color.WHITE);
                graph.draw(g2, null);         
@@ -194,7 +194,7 @@ public class PrintDialog extends JDialog
     */
    private int getCols()
    {
-      return (int) Math.max(1, Math.ceil(bounds.getWidth() * scaleGraph / pageFormat.getImageableWidth()));
+      return (int) Math.max(1, Math.ceil(Rectangle2D.getWidth() * scaleGraph / pageFormat.getImageableWidth()));
    }
 
    /**
@@ -203,7 +203,7 @@ public class PrintDialog extends JDialog
     */
    private int getRows()
    {
-      return (int) Math.max(1, Math.ceil(bounds.getHeight() * scaleGraph / pageFormat.getImageableHeight()));
+      return (int) Math.max(1, Math.ceil(Rectangle2D.getHeight() * scaleGraph / pageFormat.getImageableHeight()));
    }
 
    /**
@@ -219,7 +219,7 @@ public class PrintDialog extends JDialog
       public void paintComponent(Graphics g)
       {
          Graphics2D g2 = (Graphics2D) g;
-         bounds = graph.getBounds(g2);
+         Rectangle2D = graph.getRectangle2D(g2);
                
          double xoff; // x offset of page start in window
          double yoff; // y offset of page start in window
@@ -260,7 +260,7 @@ public class PrintDialog extends JDialog
          AffineTransform oldTransform = g2.getTransform();
 
          g2.scale((float) scaleGraph, (float) scaleGraph);
-         g2.translate((float) -bounds.getX(), (float) -bounds.getY());
+         g2.translate((float) -Rectangle2D.getX(), (float) -Rectangle2D.getY());
          graph.draw(g2, null);
          
          g2.setTransform(oldTransform);
@@ -281,7 +281,7 @@ public class PrintDialog extends JDialog
    private PageFormat pageFormat;
    private PrintRequestAttributeSet attributes;
    private Graph graph;
-   private Rectangle2D bounds; 
+   private Rectangle2D Rectangle2D; 
    private double scaleGraph = 1;
    private boolean showCropMarks;
 }
