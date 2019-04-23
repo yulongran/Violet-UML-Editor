@@ -50,10 +50,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 		
 		// If the addNote button is pressed in the toolbar
-    if (implicitParameterNode_button2 === true && selected === undefined) {
-      let n2 = new NoteNode()
-      graph.add(n2,  mousePoint);
-    }
+    //if (something === true && selected === undefined) {
+    //  let n2 = new NoteNode()
+    //  graph.add(n2,  mousePoint);
+    //}
 
     // If we unselected, the callNode button get reset
     if (selected !== undefined) {
