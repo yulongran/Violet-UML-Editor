@@ -11,7 +11,7 @@ NoteNode
 PointNode
 ReturnEdge
 ImplicitParameterNode : Yulong
-SequenceDiagramGraph
+SequenceDiagramGraph : Yulong
 
 
 
@@ -21,13 +21,13 @@ SequenceDiagramGraph
 
 Framework:
 
-SeriablizableEnumeration
+SeriablizableEnumeration ?
 SegmentedLineEdge
 RectangularNode : Yulong
 SimpleBeanInfo
 ShapeEdge
 AbstractNode : Yulong
-Graph
+Graph : Yulong
 TooBar
 Grid ?
 MultiLineString ?
