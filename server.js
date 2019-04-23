@@ -9,23 +9,30 @@ var server = http.createServer(function (request, response) {
             response.write(contents);
             response.end();
         });
-    }else if (request.url === "/static/style.css") {
+    } else if (request.url === "/static/style.css") {
         fs.readFile('./static/style.css', 'utf8', function (errors, contents) {
             response.writeHead(200, { 'Content-type': 'text/css' });
             response.write(contents);
             response.end();
         });
-    }else if (request.url === "/static/script.js") {
+    } else if (request.url === "/static/script.js") {
         fs.readFile('./static/script.js', 'utf8', function (errors, contents) {
             response.writeHead(200, { 'Content-type': 'text/javascript' });
             response.write(contents);
             response.end();
         });
-    }else {
+    } else {
         response.end('File not found!!!');
     }
 });
+
+
 // tell your server which port to run on
-server.listen(6789);
+// const hostname = '127.0.0.1';
+const hostname = '10.251.216.15';
+const port = 6789;
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
 // print to terminal window
 console.log("Running in localhost at port 6789");
