@@ -28,7 +28,7 @@ SimpleBeanInfo
 ShapeEdge
 AbstractNode : Yulong
 Graph : Yulong
-TooBar
+TooBar : Kim Do
 Grid ?
 MultiLineString ?
 MultiLineStringEditor ?
