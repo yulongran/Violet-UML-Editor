@@ -28,11 +28,6 @@ var server = http.createServer(function (request, response) {
 
 
 // tell your server which port to run on
-// const hostname = '127.0.0.1';
-const hostname = '10.250.207.122';
-const port = 6789;
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+server.listen(6789)
 // print to terminal window
 console.log("Running in localhost at port 6789");
