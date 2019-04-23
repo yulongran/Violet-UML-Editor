@@ -9,17 +9,19 @@ canvas.height = canvas.clientHeight
 
 // Keep track if the callNode button in the tool is pressed
 var callNode_button = false
-var implicitParameterNode_button=false;
+var implicitParameterNode_button = false;
+
+var addNote_button = false
 
 document.addEventListener('DOMContentLoaded', function () {
   const graph = new Graph()
   let selected
   let dragStartPoint
-  graph.draw()
+  graph.draw();
 
   function repaint () {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    graph.draw()
+    graph.draw();
     if (selected !== undefined) {
       const bounds = selected.getBounds()
       drawGrabber(bounds.x, bounds.y)
@@ -46,12 +48,19 @@ document.addEventListener('DOMContentLoaded', function () {
       let n1 = new ImplicitParameterNode()
       graph.add(n1,  mousePoint);
     }
+		
+		// If the addNote button is pressed in the toolbar
+    if (implicitParameterNode_button2 === true && selected === undefined) {
+      let n2 = new NoteNode()
+      graph.add(n2,  mousePoint);
+    }
 
     // If we unselected, the callNode button get reset
     if (selected !== undefined) {
       dragStartPoint = mousePoint
        = selected.getBounds()
       callNode = false
+			addNote = false
     }
     repaint()
   })
@@ -106,7 +115,7 @@ class Graph {
   }
   draw () {
     for (const n of this.nodes) {
-      n.draw()
+      n.draw();
     }
   }
   connect (e, p1,
@@ -344,6 +353,10 @@ class RectangularNode extends AbstractNode
    {
      return this.bounds;
    }
+	 
+	 draw() {
+		this.bounds.draw();
+	 }
 
 }
 
@@ -546,7 +559,7 @@ class ImplicitParameterNode extends RectangularNode
 
   addNode(n, p)
   {
-    return typeof n === CallNode || typeof n === PointNode;
+    return typeof n === CallNode || typeof n === PointNode || typeof n === addNote;
   }
 
   translate(dx, dy)
@@ -635,6 +648,130 @@ class CallNode {
     }
   }
 
+//WIP
+class NoteNode extends RectangularNode {
+
+	constructor(){
+		super();
+		this.DEFAULT_WIDTH = 60;
+		this.DEFAULT_HEIGHT = 40;
+		this.FOLD_X = 8;
+		this.FOLD_Y = 8;
+		this.color = "yellow";
+		this.text = "";
+		this.setBounds(new Rectangle2D(0, 0, this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT));
+		//text.setJustification(MultiLineString.LEFT);
+	}
+	
+	// addEdge(e, p1, p2) //edge, Point2D, Point2D
+   // {
+      // PointNode end = new PointNode();
+      // end.translate(p2.getX(), p2.getY());
+      // e.connect(this, end);
+      // return super.addEdge(e, p1, p2);
+   // }
+
+   // removeEdge(g, e) //graph, edge
+   // {
+      // if (e.getStart() == this) g.removeNode(e.getEnd());
+   // }
+
+   // layout(Graph g, Graphics2D g2, Grid grid)
+   // {
+      // Rectangle2D b = text.getBounds(g2); // getMultiLineBounds(name, g2);
+      // Rectangle2D bounds = getBounds();
+      // b = new Rectangle2D.Double(bounds.getX(),
+         // bounds.getY(), 
+         // Math.max(b.getWidth(), DEFAULT_WIDTH),
+         // Math.max(b.getHeight(), DEFAULT_HEIGHT));
+      // grid.snap(b);
+      // setBounds(b);
+   // }
+	 
+	 /**
+      Gets the value of the text property.
+      @return the text inside the note
+   */
+   getText()
+   {
+      return this.text;
+   }
+
+   /**
+      Sets the value of the text property.
+      @param newValue the text inside the note
+   */
+   setText(newValue)
+   {
+      this.text = newValue;
+   }
+
+   /**
+      Gets the value of the color property.
+      @return the background color of the note
+   */
+   getColor()
+   {
+      return this.color;
+   }
+
+   /**
+      Sets the value of the color property.
+      @param newValue the background color of the note
+   */
+   setColor(newValue)
+   {
+      this.color = newValue;
+   }
+   
+   draw()
+   {
+      super.draw();
+      // Color oldColor = g2.getColor();
+      // g2.setColor(color);
+
+      // Shape path = getShape();
+      // g2.fill(path);
+      // g2.setColor(oldColor);
+      // g2.draw(path);
+
+      // Rectangle2D bounds = getBounds();
+      // GeneralPath fold = new GeneralPath();
+      // fold.moveTo((float)(bounds.getMaxX() - FOLD_X), (float)bounds.getY());
+      // fold.lineTo((float)bounds.getMaxX() - FOLD_X, (float)bounds.getY() + FOLD_X);
+      // fold.lineTo((float)bounds.getMaxX(), (float)(bounds.getY() + FOLD_Y));
+      // fold.closePath();
+      // oldColor = g2.getColor();
+      // g2.setColor(g2.getBackground());
+      // g2.fill(fold);
+      // g2.setColor(oldColor);      
+      // g2.draw(fold);      
+      
+      // text.draw(g2, getBounds());
+   }
+   
+   // public Shape getShape()
+   // {
+      // Rectangle2D bounds = getBounds();
+      // GeneralPath path = new GeneralPath();
+      // path.moveTo((float)bounds.getX(), (float)bounds.getY());
+      // path.lineTo((float)(bounds.getMaxX() - FOLD_X), (float)bounds.getY());
+      // path.lineTo((float)bounds.getMaxX(), (float)(bounds.getY() + FOLD_Y));
+      // path.lineTo((float)bounds.getMaxX(), (float)bounds.getMaxY());
+      // path.lineTo((float)bounds.getX(), (float)bounds.getMaxY());
+      // path.closePath();
+      // return path;
+   // }
+
+   clone()
+   {
+      //NoteNode cloned = (NoteNode)super.clone();
+      //cloned.text = (MultiLineString)text.clone();
+      //return cloned;
+			const clone = new NoteNode();
+			return clone;
+   }
+}
 // Action listener for jquery
 $('#callNode').on('click', function () {
   implicitParameterNode_button = true
