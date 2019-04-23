@@ -1,5 +1,5 @@
 # cs151_project
-Live link: 3.16.56.32
+Live link: http://3.16.56.32
 
 1. Open your terminal and type in commands:
     * [ ] `$ git clone https://github.com/kimdo7/cs151_project`
