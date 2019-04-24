@@ -1,5 +1,4 @@
-var Graph1 = require("./src/Graph.js")
-
+//var Graph1 = require("./src/Graph.js")
 const canvas = document.getElementById('myCanvas')
 const ctx = canvas.getContext('2d')
 
@@ -11,7 +10,6 @@ canvas.height = canvas.clientHeight
 // Keep track if the callNode button in the tool is pressed
 var callNode_button = false
 var implicitParameterNode_button = false;
-
 var addNote_button = false
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -43,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
     canvas.addEventListener('mousedown', event => {
         let mousePoint = mouseLocation(event)
         selected = graph.findNode(mousePoint)
-
         // If the implicitParameterNode_button button is pressed in the toolbar
         if (implicitParameterNode_button === true && selected === undefined) {
             let n1 = new ImplicitParameterNode()
@@ -58,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // If we unselected, the callNode button get reset
         if (selected !== undefined) {
             dragStartPoint = mousePoint
-                = selected.getBounds()
+            dragStartBounds=selected.getBounds();
             implicitParameterNode_button = false;
             callNode_button = false;
             addNote = false
@@ -74,9 +71,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             selected.translate(
-                dragStartPoint.x - bounds.x +
+                dragStartBounds.x - bounds.x +
                 mousePoint.x - dragStartPoint.x,
-                dragStartPoint.y - bounds.y +
+                dragStartBounds.y - bounds.y +
                 mousePoint.y - dragStartPoint.y)
         }
         repaint()
@@ -84,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     canvas.addEventListener('mouseup', event => {
         dragStartPoint = undefined
-            = undefined
+        dragStartBounds = undefined
     })
 })
 
