@@ -11,18 +11,19 @@ canvas.height = canvas.clientHeight
 var callNode_button = false
 var implicitParameterNode_button = false;
 var addNote_button = false
+var selected_button = false;
 
 document.addEventListener('DOMContentLoaded', function () {
     const graph = new SequenceDiagramGraph()
-    let selected
+    let selected_shape;
     let dragStartPoint
     graph.draw();
 
     function repaint() {
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         graph.draw();
-        if (selected !== undefined) {
-            const bounds = selected.getBounds()
+        if (selected_shape !== undefined) {
+            const bounds = selected_shape.getBounds()
             drawGrabber(bounds.x, bounds.y)
             drawGrabber(bounds.x + bounds.width, bounds.y)
             drawGrabber(bounds.x, bounds.y + bounds.height)
@@ -40,37 +41,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
     canvas.addEventListener('mousedown', event => {
         let mousePoint = mouseLocation(event)
-        selected = graph.findNode(mousePoint)
+        selected_shape = graph.findNode(mousePoint)
+
         // If the implicitParameterNode_button button is pressed in the toolbar
-        if (implicitParameterNode_button === true && selected === undefined) {
+        if (implicitParameterNode_button === true && selected_shape === undefined) {
             let n1 = new ImplicitParameterNode()
             graph.add(n1, mousePoint);
         }
         // If the callNode button is pressed in the toolbar
-        else if (callNode_button === true) {
+        else if (callNode_button === true && !(selected_shape instanceof CallNode)) {
             let n1 = new CallNode()
             graph.add(n1, mousePoint);
         }
 
-        // If we unselected, the callNode button get reset
-        if (selected !== undefined) {
-            dragStartPoint = mousePoint
-            dragStartBounds=selected.getBounds();
-            implicitParameterNode_button = false;
-            callNode_button = false;
-            addNote = false
+        else if(selected_shape === undefined)
+        {
+              implicitParameterNode_button = false;
+              callNode_button = false;
+              addNote = false
         }
-        repaint()
+        // If we unselected, the callNode button get reset
+      if (selected_shape !== undefined) {
+            dragStartPoint = mousePoint
+            dragStartBounds=selected_shape.getBounds();
+        }
+      repaint()
     })
 
     canvas.addEventListener('mousemove', event => {
         if (dragStartPoint === undefined) return
         let mousePoint = mouseLocation(event)
-        if (selected !== undefined) {
-            const bounds = selected.getBounds()
+        if (selected_shape !== undefined) {
+            const bounds = selected_shape.getBounds()
 
-
-            selected.translate(
+            selected_shape.translate(
                 dragStartBounds.x - bounds.x +
                 mousePoint.x - dragStartPoint.x,
                 dragStartBounds.y - bounds.y +
@@ -253,9 +257,9 @@ class Graph {
 }
 
 function drawGrabber(x, y) {
-    const size = 6
-    ctx.fillRect(x - size / 2, y - size / 2, size, size)
+    const size = 4
     ctx.fillStyle = 'red'
+    ctx.fillRect(x - size / 2, y - size / 2, size, size)
 }
 
 function center(rect) {
@@ -355,7 +359,10 @@ class RectangularNode extends AbstractNode {
         this.bounds = new Rectangle2D(0, 0, 0, 0);
     }
     clone() {
-
+      let myRectangularNode = new RectangularNode();
+      let cloned = {};
+      Object.assign(cloned , myRectangularNode);
+      return cloned;
     }
 
     translate(dx, dy) {
@@ -367,7 +374,7 @@ class RectangularNode extends AbstractNode {
     }
 
     contains(p) {
-        if (p.x > this.bounds.x && p.x < this.bounds.x + this.bounds.width && p.y > this.bounds.y && p.y < this.y + this.bounds.height) {
+        if (this.bounds.contains(p)) {
             return true
         }
         return undefined
@@ -512,6 +519,11 @@ class Rectangle2D {
         ctx.stroke();
 
     }
+
+    contains(p)
+    {
+      return (this.x<p.x && (this.x+this.width)>p.x && this.y < p.y && (this.y+this.height) > p.y)
+    }
 }
 
 //******************************************************************************
@@ -591,7 +603,6 @@ class SequenceDiagramGraph extends Graph {
         }
 
         top += 20;
-
         for (let i = 0; i < objects.length; i++) {
             let n = objects[i];
             let b = n.getBounds();
@@ -698,7 +709,10 @@ class ImplicitParameterNode extends RectangularNode {
     }
 
     clone() {
-
+      let myImplicitParameterNode = new ImplicitParameterNode();
+      let cloned = {};
+      Object.assign(cloned , myImplicitParameterNode);
+      return cloned;
     }
 
     addNode(n, p) {
@@ -1053,7 +1067,6 @@ class NoteNode extends RectangularNode {
         return clone;
     }
 }
-
 // Action listener for jquery
 $('#ImplicitParameterNode').on('click', function () {
     implicitParameterNode_button = true
@@ -1061,4 +1074,13 @@ $('#ImplicitParameterNode').on('click', function () {
 // Action listener for jquery
 $('#callNode').on('click', function () {
     callNode_button = true
+    implicitParameterNode_button = false
+
+})
+
+// Set all other button to false
+$('#Select').on('click', function () {
+    callNode_button = false;
+    implicitParameterNode_button = false
+
 })
