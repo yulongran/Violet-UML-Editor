@@ -964,37 +964,36 @@ class NoteNode extends RectangularNode {
         //text.setJustification(MultiLineString.LEFT);
     }
 
-    // addEdge(e, p1, p2) //edge, Point2D, Point2D
-    // {
-    // PointNode end = new PointNode();
-    // end.translate(p2.getX(), p2.getY());
-    // e.connect(this, end);
-    // return super.addEdge(e, p1, p2);
-    // }
+    addEdge(e, p1, p2) //edge, Point2D, Point2D
+    {
+			const end = new PointNode();
+			end.translate(p2.getX(), p2.getY());
+			e.connect(this, end);
+			return super.addEdge(e, p1, p2);
+    }
 
-    // removeEdge(g, e) //graph, edge
-    // {
-    // if (e.getStart() == this) g.removeNode(e.getEnd());
-    // }
+    removeEdge(g, e) //graph, edge
+    {
+			if (e.getStart() == this)
+				g.removeNode(e.getEnd());
+    }
 
-    // layout(Graph g, Graphics2D g2, Grid grid)
-    // {
-    // Rectangle2D b = text.getBounds(g2); // getMultiLineBounds(name, g2);
-    // Rectangle2D bounds = getBounds();
-    // b = new Rectangle2D.Double(bounds.getX(),
-    // bounds.getY(),
-    // Math.max(b.getWidth(), DEFAULT_WIDTH),
-    // Math.max(b.getHeight(), DEFAULT_HEIGHT));
-    // grid.snap(b);
-    // setBounds(b);
-    // }
+    layout(g, g2, grid) //graph, Graphics2D, Grid
+    {
+			let b = text.getBounds(g2); //Rectangle2D obj, getMultiLineBounds(name, g2);
+			let bounds = getBounds(); //Rectangle2D
+			b = new Rectangle2D(bounds.getX(), bounds.getY(),
+				Math.max(b.getWidth(), DEFAULT_WIDTH), Math.max(b.getHeight(), DEFAULT_HEIGHT));
+			grid.snap(b);
+			setBounds(b);
+    }
 
     /**
      Gets the value of the text property.
      @return the text inside the note
-  */
+		*/
     getText() {
-        return this.text;
+			return this.text;
     }
 
     /**
@@ -1002,7 +1001,7 @@ class NoteNode extends RectangularNode {
        @param newValue the text inside the note
     */
     setText(newValue) {
-        this.text = newValue;
+			this.text = newValue;
     }
 
     /**
@@ -1010,7 +1009,7 @@ class NoteNode extends RectangularNode {
        @return the background color of the note
     */
     getColor() {
-        return this.color;
+			return this.color;
     }
 
     /**
@@ -1018,53 +1017,53 @@ class NoteNode extends RectangularNode {
        @param newValue the background color of the note
     */
     setColor(newValue) {
-        this.color = newValue;
+			this.color = newValue;
     }
 
     draw() {
-        super.draw();
-        // Color oldColor = g2.getColor();
-        // g2.setColor(color);
+			// super.draw();
+			// Color oldColor = g2.getColor();
+			// g2.setColor(color);
 
-        // Shape path = getShape();
-        // g2.fill(path);
-        // g2.setColor(oldColor);
-        // g2.draw(path);
+			// let path = getShape(); //Shape obj
+			// g2.fill(path);
+			// g2.setColor(oldColor);
+			// g2.draw(path);
 
-        // Rectangle2D bounds = getBounds();
-        // GeneralPath fold = new GeneralPath();
-        // fold.moveTo((float)(bounds.getMaxX() - FOLD_X), (float)bounds.getY());
-        // fold.lineTo((float)bounds.getMaxX() - FOLD_X, (float)bounds.getY() + FOLD_X);
-        // fold.lineTo((float)bounds.getMaxX(), (float)(bounds.getY() + FOLD_Y));
-        // fold.closePath();
-        // oldColor = g2.getColor();
-        // g2.setColor(g2.getBackground());
-        // g2.fill(fold);
-        // g2.setColor(oldColor);
-        // g2.draw(fold);
+			// let bounds = getBounds(); //Rectangle2D obj
+			// let fold = new GeneralPath();
+			// fold.moveTo((bounds.getMaxX() - FOLD_X), bounds.getY());
+			// fold.lineTo(bounds.getMaxX() - FOLD_X, bounds.getY() + FOLD_X);
+			// fold.lineTo(bounds.getMaxX(), (bounds.getY() + FOLD_Y));
+			// fold.closePath();
+			// oldColor = g2.getColor();
+			// g2.setColor(g2.getBackground());
+			// g2.fill(fold);
+			// g2.setColor(oldColor);
+			// g2.draw(fold);
 
-        // text.draw(g2, getBounds());
+			// text.draw(g2, getBounds());
     }
 
-    // public Shape getShape()
-    // {
-    // Rectangle2D bounds = getBounds();
-    // GeneralPath path = new GeneralPath();
-    // path.moveTo((float)bounds.getX(), (float)bounds.getY());
-    // path.lineTo((float)(bounds.getMaxX() - FOLD_X), (float)bounds.getY());
-    // path.lineTo((float)bounds.getMaxX(), (float)(bounds.getY() + FOLD_Y));
-    // path.lineTo((float)bounds.getMaxX(), (float)bounds.getMaxY());
-    // path.lineTo((float)bounds.getX(), (float)bounds.getMaxY());
-    // path.closePath();
-    // return path;
-    // }
+    getShape()
+    {
+			let bounds = getBounds(); //Rectangle2D obj
+			let path = new GeneralPath(); //GeneralPath obj
+			path.moveTo(bounds.getX(), bounds.getY());
+			path.lineTo((bounds.getMaxX() - FOLD_X), bounds.getY());
+			path.lineTo(bounds.getMaxX(), bounds.getY() + FOLD_Y);
+			path.lineTo(bounds.getMaxX(), bounds.getMaxY());
+			path.lineTo(bounds.getX(), bounds.getMaxY());
+			path.closePath();
+			return path; //shape drawn
+    }
 
     clone() {
-        //NoteNode cloned = (NoteNode)super.clone();
-        //cloned.text = (MultiLineString)text.clone();
-        //return cloned;
-        const clone = new NoteNode();
-        return clone;
+			//let cloned = (NoteNode)super.clone();
+			//cloned.text = (String)text.clone();
+			let cloned = new NoteNode();
+			cloned.text = this.text();
+			return cloned;
     }
 }
 // Action listener for jquery
