@@ -38,10 +38,19 @@ document.addEventListener('DOMContentLoaded', function () {
             y: event.clientY - rect.top
         }
     }
+  canvas.addEventListener('dblclick', event => {
+      let mousePoint = mouseLocation(event)
+      selected_shape = graph.findNode(mousePoint);
+      if(selected_shape !== undefined)
+      {
+        createPopUp(selected_shape.getPropertySheet(), selected_shape, graph);
+        openForm();
+      }
+  })
 
     canvas.addEventListener('mousedown', event => {
         let mousePoint = mouseLocation(event)
-        selected_shape = graph.findNode(mousePoint)
+        selected_shape = graph.findNode(mousePoint);
 
         // If the implicitParameterNode_button button is pressed in the toolbar
         if (implicitParameterNode_button === true && selected_shape === undefined) {
@@ -64,6 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (selected_shape !== undefined) {
             dragStartPoint = mousePoint
             dragStartBounds=selected_shape.getBounds();
+            //popUp(selected_shape.getPropertySheet());
+            let something=1;
         }
       repaint()
     })
@@ -88,6 +99,111 @@ document.addEventListener('DOMContentLoaded', function () {
         dragStartBounds = undefined
     })
 })
+
+
+
+  /**
+  https://www.w3schools.com/howto/howto_css_login_form.asp
+  **/
+function createPopUp(propertySheet, n,g)
+{
+  let propertyName= Object.getOwnPropertyNames(propertySheet);
+  let propertyValue=Object.values(propertySheet);
+  let oldName= n.name;
+  var div = document.createElement('div');
+  div.id ="myForm";
+  div.class="form-popup";
+  div.style.display = 'none';
+  div.style.position = 'fixed';
+  div.style.bottom = '0';
+  div.style.right = "15px";
+  div.style.border="3px solid #f1f1f1";
+  div.style.zIndex="9";
+
+  var form = document.createElement("form");
+  form.action = "/action_page.php";
+  form.class  = "form-container";
+  form.style.maxWidth ="300px";
+  form.style.padding="10px";
+  form.style.background="white";
+
+  for(let i=0; i<propertyName.length; i++)
+  {
+    // For loop for label
+    var label= document.createElement("Label");
+    label.for ="email"
+    label.innerHTML = propertyName[i];
+    form.appendChild(label);
+    var input = document.createElement("input");
+    input.placeholder=propertyValue[i];
+    input.name=propertyName[i];
+    input.id=propertyName[i];
+    input.style.width="100%";
+    input.style.padding="15px";
+    input.style.margin="5px 0 22px 0";
+    input.style.border="none";
+    input.style.background="#f1f1f1";
+    input.oninput=function()
+    {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      g.draw();
+      n.setName(document.getElementById(propertyName[i]).value);
+    }
+    form.appendChild(input);
+  }
+
+  var submit = document.createElement("button");
+  submit.type = "button";
+  submit.class="btn";
+  submit.innerHTML = "Submit";
+  form.appendChild(submit);
+  submit.style.backgroundColor="#4CAF50";
+  submit.style.color="white";
+  submit.style.padding="16px 20px";
+  submit.style.border="none";
+  submit.style.cursor="poiner";
+  submit.style.width="100%";
+  submit.style.marginBottom="10px";
+  submit.style.opacity="0.8";
+  submit.onclick = function()
+  {
+    closeForm();
+    g.draw();
+  }
+
+  var close= document.createElement('button');
+  close.type="button";
+  close.class="btn cancel";
+  close.innerHTML = "Close";
+  close.style.backgroundColor="#4CAF50";
+  close.style.color="white";
+  close.style.padding="16px 20px";
+  close.style.border="none";
+  close.style.cursor="poiner";
+  close.style.width="100%";
+  close.style.marginBottom="10px";
+  close.style.opacity="0.8";
+  close.onclick = function()
+  {
+    //g.draw();
+    //n.setName(oldName);
+    //ctx.clearRect(0, 0, canvas.width, canvas.height)
+    closeForm();
+  }
+  form.appendChild(close);
+  div.appendChild(form);
+  document.body.insertBefore(div, canvas);
+}
+
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+   var form = document.getElementById('myForm');
+   form.remove();
+  //document.getElementById("myForm").style.display = "none";
+}
 
 //******************************************************************************
 //*******************************Framework**************************************
@@ -655,6 +771,13 @@ class ImplicitParameterNode extends RectangularNode {
 
     draw() {
         let top = this.getTopRectangle();
+        let textWidth=ctx.measureText(this.name).width;
+        let copyBounds= super.getBounds();
+        if(textWidth+10 > top.width)
+        {
+          super.getBounds().width= textWidth+30;
+          top=this.getTopRectangle();
+        }
         top.draw();
         let xmid = super.getBounds().getCenterX();
         ctx.beginPath();
@@ -701,7 +824,7 @@ class ImplicitParameterNode extends RectangularNode {
     }
 
     setName(n) {
-        name = n;
+        this.name = n;
     }
 
     getName() {
@@ -718,6 +841,16 @@ class ImplicitParameterNode extends RectangularNode {
     addNode(n, p) {
         return n instanceof CallNode //|| typeof n === PointNode;
     }
+
+    getPropertySheet()
+    {
+      let copyName= this.name;
+      return{
+        name:copyName,
+        year:"",
+        age:"",
+      }
+    }
 }
 
 // May change the function to class
@@ -726,8 +859,7 @@ class CallNode extends RectangularNode {
         super();
         this.implicitParameter;
         this.signaled;
-        this.openBottom;
-
+        this.openBottom=false;
         this.DEFAULT_WIDTH = 16;
         this.DEFAULT_HEIGHT = 30;
         this.CALL_YGAP = 20;
@@ -946,6 +1078,15 @@ class CallNode extends RectangularNode {
         this.openBottom = newValue;
     }
 
+    getPropertySheet()
+    {
+      let copyOpenBottom= this.openBottom;
+      let copyImplicitParameter= this.implicitParameter;
+      return{
+        openBottom: copyOpenBottom,
+      }
+    }
+
 
 }
 
@@ -1076,7 +1217,6 @@ $('#callNode').on('click', function () {
     implicitParameterNode_button = false
 
 })
-
 // Set all other button to false
 $('#Select').on('click', function () {
     callNode_button = false;

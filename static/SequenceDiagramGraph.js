@@ -72,7 +72,6 @@ class SequenceDiagramGraph extends Graph {
         }
 
         top += 20;
-
         for (let i = 0; i < objects.length; i++) {
             let n = objects[i];
             let b = n.getBounds();

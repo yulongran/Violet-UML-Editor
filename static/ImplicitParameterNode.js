@@ -17,6 +17,13 @@ class ImplicitParameterNode extends RectangularNode {
 
     draw() {
         let top = this.getTopRectangle();
+        let textWidth=ctx.measureText(this.name).width;
+        let copyBounds= super.getBounds();
+        if(textWidth+10 > top.width)
+        {
+          super.getBounds().width= textWidth+30;
+          top=this.getTopRectangle();
+        }
         top.draw();
         let xmid = super.getBounds().getCenterX();
         ctx.beginPath();
@@ -63,7 +70,7 @@ class ImplicitParameterNode extends RectangularNode {
     }
 
     setName(n) {
-        name = n;
+        this.name = n;
     }
 
     getName() {
@@ -79,5 +86,13 @@ class ImplicitParameterNode extends RectangularNode {
 
     addNode(n, p) {
         return n instanceof CallNode //|| typeof n === PointNode;
+    }
+
+    getPropertySheet()
+    {
+      let copyName= this.name;
+      return{
+        name:copyName,
+      }
     }
 }

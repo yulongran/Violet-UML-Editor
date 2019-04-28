@@ -1,11 +1,9 @@
-// May change the function to class
 class CallNode extends RectangularNode {
     constructor() {
         super();
         this.implicitParameter;
         this.signaled;
-        this.openBottom;
-
+        this.openBottom=false;
         this.DEFAULT_WIDTH = 16;
         this.DEFAULT_HEIGHT = 30;
         this.CALL_YGAP = 20;
@@ -222,6 +220,15 @@ class CallNode extends RectangularNode {
 
     setOpenBottom(newValue) {
         this.openBottom = newValue;
+    }
+
+    getPropertySheet()
+    {
+      let copyOpenBottom= this.openBottom;
+      let copyImplicitParameter= this.implicitParameter;
+      return{
+        openBottom: copyOpenBottom,
+      }
     }
 
 
