@@ -847,8 +847,6 @@ class ImplicitParameterNode extends RectangularNode {
       let copyName= this.name;
       return{
         name:copyName,
-        year:"",
-        age:"",
       }
     }
 }
