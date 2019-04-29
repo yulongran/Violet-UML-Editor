@@ -263,10 +263,10 @@ class Graph {
         for (let i = this.nodes.length - 1; i >= 0; i--) {
             const n = this.nodes[i]
             if (n.contains(p)) {
-                return n
+                return n;
             }
         }
-        return undefined
+        return undefined;
     }
 
     findEdge(p) {
@@ -364,6 +364,9 @@ class Graph {
         return this.edges;
     }
 
+	getEdgesToRemove(){
+		return this.edgesToBeRemoved;
+	}
     addNode(n, p) {
         let bounds = n.getBounds();
         n.translate(p.x - bounds.getX(), p.y - bounds.getY());
@@ -402,7 +405,7 @@ class AbstractNode {
     }
 
     removeEdge(g, e) {
-
+	g.getEdgesToRemove().add(e);
     }
 
     removeNode(g, e) {
@@ -552,7 +555,10 @@ class RectangularNode extends AbstractNode {
     getShape() {
         return this.bounds;
     }
-
+	
+	removeEdge(g,e){
+		super.removeEdge(g,e);
+	}
 }
 
 
@@ -989,6 +995,7 @@ class CallNode extends RectangularNode {
         if (e.getStart() === this) {
             removeChild(e.getEnd());
         }
+		super.removeEdge(g,e);
     }
 
     removeNode(g, n) {
