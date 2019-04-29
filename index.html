@@ -29,20 +29,31 @@
 <body>
 
     <!-- nav bar -->
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-secondary">
         <form class="w-100 text-center">
             <form class="form-inline">
                 <!-- Select Button -->
                 <button class="btn btn-outline-success" id='Select' type="button" data-toggle="tooltip" data-placement="bottom"
-                    title="Select"><i class="fas fa-vector-square"></i></button>
+                    title="Select">
+                    <i class="fas fa-vector-square"></i>
+                    <!-- <canvas id="ImplicitParameterNodeToolBar" class="mx-auto toolbar-canvas" ></canvas> -->
+                </button>
 
                 <!-- TBD Button -->
-                <button class="btn btn-outline-success" id='ImplicitParameterNode' type="button" data-toggle="tooltip" data-placement="bottom"
-                    title="ImplicitParameterNode"><i class="fas fa-ruler-vertical"></i></button>
+                <button class="btn btn-outline-success mx-auto" id='ImplicitParameterNode' type="button" data-toggle="tooltip" data-placement="bottom"
+                    title="ImplicitParameterNode">
+                    
+                    <!-- <i class="fas fa-ruler-vertical"></i> -->
+                    <canvas id="ImplicitParameterNodeToolBar" class="mx-auto toolbar-canvas" ></canvas>
+                
+                </button>
 
                 <!-- Block -->
                 <button class="btn btn-outline-success" type="button" id='callNode' data-toggle="tooltip" data-placement="bottom"
-                    title="CallNode"><i class="fas fa-stop"></i></button>
+                    title="CallNode">
+                    
+                    <canvas id="CallNodeToolBar" class="mx-auto toolbar-canvas" ></canvas>
+                </button>
 
                 <!-- Note -->
                 <button class="btn btn-outline-success text-warning" id='addNote' type="button" data-toggle="tooltip"
@@ -68,4 +79,6 @@
 
     <canvas id="myCanvas" class="w-100" height="100" style="border:1px solid #000000;">
     <script type="text/javascript" src="static/script.js"></script>
+
+    
 </body>
