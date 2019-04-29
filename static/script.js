@@ -152,8 +152,8 @@ function createPopUp(propertySheet, n, g) {
 
     var submit = document.createElement("button");
     submit.type = "button";
-    submit.class = "btn";
-    submit.innerHTML = "Submit";
+    submit.class = "btn btn-danger";
+    submit.innerHTML = "&check; Update";
     form.appendChild(submit);
     submit.style.backgroundColor = "#4CAF50";
     submit.style.color = "white";
@@ -171,8 +171,8 @@ function createPopUp(propertySheet, n, g) {
     var close = document.createElement('button');
     close.type = "button";
     close.class = "btn cancel";
-    close.innerHTML = "Close";
-    close.style.backgroundColor = "#4CAF50";
+    close.innerHTML = "&#120; Cancel";
+    close.style.backgroundColor = "#ff0000";
     close.style.color = "white";
     close.style.padding = "16px 20px";
     close.style.border = "none";
