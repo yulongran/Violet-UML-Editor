@@ -188,8 +188,8 @@ class Direction
 	   let x;
 	   let y;
 	   if(p instanceof Point2D &&q instanceof Point2D){
-	x=q.getX() - p.getX();
-	y=q.getY() - p.getY();
+		x=q.getX() - p.getX();
+		y=q.getY() - p.getY();
 	   }
 	   else{
 		   x=p;

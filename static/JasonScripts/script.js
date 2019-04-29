@@ -2,7 +2,80 @@
 'use strict'
 var LineStyle={SOLID:"solid",DASHED:"dashed"};
 var ArrowHead={NONE:"none",V:"V",TRIANGLE:"triangle",DIAMOND:"diamond",BLACKDIAMOND:"blackdiamond"};
-var Direction={LEFT:"left",RIGHT:"right"};
+//var Direction={LEFT:"left",RIGHT:"right"};
+
+
+
+class Direction
+{
+
+   //public static final Direction NORTH = new Direction(0, -1);
+   //public static final Direction SOUTH = new Direction(0, 1);
+   //public static final Direction EAST = new Direction(1, 0);
+   //public static final Direction WEST = new Direction(-1, 0);
+
+	/**  
+   
+      Constructs a direction between two points
+      @param p the starting point
+      @param q the ending point
+   */  
+   
+   constructor(p,q)
+   {
+	   let x;
+	   let y;
+	   if(p instanceof Point2D &&q instanceof Point2D){
+		this.x=q.getX() - p.getX();
+		
+		this.y=q.getY() - p.getY();
+	   }
+	   else{
+		   this.x=p;
+		   this.y=q;
+	   }
+	let length = Math.sqrt(this.x * this.x + this.y * this.y);
+      if (length !== 0) 
+      this.x = this.x / length;
+      this.y = this.y / length;
+	  
+	  
+   }
+
+   /**
+      Turns this direction by an angle.
+      @param angle the angle in degrees
+	*/  
+   turn(angle)
+   {
+      let a = angle* Math.PI / 180;  
+		return new Direction(
+         Math.round(this.x * Math.cos(a) - this.y * Math.sin(a)),Math.round(
+         this.x * Math.sin(a) + this.y * Math.cos(a)));
+		 
+   }
+
+   /**
+      Gets the x-component of this direction
+      @return the x-component (between -1 and 1)
+   
+   */  
+   getX()
+   {
+      return this.x;
+   }
+
+   /**
+      Gets the y-component of this direction
+      @return the y-component (between -1 and 1)
+   
+   */  
+   getY()
+   {
+      return this.y;
+   }
+}
+
 
 
 /**
@@ -114,9 +187,7 @@ class Line2D{
 		return this.p2;
 	}
 	getPM(){
-		console.log("here");
 		let pm=new Point2D(Math.round((this.getX1()+this.getX2())/2),Math.round((this.getY1()+this.getY2())/2));
-		console.log(pm);
 		return pm;
 	}
     getX1() {
@@ -191,23 +262,24 @@ class AbstractEdge
 	//returns bounds as a line since lines are horizontal
    getBounds()
    {
-      conn = getConnectionPoints();
+      conn = this.getConnectionPoints();
       let r = new Rectangle2D(conn.getX1(), conn.getY1(),conn.getX1-conn.getX2,conn.getY1-conn.getY2);
       return r;
    }
 
    getConnectionPoints()
    {
+	   //console.log("mistake");
       let startBounds = this.start.getBounds();
       let endBounds = this.end.getBounds();
       let startCenter = new Point2D(
          startBounds.getCenterX(), startBounds.getCenterY());
       let endCenter = new Point2D(
          endBounds.getCenterX(), endBounds.getCenterY());
-      let toEnd;
+      let toEnd = new Direction(startCenter, endCenter);
       return new Line2D(
          this.start.getConnectionPoint(toEnd),
-         this.end.getConnectionPoint(toEnd));
+         this.end.getConnectionPoint(toEnd.turn(180)));
    }
 }
 
@@ -245,8 +317,16 @@ class SegmentedLineEdge extends AbstractEdge
    setEndLabel(newValue) { this.endLabel = newValue; }
    getEndLabel() { return this.endLabel; }
  
-	draw(p1,p2)
+ 
+ //change dependency on p1 and p2 being points and dependency on arguments
+	draw(p3,p4)
    { 
+   	
+	
+	let line=this.getConnectionPoints();	
+	//console.log("mistake");
+	let p1=line.getP1();
+	let p2=line.getP2();
 	const c=document.getElementById("myCanvas");
 	const ctx = c.getContext("2d");
 	ctx.beginPath();
@@ -258,13 +338,9 @@ class SegmentedLineEdge extends AbstractEdge
 	ctx.lineTo(p2.getX(),p2.getY());
 	ctx.stroke();	
 	ctx.setLineDash([]);
-	var direction;
-	if(p1.getX()>p2.getX()){
-		direction=Direction.RIGHT;
-	}
-	else{
-		direction=Direction.LEFT;
-	}
+	//console.log("mistake");
+	var direction=new Direction(p1,p2);
+	//var direction=new Point2D(0,0);
 	this.drawArrowHeads(p1,p2,direction);
 	
 	this.drawPositionedStrings();
@@ -320,7 +396,6 @@ class SegmentedLineEdge extends AbstractEdge
 				}
 		}
 		if(this.getStartArrowHead()=="triangle"){
-			console.log("here");
 				if(direction=="left"){			
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
@@ -346,7 +421,6 @@ class SegmentedLineEdge extends AbstractEdge
 				}
 		}
 		if(this.getEndArrowHead()=="triangle"){
-			console.log("here");
 				if(direction=="right"){			
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
@@ -375,7 +449,7 @@ class SegmentedLineEdge extends AbstractEdge
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
 					
-					if(direction=="left"){
+					if(direction.getX()==1){
 					
 					ctx.setLineDash([]);
 					ctx.beginPath();
@@ -406,9 +480,7 @@ class SegmentedLineEdge extends AbstractEdge
 		if(this.getEndArrowHead()=="diamond"||this.getEndArrowHead()=="blackdiamond"){
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
-					
-					if(direction=="right"){
-					
+					if(direction.getX()==-1){
 					ctx.setLineDash([]);
 					ctx.beginPath();
 					ctx.moveTo(p2.getX(),p2.getY());
@@ -491,12 +563,13 @@ var p2=new Rectangle2D(500,400,1,1);
 const c=document.getElementById("myCanvas");
 const ctx = c.getContext("2d");
 edge.connect(p1,p2);
-//edge.setStartLabel("Start");
-//edge.setMiddleLabel("Middle");
-//edge.setEndLabel("End");
+edge.setStartLabel("Start");
+edge.setMiddleLabel("Middle");
+edge.setEndLabel("End");
 //edge.drawPositionedStrings();
 //edge.setLineStyle(LineStyle.SOLID);
-//edge.setStartArrowHead(ArrowHead.DIAMOND);
-//edge.setEndArrowHead(ArrowHead.DIAMOND);
+edge.setStartArrowHead(ArrowHead.DIAMOND);
+edge.setEndArrowHead(ArrowHead.DIAMOND);
+
 edge.draw(p1,p2);
 });
