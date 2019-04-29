@@ -144,8 +144,8 @@ function createPopUp(propertySheet, n, g) {
         input.style.background = "#f1f1f1";
         input.oninput = function () {
             ctx.clearRect(0, 0, canvas.width, canvas.height)
-            g.draw();
             n.setName(document.getElementById(propertyName[i]).value);
+            g.draw();
         }
         form.appendChild(input);
     }
@@ -181,9 +181,8 @@ function createPopUp(propertySheet, n, g) {
     close.style.marginBottom = "10px";
     close.style.opacity = "0.8";
     close.onclick = function () {
-        //g.draw();
-        //n.setName(oldName);
-        //ctx.clearRect(0, 0, canvas.width, canvas.height)
+        n.setName(oldName);
+        g.draw();
         closeForm();
     }
     form.appendChild(close);
@@ -1300,6 +1299,7 @@ $('#Select').on('click', function () {
 $(document).ready(function () {
     drawImplicitParameterNodeToolBar()
     drawCallNodeToolBar()
+    drawNoteNodeToolBar()
 
     function drawImplicitParameterNodeToolBar() {
         let n = new ImplicitParameterNode();
@@ -1313,5 +1313,12 @@ $(document).ready(function () {
         var canvas = document.getElementById("CallNodeToolBar");
         var ctx = canvas.getContext("2d");
         n.drawToolBar(ctx)
+    }
+
+    function drawNoteNodeToolBar() {
+        // let n = new NoteNode();
+        // var canvas = document.getElementById("NoteNodeToolBar");
+        // var ctx = canvas.getContext("2d");
+        // n.drawToolBar(ctx)
     }
 });
