@@ -115,15 +115,22 @@ class NoteNode extends RectangularNode {
     drawToolBar(ctx) {
         ctx.fillStyle = this.color;
         ctx.fillRect(super.getBounds().getX(), super.getBounds().getY(),
-            TOOLBAR_WIDTH, TOOLBAR_HEIGHT);
+            TOOLBAR_WIDTH, TOOLBAR_HEIGHT/4);
         ctx.strokeRect(super.getBounds().getX(), super.getBounds().getY(),
-            TOOLBAR_WIDTH, TOOLBAR_HEIGHT);
-        ctx.beginPath(); //fold
-        ctx.moveTo(super.getBounds().getX() + this.DEFAULT_WIDTH * 3,
+            TOOLBAR_WIDTH, TOOLBAR_HEIGHT/4);
+	ctx.beginPath(); //fold
+        ctx.clearRect(super.getBounds().getX() + TOOLBAR_WIDTH * 3 / 4,
+            super.getBounds().getY(), TOOLBAR_WIDTH / 4, TOOLBAR_HEIGHT / 12);
+        ctx.moveTo(super.getBounds().getX() + TOOLBAR_WIDTH * 3 / 4,
             super.getBounds().getY());
         ctx.lineTo(super.getBounds().getX() + TOOLBAR_WIDTH,
-            super.getBounds().getY() + TOOLBAR_HEIGHT / 8);
-        ctx.stroke();
+            super.getBounds().getY() + TOOLBAR_HEIGHT / 12);
+        ctx.lineTo(super.getBounds().getX() + TOOLBAR_WIDTH * 3 / 4,
+            super.getBounds().getY() + TOOLBAR_HEIGHT / 12);
+        ctx.closePath();
+	ctx.fillStyle = 'white';
+	ctx.fill();
+	ctx.stroke();
     }
 
     getShape() {
