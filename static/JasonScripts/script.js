@@ -675,10 +675,14 @@ class SegmentedLineEdge extends AbstractEdge
 	ctx.beginPath();
 	ctx.moveTo(p1.getX(),p1.getY());
 	let style=this.getLineStyle();
+	if(style!==undefined){
 	style.applyStyle();
+	}
 	ctx.lineTo(p2.getX(),p2.getY());
 	ctx.stroke();	
+	if(style!==undefined){
 	style.revertStyle();
+	}
 	var direction=new Direction(p1,p2);
 	this.drawArrowHeads(p1,p2,direction);
 	this.drawPositionedStrings();
@@ -686,7 +690,7 @@ class SegmentedLineEdge extends AbstractEdge
 
 	drawArrowHeads(p1,p2,direction){
 		
-		if(this.getStartArrowHead().drawMethod!==undefined)
+		if(this.getStartArrowHead()!==undefined)
 		this.getStartArrowHead().drawMethod(p1,p2,direction,true);
 	
 		if(this.getEndArrowHead().drawMethod!==undefined)
@@ -721,7 +725,7 @@ getBounds()
    {
       return super.getBounds();
    }
-
+//protect against undefined
 contains(aPoint)
 {
 	   let line=this.getConnectionPoints();
@@ -735,6 +739,18 @@ contains(aPoint)
 		ctx.stroke();
 		console.log(this.getStartArrowHead().getHeadBounds(p1,p2,direction,true));
 		console.log(this.getEndArrowHead().getHeadBounds(p1,p2,direction,false));		
+		
+		if(this.getStartArrowHead()!==undefined){
+			if(this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).contains(aPoint)){
+				return true;
+			}
+		}
+		
+		if(this.getEndArrowHead()!==undefined){
+			if(this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).contains(aPoint)){
+				return true;
+			}
+		}
 	if(this.getBounds().contains(aPoint)||this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).contains(aPoint)||this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).contains(aPoint)){
 		return true;
 	}
@@ -848,7 +864,7 @@ class ReturnEdge extends SegmentedLineEdge
 
 document.addEventListener('DOMContentLoaded', function () {
 
-var edge=new ReturnEdge();
+var edge=new CallEdge();
 var p2=new Rectangle2D(100,400,40,40);
 var p1=new Rectangle2D(500,300,40,40);
 //edge.draw(p1,p2);
@@ -858,11 +874,11 @@ edge.connect(p1,p2);
 edge.setStartLabel("Start");
 //edge.setMiddleLabel("Middle");
 edge.setEndLabel("End");
-edge.drawPositionedStrings();
+//edge.drawPositionedStrings();
 edge.setLineStyle(LineStyle.SOLID);	
 edge.setStartArrowHead(ArrowHead.BLACKDIAMOND);
 edge.setEndArrowHead(ArrowHead.BLACKDIAMOND);
-edge.setLineStyle(LineStyle.SOLID);
+edge.setLineStyle(LineStyle.DOTTED);
 edge.draw();
 //console.log(edge);
 //let line=new Line2D(p1,p2);
@@ -873,4 +889,7 @@ let testPoint=new Point2D(500,300);
 //console.log(direction.getX());
 console.log(edge.contains(testPoint));
 //console.log(edge.getPoints());
+ArrowHead['test']="test";
+console.log(ArrowHead);
+
 });
