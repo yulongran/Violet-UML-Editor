@@ -9,8 +9,8 @@ class Graph {
     }
 
     connect(e, p1, p2) {
-        let n1 = findNode(p1);
-        let n2 = findNode(p2);
+        let n1 = this.findNode(p1);
+        let n2 = this.findNode(p2);
         if (n1 !== undefined) {
             e.connect(n1, n2);
             if (n1.addEdge(e, p1, p2) && e.getEnd() !== undefined) {

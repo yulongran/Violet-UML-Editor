@@ -5,7 +5,7 @@ var LineStyle={SOLID:{"name":"solid",
 
 },
 "revertStyle":function(){
-	
+
 }
 },DOTTED:{"name":"dotted",
 "applyStyle":function(){
@@ -23,7 +23,7 @@ var LineStyle={SOLID:{"name":"solid",
 var ArrowHead={NONE:"none",V:{"name":"V",
 "drawMethod":function(p1,p2,direction,start) {
 if(start){
-				if(direction.getX()==1){			
+				if(direction.getX()==1){
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
                     ctx.beginPath();
@@ -43,11 +43,11 @@ if(start){
 					ctx.lineTo(p1.getX()-10,p1.getY()+10);
 					ctx.moveTo(p1.getX(),p1.getY());
 					ctx.lineTo(p1.getX()-10,p1.getY()-10);
-					ctx.stroke();					
+					ctx.stroke();
 				}
 }
 else{
-					if(direction.getX()==-1){			
+					if(direction.getX()==-1){
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
                     ctx.beginPath();
@@ -67,36 +67,36 @@ else{
 					ctx.lineTo(p2.getX()-10,p2.getY()+10);
 					ctx.moveTo(p2.getX(),p2.getY());
 					ctx.lineTo(p2.getX()-10,p2.getY()-10);
-					ctx.stroke();					
+					ctx.stroke();
 				}
-		}		
+		}
 },
 "getHeadBounds":function(p1,p2,direction,start) {
 if(start){
 				if(direction.getX()==1){
-					
+
 					return new Rectangle2D(p1.getX(),p1.getY()-10,10,20);
 				}
 				else{
-					return new Rectangle2D(p1.getX()-10,p1.getY()-10,10,20);					
+					return new Rectangle2D(p1.getX()-10,p1.getY()-10,10,20);
 				}
 }
 else{
-					if(direction.getX()==-1){			
+					if(direction.getX()==-1){
 					return new Rectangle2D(p2.getX(),p2.getY()-10,10,20);
-					
+
 				}
 				else{
-					return new Rectangle2D(p2.getX()-10,p2.getY()-10,10,20);				
+					return new Rectangle2D(p2.getX()-10,p2.getY()-10,10,20);
 				}
-		}		
+		}
 },
 
 },
 TRIANGLE:{"name":"triangle",
 "drawMethod":function(p1,p2,direction,start){
 	if(start){
-		if(direction.getX()==1){			
+		if(direction.getX()==1){
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
                     ctx.beginPath();
@@ -117,11 +117,11 @@ TRIANGLE:{"name":"triangle",
 					ctx.moveTo(p1.getX(),p1.getY());
 					ctx.lineTo(p1.getX()-10,p1.getY()-10);
 					ctx.lineTo(p1.getX()-10,p1.getY()+10);
-					ctx.stroke();					
+					ctx.stroke();
 				}
 	}
 	else{
-		if(direction.getX()==-1){			
+		if(direction.getX()==-1){
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
                     ctx.beginPath();
@@ -142,10 +142,10 @@ TRIANGLE:{"name":"triangle",
 					ctx.moveTo(p2.getX(),p2.getY());
 					ctx.lineTo(p2.getX()-10,p2.getY()-10);
 					ctx.lineTo(p2.getX()-10,p2.getY()+10);
-					ctx.stroke();					
+					ctx.stroke();
 				}
 	}
-	
+
 },
 "getHeadBounds":function(p1,p2,direction,start) {
 if(start){
@@ -153,18 +153,18 @@ if(start){
 					return new Rectangle2D(p1.getX(),p1.getY()-10,10,20);
 				}
 				else{
-					return new Rectangle2D(p1.getX()-10,p1.getY()-10,10,20);					
+					return new Rectangle2D(p1.getX()-10,p1.getY()-10,10,20);
 				}
 }
 else{
-					if(direction.getX()==-1){			
+					if(direction.getX()==-1){
 					return new Rectangle2D(p2.getX(),p2.getY()-10,10,20);
-					
+
 				}
 				else{
-					return new Rectangle2D(p2.getX()-10,p2.getY()-10,10,20);				
+					return new Rectangle2D(p2.getX()-10,p2.getY()-10,10,20);
 				}
-		}		
+		}
 },
 },
 
@@ -174,7 +174,7 @@ if(start){
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
 					if(direction.getX()==1){
-					
+
 					ctx.setLineDash([]);
 					ctx.beginPath();
 					ctx.moveTo(p1.getX(),p1.getY());
@@ -192,7 +192,7 @@ if(start){
 					ctx.moveTo(p1.getX(),p1.getY());
 					ctx.lineTo(p1.getX()-10,p1.getY()-10);
 					ctx.lineTo(p1.getX()-20,p1.getY());
-					ctx.lineTo(p1.getX()-10,p1.getY()+10);	
+					ctx.lineTo(p1.getX()-10,p1.getY()+10);
 					}
 						ctx.fillStyle="white";
 						ctx.fill();
@@ -202,7 +202,7 @@ if(start){
 		else {
 			const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
-					
+
 					if(direction.getX()==-1){
 					ctx.setLineDash([]);
 					ctx.beginPath();
@@ -221,15 +221,15 @@ if(start){
 					ctx.moveTo(p2.getX(),p2.getY());
 					ctx.lineTo(p2.getX()-10,p2.getY()-10);
 					ctx.lineTo(p2.getX()-20,p2.getY());
-					ctx.lineTo(p2.getX()-10,p2.getY()+10);	
+					ctx.lineTo(p2.getX()-10,p2.getY()+10);
 					}
 						ctx.fillStyle="white";
 						ctx.fill();
 						ctx.fillStyle="black";
 						ctx.stroke();
-			
+
 		}
-}	
+}
 
 ,"getHeadBounds":function(p1,p2,direction,start) {
 if(start){
@@ -237,29 +237,29 @@ if(start){
 					return new Rectangle2D(p1.getX(),p1.getY()-10,20,20);
 				}
 				else{
-					return new Rectangle2D(p1.getX()-20,p1.getY()-10,20,20);					
+					return new Rectangle2D(p1.getX()-20,p1.getY()-10,20,20);
 				}
 }
 else{
-					if(direction.getX()==-1){			
+					if(direction.getX()==-1){
 					return new Rectangle2D(p2.getX(),p2.getY()-10,20,20);
-					
+
 				}
 				else{
-					return new Rectangle2D(p2.getX()-20,p2.getY()-10,20,20);				
+					return new Rectangle2D(p2.getX()-20,p2.getY()-10,20,20);
 				}
-		}		
+		}
 },
 },
 
 BLACKDIAMOND:{"name":"blackdiamond",
 
-"drawMethod":function(p1,p2,direction,start){	
+"drawMethod":function(p1,p2,direction,start){
 	if(start){
 		const c=document.getElementById("myCanvas");
-					const ctx = c.getContext("2d");			
+					const ctx = c.getContext("2d");
 					if(direction.getX()==1){
-					
+
 					ctx.setLineDash([]);
 					ctx.beginPath();
 					ctx.moveTo(p1.getX(),p1.getY());
@@ -277,7 +277,7 @@ BLACKDIAMOND:{"name":"blackdiamond",
 					ctx.moveTo(p1.getX(),p1.getY());
 					ctx.lineTo(p1.getX()-10,p1.getY()-10);
 					ctx.lineTo(p1.getX()-20,p1.getY());
-					ctx.lineTo(p1.getX()-10,p1.getY()+10);	
+					ctx.lineTo(p1.getX()-10,p1.getY()+10);
 					}
 						ctx.fill();
 						ctx.fillStyle="black";
@@ -304,31 +304,31 @@ BLACKDIAMOND:{"name":"blackdiamond",
 					ctx.moveTo(p2.getX(),p2.getY());
 					ctx.lineTo(p2.getX()-10,p2.getY()-10);
 					ctx.lineTo(p2.getX()-20,p2.getY());
-					ctx.lineTo(p2.getX()-10,p2.getY()+10);	
+					ctx.lineTo(p2.getX()-10,p2.getY()+10);
 					}
 						ctx.fill();
 						ctx.fillStyle="black";
 						ctx.stroke();
-	}	
-},	
+	}
+},
 "getHeadBounds":function(p1,p2,direction,start) {
 if(start){
 				if(direction.getX()==1){
 					return new Rectangle2D(p1.getX(),p1.getY()-10,20,20);
 				}
 				else{
-					return new Rectangle2D(p1.getX()-20,p1.getY()-10,20,20);					
+					return new Rectangle2D(p1.getX()-20,p1.getY()-10,20,20);
 				}
 }
 else{
-					if(direction.getX()==-1){			
+					if(direction.getX()==-1){
 					return new Rectangle2D(p2.getX(),p2.getY()-10,20,20);
-					
+
 				}
 				else{
-					return new Rectangle2D(p2.getX()-20,p2.getY()-10,20,20);				
+					return new Rectangle2D(p2.getX()-20,p2.getY()-10,20,20);
 				}
-		}		
+		}
 },
 
 }
@@ -346,13 +346,13 @@ class Direction
    //public static final Direction EAST = new Direction(1, 0);
    //public static final Direction WEST = new Direction(-1, 0);
 
-	/**  
-   
+	/**
+
       Constructs a direction between two points
       @param p the starting point
       @param q the ending point
-   */  
-   
+   */
+
    constructor(p,q)
    {
 	   let x;
@@ -370,27 +370,27 @@ class Direction
 	  this.x = Math.round(this.x / length);
       this.y = Math.round(this.y / length);
    }
-	  
+
    }
 
    /**
       Turns this direction by an angle.
       @param angle the angle in degrees
-	*/  
+	*/
    turn(angle)
    {
-      let a = angle* Math.PI / 180;  
+      let a = angle* Math.PI / 180;
 		return new Direction(
          Math.round(this.x * Math.cos(a) - this.y * Math.sin(a)),Math.round(
          this.x * Math.sin(a) + this.y * Math.cos(a)));
-		 
+
    }
 
    /**
       Gets the x-component of this direction
       @return the x-component (between -1 and 1)
-   
-   */  
+
+   */
    getX()
    {
       return this.x;
@@ -399,8 +399,8 @@ class Direction
    /**
       Gets the y-component of this direction
       @return the y-component (between -1 and 1)
-   
-   */  
+
+   */
    getY()
    {
       return this.y;
@@ -573,7 +573,7 @@ class Line2D{
 */
 class AbstractEdge
 {
-	
+
 	constructor(){
    let start;
    let end;
@@ -634,7 +634,7 @@ class AbstractEdge
    An edge that is composed of multiple line segments
 */
 class SegmentedLineEdge extends AbstractEdge
-{ 
+{
 //   private static JLabel label = new JLabel();
 
    /**
@@ -664,10 +664,10 @@ class SegmentedLineEdge extends AbstractEdge
    getEndLabel() { return this.endLabel; }
 
 	draw()
-   { 
-   	
-	
-	let line=this.getConnectionPoints();	
+   {
+
+
+	let line=this.getConnectionPoints();
 	let p1=line.getP1();
 	let p2=line.getP2();
 	const c=document.getElementById("myCanvas");
@@ -692,33 +692,33 @@ class SegmentedLineEdge extends AbstractEdge
 		
 		if(this.getStartArrowHead()!==undefined)
 		this.getStartArrowHead().drawMethod(p1,p2,direction,true);
-	
+
 		if(this.getEndArrowHead().drawMethod!==undefined)
 		this.getEndArrowHead().drawMethod(p1,p2,direction,false);
-		
+
 	}
-	
+
 	drawPositionedStrings(){
 		let line=this.getConnectionPoints();
 		if(this.getStartLabel()!==undefined){
 		this.drawString(this.getStartLabel(),line.getP1());
 		}
-		
+
 		if(this.getMiddleLabel()!==undefined){
 		this.drawString(this.getMiddleLabel(),line.getPM());
 		}
 		if(this.getEndLabel()!==undefined){
 		this.drawString(this.getEndLabel(),line.getP2());
 		}
-	
+
 	}
    drawString(s,p)
    {
     const c=document.getElementById("myCanvas");
 	const ctx = c.getContext("2d");
-	
+
 	ctx.font = '20px serif';
-	ctx.fillText(s, p.getX(),p.getY());   
+	ctx.fillText(s, p.getX(),p.getY());
    }
 
 getBounds()
@@ -732,13 +732,13 @@ contains(aPoint)
 	   let p1=line.getP1();
 	   let p2=line.getP2();
 		var direction=new Direction(p1,p2);
-		const c=document.getElementById("myCanvas");
-		const ctx = c.getContext("2d");
-		ctx.rect(this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).getX(),this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).getY(),this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).getWidth(),this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).getHeight());
-		ctx.rect(this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).getX(),this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).getY(),this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).getWidth(),this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).getHeight());
-		ctx.stroke();
-		console.log(this.getStartArrowHead().getHeadBounds(p1,p2,direction,true));
-		console.log(this.getEndArrowHead().getHeadBounds(p1,p2,direction,false));		
+		//const c=document.getElementById("myCanvas");
+		//const ctx = c.getContext("2d");
+		//ctx.rect(this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).getX(),this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).getY(),this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).getWidth(),this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).getHeight());
+		//ctx.rect(this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).getX(),this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).getY(),this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).getWidth(),this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).getHeight());
+		//ctx.stroke();
+		//console.log(this.getStartArrowHead().getHeadBounds(p1,p2,direction,true));
+		//console.log(this.getEndArrowHead().getHeadBounds(p1,p2,direction,false));		
 		
 		if(this.getStartArrowHead()!==undefined){
 			if(this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).contains(aPoint)){
@@ -751,6 +751,7 @@ contains(aPoint)
 				return true;
 			}
 		}
+
 	if(this.getBounds().contains(aPoint)||this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).contains(aPoint)||this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).contains(aPoint)){
 		return true;
 	}
@@ -768,13 +769,13 @@ class CallEdge extends SegmentedLineEdge
       let signal;
 	  this.setSignal(false);
    }
-   isSignal() { return signal; }      
-   setSignal(newValue) 
-   { 
-      this.signal = newValue; 
+   isSignal() { return signal; }
+   setSignal(newValue)
+   {
+      this.signal = newValue;
       if (this.signal){
 		  //FUCK implement halfV????
-		  
+
          //super.setEndArrowHead(ArrowHead.HALF_V);
          this.setEndArrowHead(ArrowHead.V);
       }
@@ -788,7 +789,7 @@ class CallEdge extends SegmentedLineEdge
       let n = this.getEnd();
       let start = this.getStart().getBounds();
       let end = n.getBounds();
-      
+
       if (n instanceof CallNode &&(n.getImplicitParameter() ==(this.getStart()).getImplicitParameter()))
       {
          let  p = new Point2D(start.getMaxX(), end.getY() - CallNode.CALL_YGAP / 2);
@@ -805,11 +806,11 @@ class CallEdge extends SegmentedLineEdge
          a.push(new Point2D(start.getMaxX(), start.getY()));
          a.push(new Point2D(end.getX(), start.getY()));
       }
-      else     
+      else
       {
          let  d = new Direction(start.getX() - end.getX(), 0);
          endPoint = getEnd().getConnectionPoint(d);
-         
+
          if (start.getCenterX() < endPoint.getX())
             a.add(new Point2D.Double(start.getMaxX(),
                      endPoint.getY()));
@@ -843,7 +844,7 @@ class ReturnEdge extends SegmentedLineEdge
       {
          a.push(new Point2D(end.getX(), end.getY()));
          a.push(new Point2D(start.getMaxX(), end.getY()));
-      }      
+      }
       else if (start.getCenterX() < end.getCenterX())
       {
          a.push(new Point2D(start.getMaxX(), start.getMaxY()));
@@ -875,10 +876,6 @@ edge.setStartLabel("Start");
 //edge.setMiddleLabel("Middle");
 edge.setEndLabel("End");
 //edge.drawPositionedStrings();
-edge.setLineStyle(LineStyle.SOLID);	
-edge.setStartArrowHead(ArrowHead.BLACKDIAMOND);
-edge.setEndArrowHead(ArrowHead.BLACKDIAMOND);
-edge.setLineStyle(LineStyle.DOTTED);
 edge.draw();
 //console.log(edge);
 //let line=new Line2D(p1,p2);

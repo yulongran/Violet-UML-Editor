@@ -62,8 +62,8 @@
                 </button>
 
                 <!-- Right Arrow -->
-                <button class="btn btn-outline-success " type="button" data-toggle="tooltip" data-placement="bottom"
-                    title="Right Connection"><i class="fas fa-arrow-right toolbar-canvas"
+                <button class="btn btn-outline-success " id='callEdge' type="button" data-toggle="tooltip" data-placement="bottom"
+                    title="Call Edge"><i class="fas fa-arrow-right toolbar-canvas"
                         style="font-size: 50pt; padding-top:5px;"></i></button>
 
                 <!-- Left Arrow -->
@@ -78,11 +78,21 @@
             </form>
         </form>
     </nav>
-
     <!-- End of Nav bar -->
 
     <canvas id="myCanvas" class="w-100" height="100" style="border:1px solid #000000;">
-        <script type="text/javascript" src="static/script.js"></script>
+    <script type="text/javascript" src="static/Framework/AbstractNode.js"></script>
+    <script type="text/javascript" src="static/Framework/RectangularNode.js"></script>
+    <script type="text/javascript" src="static/Framework/AbstractEdge.js"></script>
+    <script type="text/javascript" src="static/Framework/SegmentedLineEdge.js"></script>
+    <script type="text/javascript" src="static/Framework/Graph.js"></script>
+    <script type="text/javascript" src="static/SequenceDiagramGraph.js"></script>
+    <script type="text/javascript" src="static/ImplicitParameterNode.js"></script>
+    <script type="text/javascript" src="static/CallNode.js"></script>
+    <script type="text/javascript" src="static/NoteNode.js"></script>
+    <script type="text/javascript" src="static/CallEdge.js"></script>
+    <script type="text/javascript" src="static/ReturnEdge.js"></script>
+    <script type="text/javascript" src="static/script.js"></script>
 
 
 </body>

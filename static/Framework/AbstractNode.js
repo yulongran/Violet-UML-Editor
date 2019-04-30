@@ -1,7 +1,7 @@
 class AbstractNode {
     constructor() {
         this.children = [];
-        parent = undefined;
+        this.parent = undefined;
         this.SHADOW_GAP = 4;
         this.SHADOW_COLOR = 'gray';
     }
@@ -34,9 +34,9 @@ class AbstractNode {
         }
     }
 
-    addNode(n, p) {
-        return false;
-    }
+    // addNode(n, p) {
+    //     return false;
+    // }
 
     getParent() {
         return this.parent;
@@ -50,8 +50,9 @@ class AbstractNode {
         return this.children;
     }
 
-    addChild(index, node) {
+    addChild2(index, node) {
         let oldParent = node.getParent();
+        console.log(node.getParent());
         if (oldParent === undefined) {
             oldParent.removeChild(node);
         }
@@ -60,7 +61,7 @@ class AbstractNode {
     }
 
     addChild(node) {
-        addChild(children.length, node);
+        this.addChild2(this.children.length, node);
     }
 
     removeChild(node) {
