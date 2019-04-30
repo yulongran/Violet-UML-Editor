@@ -234,3 +234,174 @@ class Direction
 */
 
 
+
+
+draw methods
+
+
+/*if(this.getStartArrowHead()=="V"){
+			
+			if(direction.getX()==1){			
+					const c=document.getElementById("myCanvas");
+					const ctx = c.getContext("2d");
+                    ctx.beginPath();
+					ctx.setLineDash([]);
+					ctx.moveTo(p1.getX(),p1.getY());
+					ctx.lineTo(p1.getX()+10,p1.getY()+10);
+					ctx.moveTo(p1.getX(),p1.getY());
+					ctx.lineTo(p1.getX()+10,p1.getY()-10);
+					ctx.stroke();
+				}
+				else{
+					const c=document.getElementById("myCanvas");
+					const ctx = c.getContext("2d");
+                    ctx.beginPath();
+					ctx.setLineDash([]);
+					ctx.moveTo(p1.getX(),p1.getY());
+					ctx.lineTo(p1.getX()-10,p1.getY()+10);
+					ctx.moveTo(p1.getX(),p1.getY());
+					ctx.lineTo(p1.getX()-10,p1.getY()-10);
+					ctx.stroke();					
+				}
+		}		
+		if(this.getEndArrowHead()=="V"){
+					if(direction.getX()==-1){			
+					const c=document.getElementById("myCanvas");
+					const ctx = c.getContext("2d");
+                    ctx.beginPath();
+					ctx.setLineDash([]);
+					ctx.moveTo(p2.getX(),p2.getY());
+					ctx.lineTo(p2.getX()+10,p2.getY()+10);
+					ctx.moveTo(p2.getX(),p2.getY());
+					ctx.lineTo(p2.getX()+10,p2.getY()-10);
+					ctx.stroke();
+				}
+				else{
+					const c=document.getElementById("myCanvas");
+					const ctx = c.getContext("2d");
+                    ctx.beginPath();
+					ctx.setLineDash([]);
+					ctx.moveTo(p2.getX(),p2.getY());
+					ctx.lineTo(p2.getX()-10,p2.getY()+10);
+					ctx.moveTo(p2.getX(),p2.getY());
+					ctx.lineTo(p2.getX()-10,p2.getY()-10);
+					ctx.stroke();					
+				}
+		}
+		if(this.getStartArrowHead()=="triangle"){
+				if(direction.getX()==1){			
+					const c=document.getElementById("myCanvas");
+					const ctx = c.getContext("2d");
+                    ctx.beginPath();
+					ctx.setLineDash([]);
+					ctx.moveTo(p1.getX(),p1.getY());
+					ctx.lineTo(p1.getX()+10,p1.getY()+10);
+					ctx.moveTo(p1.getX(),p1.getY());
+					ctx.lineTo(p1.getX()+10,p1.getY()-10);
+					ctx.lineTo(p1.getX()+10,p1.getY()+10);
+					ctx.stroke();
+				}
+				else{
+					const c=document.getElementById("myCanvas");
+					const ctx = c.getContext("2d");
+					ctx.beginPath();
+					ctx.moveTo(p1.getX(),p1.getY());
+					ctx.lineTo(p1.getX()-10,p1.getY()+10);
+					ctx.moveTo(p1.getX(),p1.getY());
+					ctx.lineTo(p1.getX()-10,p1.getY()-10);
+					ctx.lineTo(p1.getX()-10,p1.getY()+10);
+					ctx.stroke();					
+				}
+		}
+		if(this.getEndArrowHead()=="triangle"){
+				if(direction.getX()==-1){			
+					const c=document.getElementById("myCanvas");
+					const ctx = c.getContext("2d");
+                    ctx.beginPath();
+					ctx.setLineDash([]);
+					ctx.moveTo(p2.getX(),p2.getY());
+					ctx.lineTo(p2.getX()+10,p2.getY()+10);
+					ctx.moveTo(p2.getX(),p2.getY());
+					ctx.lineTo(p2.getX()+10,p2.getY()-10);
+					ctx.lineTo(p2.getX()+10,p2.getY()+10);
+					ctx.stroke();
+				}
+				else{
+					const c=document.getElementById("myCanvas");
+					const ctx = c.getContext("2d");
+					ctx.beginPath();
+					ctx.moveTo(p2.getX(),p2.getY());
+					ctx.lineTo(p2.getX()-10,p2.getY()+10);
+					ctx.moveTo(p2.getX(),p2.getY());
+					ctx.lineTo(p2.getX()-10,p2.getY()-10);
+					ctx.lineTo(p2.getX()-10,p2.getY()+10);
+					ctx.stroke();					
+				}
+		}
+		if(this.getStartArrowHead()=="diamond"||this.getStartArrowHead()=="blackdiamond"){
+					const c=document.getElementById("myCanvas");
+					const ctx = c.getContext("2d");
+					
+					if(direction.getX()==1){
+					
+					ctx.setLineDash([]);
+					ctx.beginPath();
+					ctx.moveTo(p1.getX(),p1.getY());
+					ctx.lineTo(p1.getX()+10,p1.getY()+10);
+					ctx.moveTo(p1.getX(),p1.getY());
+					ctx.lineTo(p1.getX()+10,p1.getY()-10);
+					ctx.lineTo(p1.getX()+20,p1.getY());
+					ctx.lineTo(p1.getX()+10,p1.getY()+10);
+					}
+					else{
+					ctx.setLineDash([]);
+					ctx.beginPath();
+					ctx.moveTo(p1.getX(),p1.getY());
+					ctx.lineTo(p1.getX()-10,p1.getY()+10);
+					ctx.moveTo(p1.getX(),p1.getY());
+					ctx.lineTo(p1.getX()-10,p1.getY()-10);
+					ctx.lineTo(p1.getX()-20,p1.getY());
+					ctx.lineTo(p1.getX()-10,p1.getY()+10);	
+					}
+					if(this.getStartArrowHead()=="diamond"){
+						ctx.fillStyle="white";
+					}
+						ctx.fill();
+						ctx.fillStyle="black";
+						ctx.stroke();
+		}
+		if(this.getEndArrowHead()=="diamond"||this.getEndArrowHead()=="blackdiamond"){
+					const c=document.getElementById("myCanvas");
+					const ctx = c.getContext("2d");
+					if(direction.getX()==-1){
+					ctx.setLineDash([]);
+					ctx.beginPath();
+					ctx.moveTo(p2.getX(),p2.getY());
+					ctx.lineTo(p2.getX()+10,p2.getY()+10);
+					ctx.moveTo(p2.getX(),p2.getY());
+					ctx.lineTo(p2.getX()+10,p2.getY()-10);
+					ctx.lineTo(p2.getX()+20,p2.getY());
+					ctx.lineTo(p2.getX()+10,p2.getY()+10);
+					}
+					else{
+					ctx.setLineDash([]);
+					ctx.beginPath();
+					ctx.moveTo(p2.getX(),p2.getY());
+					ctx.lineTo(p2.getX()-10,p2.getY()+10);
+					ctx.moveTo(p2.getX(),p2.getY());
+					ctx.lineTo(p2.getX()-10,p2.getY()-10);
+					ctx.lineTo(p2.getX()-20,p2.getY());
+					ctx.lineTo(p2.getX()-10,p2.getY()+10);	
+					}
+					if(this.getEndArrowHead()=="diamond"){
+						ctx.fillStyle="white";
+					}
+						ctx.fill();
+						ctx.fillStyle="black";
+						ctx.stroke();
+		}
+		else{}
+		
+		*/
+
+
