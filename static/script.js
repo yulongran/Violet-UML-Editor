@@ -1197,14 +1197,15 @@ class NoteNode extends RectangularNode {
 				g.removeNode(e.getEnd());
     }
 
-    layout(g, g2, grid) //graph, Graphics2D, Grid
+    layout()
     {
-			// let b = this.text.getBounds(g2); //Rectangle2D obj, getMultiLineBounds(name, g2);
-			// let bounds = getBounds(); //Rectangle2D
-			// b = new Rectangle2D(bounds.getX(), bounds.getY(),
-					// Math.max(b.getWidth(), DEFAULT_WIDTH), Math.max(b.getHeight(), DEFAULT_HEIGHT));
-			// grid.snap(b);
-			// setBounds(b);
+			let b = ctx.measureText(this.text);
+			let bw = ctx.measureText(this.text).width;
+			let bh = 12; //parseInt(ctx.font);
+			let bounds = super.getBounds();
+			b = new Rectangle2D(bounds.getX(), bounds.getY(),
+					Math.max(bw, this.DEFAULT_WIDTH), Math.max(bh, this.DEFAULT_HEIGHT));
+			super.setBounds(b);
     }
 
     /**
@@ -1278,7 +1279,7 @@ class NoteNode extends RectangularNode {
 				this.DEFAULT_WIDTH += 25;
 			}
 			ctx.fillStyle = 'black';
-      ctx.font = '12px Arial';
+      ctx.font = '12pt Arial';
 			ctx.fillText(this.text, super.getBounds().getX() + 10, super.getBounds().getY() + 25);
 			ctx.stroke();
     }
