@@ -1,10 +1,11 @@
+
 class ImplicitParameterNode extends RectangularNode {
-       DEFAULT_WIDTH = 80;
-       DEFAULT_HEIGHT = 120;
-       DEFAULT_TOP_HEIGHT = 60
     constructor() {
         super();
-        this.name =""; // MultiLineString
+        this.name = "Hello World" // MultiLineString
+        this.DEFAULT_WIDTH = 80;
+        this.DEFAULT_HEIGHT = 120;
+        this.DEFAULT_TOP_HEIGHT = 60;
         super.setBounds(new Rectangle2D(0, 0, this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT));
         this.topHeight = this.DEFAULT_TOP_HEIGHT;
     }
@@ -17,12 +18,11 @@ class ImplicitParameterNode extends RectangularNode {
 
     draw() {
         let top = this.getTopRectangle();
-        let textWidth=ctx.measureText(this.name).width;
-        let copyBounds= super.getBounds();
-        if(textWidth+10 > top.width)
-        {
-          super.getBounds().width= textWidth+30;
-          top=this.getTopRectangle();
+        let textWidth = ctx.measureText(this.name).width;
+        let copyBounds = super.getBounds();
+        if (textWidth + 10 > top.width) {
+            super.getBounds().width = textWidth + 30;
+            top = this.getTopRectangle();
         }
         top.draw();
         let xmid = super.getBounds().getCenterX();
@@ -37,8 +37,20 @@ class ImplicitParameterNode extends RectangularNode {
 
     }
 
-    getTopRectangle() {
+    drawToolBar(ctx) {
+        super.getBounds().width = TOOLBAR_WIDTH;
+        let top = this.getTopRectangle();
+        top.drawToolBar(ctx);
+        let xmid = super.getBounds().getCenterX();
+        ctx.beginPath();
+        ctx.setLineDash([20, 12]);/*dashes are 5px and spaces are 3px*/
+        ctx.moveTo(xmid, top.getMaxY());
+        ctx.strokeStyle = "#FFFFFF";
+        ctx.lineTo(xmid, TOOLBAR_HEIGHT);
+        ctx.stroke()
+    }
 
+    getTopRectangle() {
         let tRectangle = new Rectangle2D(super.getBounds().getX(), super.getBounds().getY(), super.getBounds().getWidth(), this.topHeight);
         return tRectangle;
     }
@@ -78,21 +90,20 @@ class ImplicitParameterNode extends RectangularNode {
     }
 
     clone() {
-      let myImplicitParameterNode = new ImplicitParameterNode();
-      let cloned = {};
-      Object.assign(cloned , myImplicitParameterNode);
-      return cloned;
+        let myImplicitParameterNode = new ImplicitParameterNode();
+        let cloned = {};
+        Object.assign(cloned, myImplicitParameterNode);
+        return cloned;
     }
 
     addNode(n, p) {
         return n instanceof CallNode //|| typeof n === PointNode;
     }
 
-    getPropertySheet()
-    {
-      let copyName= this.name;
-      return{
-        name:copyName,
-      }
+    getPropertySheet() {
+        let copyName = this.name;
+        return {
+            name: copyName,
+        }
     }
 }

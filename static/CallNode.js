@@ -1,18 +1,68 @@
 class CallNode extends RectangularNode {
-     implicitParameter;
-     signaled;
-     openBottom=false;
-     DEFAULT_WIDTH = 16;
-     DEFAULT_HEIGHT = 30;
-     CALL_YGAP = 20;
     constructor() {
         super();
+        this.implicitParameter;
+        this.signaled;
+        this.openBottom = false;
+        this.DEFAULT_WIDTH = 16;
+        this.DEFAULT_HEIGHT = 30;
+        this.CALL_YGAP = 20;
         super.setBounds(new Rectangle2D(0, 0, this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT));
 
     }
     draw() {
         let rec = super.getBounds();
         rec.draw();
+        if (this.openBottom) {
+            b = super.getBounds();
+            var x1 = b.getX();
+            var x2 = x1 + b.getWidth();
+            var y1 = b.getY();
+            var y3 = y1 + b.getHeight();
+            var y2 = y3 - CALL_YGAP;
+
+            // Draw line1
+            ctx.beginPath();
+            ctx.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y1);
+            ctx.stroke()
+
+            // Draw line2
+            ctx.beginPath();
+            ctx.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke()
+
+            // Draw line3
+            ctx.beginPath();
+            ctx.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
+            ctx.moveTo(x2, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke()
+
+            // Draw line4
+            ctx.beginPath();
+            ctx.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
+            ctx.moveTo(x1, y2);
+            ctx.lineTo(x1, y3);
+            ctx.stroke()
+
+            // Draw line4
+            ctx.beginPath();
+            ctx.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2, y3);
+            ctx.stroke()
+        }
+    }
+
+    drawToolBar(ctx) {
+        super.getBounds().width = TOOLBAR_WIDTH;
+        super.getBounds().height = TOOLBAR_HEIGHT;
+        let rec = super.getBounds();
+        rec.drawToolBar(ctx);
         if (this.openBottom) {
             b = super.getBounds();
             var x1 = b.getX();
@@ -135,6 +185,7 @@ class CallNode extends RectangularNode {
         if (e.getStart() === this) {
             removeChild(e.getEnd());
         }
+        super.removeEdge(g, e);
     }
 
     removeNode(g, n) {
@@ -222,13 +273,12 @@ class CallNode extends RectangularNode {
         this.openBottom = newValue;
     }
 
-    getPropertySheet()
-    {
-      let copyOpenBottom= this.openBottom;
-      let copyImplicitParameter= this.implicitParameter;
-      return{
-        openBottom: copyOpenBottom,
-      }
+    getPropertySheet() {
+        let copyOpenBottom = this.openBottom;
+        let copyImplicitParameter = this.implicitParameter;
+        return {
+            openBottom: copyOpenBottom,
+        }
     }
 
 
