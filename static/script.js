@@ -11,9 +11,9 @@ canvas.width = canvas.clientWidth
 canvas.height = canvas.clientHeight
 
 // Keep track if the callNode button in the tool is pressed
-var callNode_button = false
+var callNode_button = false;
 var implicitParameterNode_button = false;
-var addNote_button = false
+var addNote_button = false;
 var selected_button = false;
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -70,6 +70,12 @@ document.addEventListener('DOMContentLoaded', function () {
             callNode_button = false;
             addNote = false
         }
+				
+				if (addNote_button === true && selected_shape === undefined) {
+            let n1 = new NoteNode()
+            graph.add(n1, mousePoint);
+        }
+				
         // If we unselected, the callNode button get reset
         if (selected_shape !== undefined) {
             dragStartPoint = mousePoint
@@ -1167,39 +1173,39 @@ class CallNode extends RectangularNode {
 class NoteNode extends RectangularNode {
 
     constructor() {
-        super();
-        this.DEFAULT_WIDTH = 60;
-        this.DEFAULT_HEIGHT = 40;
-        this.FOLD_X = 8;
-        this.FOLD_Y = 8;
-        this.color = "yellow";
-        this.text = "";
-        this.setBounds(new Rectangle2D(0, 0, this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT));
-        //text.setJustification(MultiLineString.LEFT);
+			super();
+			this.DEFAULT_WIDTH = 60;
+			this.DEFAULT_HEIGHT = 40;
+			this.FOLD_X = 8;
+			this.FOLD_Y = 8;
+			this.color = "yellow";
+			this.text = "Text";
+			this.setBounds(new Rectangle2D(0, 0, this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT));
+			//text.setJustification(MultiLineString.LEFT);
     }
 
     addEdge(e, p1, p2) //edge, Point2D, Point2D
     {
-        const end = new PointNode();
-        end.translate(p2.getX(), p2.getY());
-        e.connect(this, end);
-        return super.addEdge(e, p1, p2);
+			const end = new PointNode();
+			end.translate(p2.getX(), p2.getY());
+			e.connect(this, end);
+			return super.addEdge(e, p1, p2);
     }
 
     removeEdge(g, e) //graph, edge
     {
-        if (e.getStart() == this)
-            g.removeNode(e.getEnd());
+			if (e.getStart() == this)
+				g.removeNode(e.getEnd());
     }
 
     layout(g, g2, grid) //graph, Graphics2D, Grid
     {
-        let b = text.getBounds(g2); //Rectangle2D obj, getMultiLineBounds(name, g2);
-        let bounds = getBounds(); //Rectangle2D
-        b = new Rectangle2D(bounds.getX(), bounds.getY(),
-            Math.max(b.getWidth(), DEFAULT_WIDTH), Math.max(b.getHeight(), DEFAULT_HEIGHT));
-        grid.snap(b);
-        setBounds(b);
+			// let b = this.text.getBounds(g2); //Rectangle2D obj, getMultiLineBounds(name, g2);
+			// let bounds = getBounds(); //Rectangle2D
+			// b = new Rectangle2D(bounds.getX(), bounds.getY(),
+					// Math.max(b.getWidth(), DEFAULT_WIDTH), Math.max(b.getHeight(), DEFAULT_HEIGHT));
+			// grid.snap(b);
+			// setBounds(b);
     }
 
     /**
@@ -1207,7 +1213,7 @@ class NoteNode extends RectangularNode {
      @return the text inside the note
 		*/
     getText() {
-        return this.text;
+			return this.text;
     }
 
     /**
@@ -1215,7 +1221,7 @@ class NoteNode extends RectangularNode {
        @param newValue the text inside the note
     */
     setText(newValue) {
-        this.text = newValue;
+			this.text = newValue;
     }
 
     /**
@@ -1223,7 +1229,7 @@ class NoteNode extends RectangularNode {
        @return the background color of the note
     */
     getColor() {
-        return this.color;
+			return this.color;
     }
 
     /**
@@ -1231,52 +1237,89 @@ class NoteNode extends RectangularNode {
        @param newValue the background color of the note
     */
     setColor(newValue) {
-        this.color = newValue;
+			this.color = newValue;
     }
 
     draw() {
-        // super.draw();
-        // Color oldColor = g2.getColor();
-        // g2.setColor(color);
-
-        // let path = getShape(); //Shape obj
-        // g2.fill(path);
-        // g2.setColor(oldColor);
-        // g2.draw(path);
-
-        // let bounds = getBounds(); //Rectangle2D obj
-        // let fold = new GeneralPath();
-        // fold.moveTo((bounds.getMaxX() - FOLD_X), bounds.getY());
-        // fold.lineTo(bounds.getMaxX() - FOLD_X, bounds.getY() + FOLD_X);
-        // fold.lineTo(bounds.getMaxX(), (bounds.getY() + FOLD_Y));
-        // fold.closePath();
-        // oldColor = g2.getColor();
-        // g2.setColor(g2.getBackground());
-        // g2.fill(fold);
-        // g2.setColor(oldColor);
-        // g2.draw(fold);
-
-        // text.draw(g2, getBounds());
+			// super.draw();
+			// let textWidth = ctx.measureText(this.text).width;
+			// ctx.beginPath();
+			// ctx.moveTo(0,0);
+			// ctx.lineTo(this.DEFAULT_WIDTH, 0);
+			// ctx.lineTo(this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT);
+			// ctx.lineTo(0, this.DEFAULT_HEIGHT);
+			// ctx.moveTo(this.DEFAULT_WIDTH*3/4, 0); //fold
+			// ctx.lineTo(this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT/4);
+			// ctx.fillStyle = this.color;
+			// ctx.fill();
+			// ctx.stroke();
+			// ctx.font = "8px Arial";
+			// ctx.fillText(this.text, this.DEFAULT_WIDTH, this.DEFAULT_WIDTH);
+			
+			let ctx = canvas.getContext('2d');
+			ctx.fillStyle = this.color;
+			ctx.fillRect(super.getBounds().getX(), super.getBounds().getY(), 
+				this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT);
+			ctx.strokeRect(super.getBounds().getX(), super.getBounds().getY(), 
+				this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT);
+			ctx.beginPath(); //fold
+			ctx.clearRect(super.getBounds().getX() + this.DEFAULT_WIDTH*3/4, 
+				super.getBounds().getY() - 1, this.DEFAULT_WIDTH/4 + 1, this.DEFAULT_HEIGHT/4);
+			ctx.moveTo(super.getBounds().getX() + this.DEFAULT_WIDTH*3/4, 
+				super.getBounds().getY());
+			ctx.lineTo(super.getBounds().getX() + this.DEFAULT_WIDTH, 
+				super.getBounds().getY() + this.DEFAULT_HEIGHT/4);
+			ctx.lineTo(super.getBounds().getX() + this.DEFAULT_WIDTH*3/4, 
+				super.getBounds().getY() + this.DEFAULT_HEIGHT/4);
+			ctx.closePath();
+			ctx.fillStyle = 'black'; //text
+      ctx.font = '12px Arial';
+			ctx.fillText(this.text, super.getBounds().getX() + 10, super.getBounds().getY() + 25);
+			ctx.stroke();
     }
-
+		
+		drawToolBar(ctx) {
+			// ctx.beginPath();
+			// ctx.moveTo(0,0);
+			// ctx.lineTo(this.DEFAULT_WIDTH*4, 0);
+			// ctx.lineTo(this.DEFAULT_WIDTH*4, this.DEFAULT_HEIGHT*4);
+			// ctx.lineTo(0, this.DEFAULT_HEIGHT*4);
+			// ctx.moveTo(this.DEFAULT_WIDTH*3, 0); //fold
+			// ctx.lineTo(this.DEFAULT_WIDTH*4, this.DEFAULT_HEIGHT);
+			// ctx.fillStyle = this.color;
+			// ctx.fill();
+			// ctx.stroke();
+			ctx.fillStyle = this.color;
+			ctx.fillRect(super.getBounds().getX(), super.getBounds().getY(), 
+				this.DEFAULT_WIDTH*4, this.DEFAULT_HEIGHT*2);
+			ctx.strokeRect(super.getBounds().getX(), super.getBounds().getY(), 
+				this.DEFAULT_WIDTH*4, this.DEFAULT_HEIGHT*2);
+			ctx.beginPath(); //fold
+			ctx.moveTo(super.getBounds().getX() + this.DEFAULT_WIDTH*3, 
+				super.getBounds().getY());
+			ctx.lineTo(super.getBounds().getX() + this.DEFAULT_WIDTH*4, 
+				super.getBounds().getY() + this.DEFAULT_HEIGHT/2);
+			ctx.stroke();
+    }
+		
     getShape() {
-        let bounds = getBounds(); //Rectangle2D obj
-        let path = new GeneralPath(); //GeneralPath obj
-        path.moveTo(bounds.getX(), bounds.getY());
-        path.lineTo((bounds.getMaxX() - FOLD_X), bounds.getY());
-        path.lineTo(bounds.getMaxX(), bounds.getY() + FOLD_Y);
-        path.lineTo(bounds.getMaxX(), bounds.getMaxY());
-        path.lineTo(bounds.getX(), bounds.getMaxY());
-        path.closePath();
-        return path; //shape drawn
+			let bounds = getBounds(); //Rectangle2D obj
+			let path = new GeneralPath(); //GeneralPath obj
+			path.moveTo(bounds.getX(), bounds.getY());
+			path.lineTo((bounds.getMaxX() - FOLD_X), bounds.getY());
+			path.lineTo(bounds.getMaxX(), bounds.getY() + FOLD_Y);
+			path.lineTo(bounds.getMaxX(), bounds.getMaxY());
+			path.lineTo(bounds.getX(), bounds.getMaxY());
+			path.closePath();
+			return path; //shape drawn
     }
 
     clone() {
-        //let cloned = (NoteNode)super.clone();
-        //cloned.text = (String)text.clone();
-        let cloned = new NoteNode();
-        cloned.text = this.text();
-        return cloned;
+			//let cloned = (NoteNode)super.clone();
+			//cloned.text = (String)text.clone();
+			let cloned = new NoteNode();
+			cloned.text = this.text();
+			return cloned;
     }
 }
 // Action listener for jquery
@@ -1287,13 +1330,18 @@ $('#ImplicitParameterNode').on('click', function () {
 $('#callNode').on('click', function () {
     callNode_button = true
     implicitParameterNode_button = false
-
 })
+
+$('#addNote').on('click', function () {
+    addNote_button = true
+		implicitParameterNode_button = false
+})
+
 // Set all other button to false
 $('#Select').on('click', function () {
     callNode_button = false;
-    implicitParameterNode_button = false
-
+    implicitParameterNode_button = false;
+		addNote_button = false;
 })
 
 $(document).ready(function () {
@@ -1316,9 +1364,9 @@ $(document).ready(function () {
     }
 
     function drawNoteNodeToolBar() {
-        // let n = new NoteNode();
-        // var canvas = document.getElementById("NoteNodeToolBar");
-        // var ctx = canvas.getContext("2d");
-        // n.drawToolBar(ctx)
+        let n = new NoteNode();
+        var canvas = document.getElementById("NoteNodeToolBar");
+        var ctx = canvas.getContext("2d");
+        n.drawToolBar(ctx)
     }
 });
