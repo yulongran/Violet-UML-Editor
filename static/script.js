@@ -10,15 +10,17 @@ const TOOLBAR_HEIGHT = 350
 canvas.width = canvas.clientWidth
 canvas.height = canvas.clientHeight
 
-// Keep track if the callNode button in the tool is pressed
+// List of button variables
 var callNode_button = false;
 var implicitParameterNode_button = false;
 var addNote_button = false;
 var selected_button = false;
+var callEdge_button=false;
 
 document.addEventListener('DOMContentLoaded', function () {
     const graph = new SequenceDiagramGraph()
     let selected_shape;
+    let selected_edge;
     let dragStartPoint
     graph.draw();
 
@@ -44,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     canvas.addEventListener('dblclick', event => {
         let mousePoint = mouseLocation(event)
         selected_shape = graph.findNode(mousePoint);
+        selected_edge  = graph.findEdge(mousePoint);
         if (selected_shape !== undefined) {
             createPopUp(selected_shape.getPropertySheet(),graph);
             openForm();
@@ -53,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
     canvas.addEventListener('mousedown', event => {
         let mousePoint = mouseLocation(event)
         selected_shape = graph.findNode(mousePoint);
+        selected_edge  = graph.findEdge(mousePoint);
 
         // If the implicitParameterNode_button button is pressed in the toolbar
         if (implicitParameterNode_button === true && selected_shape === undefined) {
@@ -93,9 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
     canvas.addEventListener('mousemove', event => {
         if (dragStartPoint === undefined) return
         let mousePoint = mouseLocation(event)
-        if (selected_shape !== undefined) {
+        if (selected_shape !== undefined && !callEdge_button) {
             const bounds = selected_shape.getBounds()
-
             selected_shape.translate(
                 dragStartBounds.x - bounds.x +
                 mousePoint.x - dragStartPoint.x,
@@ -106,8 +109,16 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     canvas.addEventListener('mouseup', event => {
-        dragStartPoint = undefined
-        dragStartBounds = undefined
+        mousePoint = mouseLocation(event)
+        if(callEdge_button)
+        {
+           let e = new CallEdge();
+           let d=graph.connect(e, dragStartPoint, mousePoint);
+           console.log(d);
+        }
+        dragStartPoint = undefined;
+        dragStartBounds = undefined;
+        repaint();
     })
 })
 
@@ -528,6 +539,19 @@ $('#Select').on('click', function () {
     addNote_button = false;
 
     $("#Select").addClass("active")
+    $("#ImplicitParameterNode").removeClass("active")
+    $("#callNode").removeClass("active")
+    $("#addNote").removeClass("active")
+})
+
+// Set all other button to false
+$('#callEdge').on('click', function () {
+    callEdge_button = true;
+    callNode_button = false;
+    implicitParameterNode_button = false;
+    addNote_button = false;
+
+  //  $("#Select").addClass("active")
     $("#ImplicitParameterNode").removeClass("active")
     $("#callNode").removeClass("active")
     $("#addNote").removeClass("active")
