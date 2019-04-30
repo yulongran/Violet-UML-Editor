@@ -1169,7 +1169,6 @@ class CallNode extends RectangularNode {
 
 }
 
-//WIP
 class NoteNode extends RectangularNode {
 
     constructor() {
@@ -1272,7 +1271,13 @@ class NoteNode extends RectangularNode {
 			ctx.lineTo(super.getBounds().getX() + this.DEFAULT_WIDTH*3/4, 
 				super.getBounds().getY() + this.DEFAULT_HEIGHT/4);
 			ctx.closePath();
-			ctx.fillStyle = 'black'; //text
+			
+			let textWidth = ctx.measureText(this.text).width; //text
+			if (textWidth + 10 > this.DEFAULT_WIDTH){
+				super.getBounds().width = textWidth + 25;
+				this.DEFAULT_WIDTH += 25;
+			}
+			ctx.fillStyle = 'black';
       ctx.font = '12px Arial';
 			ctx.fillText(this.text, super.getBounds().getX() + 10, super.getBounds().getY() + 25);
 			ctx.stroke();
