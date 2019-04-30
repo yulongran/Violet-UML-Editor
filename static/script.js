@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let mousePoint = mouseLocation(event)
         selected_shape = graph.findNode(mousePoint);
         if (selected_shape !== undefined) {
-            createPopUp(selected_shape.getPropertySheet(), selected_shape, graph);
+            createPopUp(selected_shape.getPropertySheet(),graph);
             openForm();
         }
     })
@@ -116,10 +116,9 @@ document.addEventListener('DOMContentLoaded', function () {
 /**
 https://www.w3schools.com/howto/howto_css_login_form.asp
 **/
-function createPopUp(propertySheet, n, g) {
+function createPopUp(propertySheet, g) {
     let propertyName = Object.getOwnPropertyNames(propertySheet);
     let propertyValue = Object.values(propertySheet);
-    let oldName = n.name;
     var div = document.createElement('div');
     div.id = "myForm";
     div.class = "form-popup";
@@ -139,25 +138,33 @@ function createPopUp(propertySheet, n, g) {
 
     for (let i = 0; i < propertyName.length; i++) {
         // For loop for label
-        var label = document.createElement("Label");
-        label.for = "email"
-        label.innerHTML = propertyName[i];
-        form.appendChild(label);
-        var input = document.createElement("input");
-        input.placeholder = propertyValue[i];
-        input.name = propertyName[i];
-        input.id = propertyName[i];
-        input.style.width = "100%";
-        input.style.padding = "15px";
-        input.style.margin = "5px 0 22px 0";
-        input.style.border = "none";
-        input.style.background = "#f1f1f1";
-        input.oninput = function () {
-            ctx.clearRect(0, 0, canvas.width, canvas.height)
-            n.setName(document.getElementById(propertyName[i]).value);
-            g.draw();
+        if(typeof propertySheet[propertyName[i]] !== 'function')
+        {
+          var label = document.createElement("Label");
+          label.for = "email"
+          label.innerHTML = propertyName[i];
+          form.appendChild(label);
+          var input = document.createElement("input");
+          input.placeholder = propertyValue[i];
+          input.name = propertyName[i];
+          input.id = propertyName[i];
+          input.style.width = "100%";
+          input.style.padding = "15px";
+          input.style.margin = "5px 0 22px 0";
+          input.style.border = "none";
+          input.style.background = "#f1f1f1";
         }
-        form.appendChild(input);
+        else if(typeof propertySheet[propertyName[i]] === 'function')
+        {
+          let setName = propertySheet[propertyName[i]];
+          input.oninput = function()
+          {
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            propertySheet[propertyName[i]](input.value)
+            g.draw();
+          }
+          form.appendChild(input);
+        }
     }
 
     var submit = document.createElement("button");
@@ -174,8 +181,8 @@ function createPopUp(propertySheet, n, g) {
     submit.style.marginBottom = "10px";
     submit.style.opacity = "0.8";
     submit.onclick = function () {
-        closeForm();
-        g.draw();
+    closeForm();
+    g.draw();
     }
 
     var close = document.createElement('button');
@@ -191,8 +198,7 @@ function createPopUp(propertySheet, n, g) {
     close.style.marginBottom = "10px";
     close.style.opacity = "0.8";
     close.onclick = function () {
-        n.setName(oldName);
-        g.draw();
+      g.draw();
         closeForm();
     }
     form.appendChild(close);

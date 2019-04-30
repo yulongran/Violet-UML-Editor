@@ -96,7 +96,6 @@ class SequenceDiagramGraph extends Graph {
                 n.draw();
             }
         }
-
         let edges = super.getEdges();
         for (let i = 0; i < edges.length; i++) {
             e.draw();

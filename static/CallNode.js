@@ -275,9 +275,13 @@ class CallNode extends RectangularNode {
 
     getPropertySheet() {
         let copyOpenBottom = this.openBottom;
-        let copyImplicitParameter = this.implicitParameter;
+        var myNode= this;
         return {
             openBottom: copyOpenBottom,
+            setOpenBottom()
+            {
+              return myNode.setOpenBottom();
+            },
         }
     }
 
