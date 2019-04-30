@@ -19,7 +19,7 @@ class RectangularNode extends AbstractNode {
     }
 
     contains(p) {
-        if (p.x > this.bounds.x && p.x < this.bounds.x + this.bounds.width && p.y > this.bounds.y && p.y < this.y + this.bounds.height) {
+        if (this.bounds.contains(p)) {
             return true
         }
         return undefined

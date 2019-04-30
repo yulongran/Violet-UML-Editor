@@ -1,10 +1,10 @@
 class ImplicitParameterNode extends RectangularNode {
+       DEFAULT_WIDTH = 80;
+       DEFAULT_HEIGHT = 120;
+       DEFAULT_TOP_HEIGHT = 60
     constructor() {
         super();
-        this.name = "Hello World" // MultiLineString
-        this.DEFAULT_WIDTH = 80;
-        this.DEFAULT_HEIGHT = 120;
-        this.DEFAULT_TOP_HEIGHT = 60;
+        this.name =""; // MultiLineString
         super.setBounds(new Rectangle2D(0, 0, this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT));
         this.topHeight = this.DEFAULT_TOP_HEIGHT;
     }

@@ -1,12 +1,12 @@
 class CallNode extends RectangularNode {
+     implicitParameter;
+     signaled;
+     openBottom=false;
+     DEFAULT_WIDTH = 16;
+     DEFAULT_HEIGHT = 30;
+     CALL_YGAP = 20;
     constructor() {
         super();
-        this.implicitParameter;
-        this.signaled;
-        this.openBottom=false;
-        this.DEFAULT_WIDTH = 16;
-        this.DEFAULT_HEIGHT = 30;
-        this.CALL_YGAP = 20;
         super.setBounds(new Rectangle2D(0, 0, this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT));
 
     }
