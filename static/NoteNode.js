@@ -135,7 +135,7 @@ class NoteNode extends RectangularNode {
         cloned.text = this.text();
         return cloned;
     }
-		
+
 		getPropertySheet() {
 			let copyText = this.text;
 			let copyColor = this.color;
