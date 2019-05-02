@@ -639,13 +639,13 @@ $(document).ready(function () {
         let n = new CallNode();
         var canvas = document.getElementById("CallNodeToolBar");
         var ctx = canvas.getContext("2d");
-        n.drawToolBar()
+        n.drawToolBar(ctx)
     }
 
     function drawNoteNodeToolBar() {
         let n = new NoteNode();
         var canvas = document.getElementById("NoteNodeToolBar");
         var ctx = canvas.getContext("2d");
-        n.drawToolBar()
+        n.drawToolBar(ctx)
     }
 });
