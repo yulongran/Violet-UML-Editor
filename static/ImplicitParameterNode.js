@@ -100,12 +100,12 @@ class ImplicitParameterNode extends RectangularNode {
         return n instanceof CallNode //|| typeof n === PointNode;
     }
 
-    getPropertySheet() {
+    getProperty() {
         let copyName = this.name;
         var myNode= this;
         return {
             name: copyName,
-            //editorname
+            inputBox: [copyName],
             setName(n)
             {
               myNode.setName(n);

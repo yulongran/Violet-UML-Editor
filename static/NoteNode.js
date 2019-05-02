@@ -135,22 +135,25 @@ class NoteNode extends RectangularNode {
         cloned.text = this.text();
         return cloned;
     }
-
-		getPropertySheet() {
-			let copyText = this.text;
+    getProperty() {
+      let copyText = this.text;
 			let copyColor = this.color;
 			var myNode = this;
         return {
-            Text: copyText,
+            text: copyText,
+            inputBox: copyText,
             setText(n)
             {
               myNode.setText(n);
             },
-						// Color: copyColor,
-						// setColor(n)
-						// {
-							// myNode.setColor(n);
-						// },
+            Color: copyColor,
+            selectBar: [copyColor, "AliceBlue", "AntiqueWhite", "Azure", "Beige",
+            "Snow", "Silver", "SeaGreen", "SlateBlue", "Salmon"
+          ,"RoyalBlue", "Pink" ,"PeachPuff",],
+            setColor(c)
+            {
+              myNode.setColor(c);
+            },
         }
     }
 }

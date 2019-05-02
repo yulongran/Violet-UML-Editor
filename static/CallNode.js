@@ -14,7 +14,7 @@ class CallNode extends RectangularNode {
         let rec = super.getBounds();
         rec.draw();
         if (this.openBottom) {
-            b = super.getBounds();
+            let b = super.getBounds();
             var x1 = b.getX();
             var x2 = x1 + b.getWidth();
             var y1 = b.getY();
@@ -64,12 +64,12 @@ class CallNode extends RectangularNode {
         let rec = super.getBounds();
         rec.drawToolBar(ctx);
         if (this.openBottom) {
-            b = super.getBounds();
+            let b = super.getBounds();
             var x1 = b.getX();
             var x2 = x1 + b.getWidth();
             var y1 = b.getY();
             var y3 = y1 + b.getHeight();
-            var y2 = y3 - CALL_YGAP;
+            var y2 = y3 - this.CALL_YGAP;
 
             // Draw line1
             ctx.beginPath();
@@ -246,7 +246,7 @@ class CallNode extends RectangularNode {
             }
         }
         if (this.openBottom) {
-            tyop += 2 * this.CALL_YGAP;
+            ytop += 2 * this.CALL_YGAP;
         }
         let b = super.getBounds();
         var minHeight = this.DEFAULT_HEIGHT;
@@ -274,14 +274,15 @@ class CallNode extends RectangularNode {
         this.openBottom = newValue;
     }
 
-    getPropertySheet() {
+    getProperty() {
         let copyOpenBottom = this.openBottom;
         var myNode= this;
         return {
             openBottom: copyOpenBottom,
-            setOpenBottom()
+            selectBar: [copyOpenBottom, !copyOpenBottom],
+            setOpenBottom(newValue)
             {
-              return myNode.setOpenBottom();
+              return myNode.setOpenBottom(newValue);
             },
         }
     }

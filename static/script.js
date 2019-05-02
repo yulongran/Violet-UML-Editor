@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
         selected_shape = graph.findNode(mousePoint);
         selected_edge  = graph.findEdge(mousePoint);
         if (selected_shape !== undefined) {
-            createPopUp(selected_shape.getPropertySheet(),graph);
+            createPropertySheet(selected_shape.getProperty(),graph);
             openForm();
         }
     })
@@ -59,39 +59,41 @@ document.addEventListener('DOMContentLoaded', function () {
         selected_shape = graph.findNode(mousePoint);
         selected_edge  = graph.findEdge(mousePoint);
 
-
         // If the implicitParameterNode_button button is pressed in the toolbar
-        if (implicitParameterNode_button === true && selected_shape === undefined) {
+        if (implicitParameterNode_button === true && selected_shape === undefined)
+        {
             let n1 = new ImplicitParameterNode()
             graph.add(n1, mousePoint);
 
             resetToolBar()
         }
-				
         // If the callNode button is pressed in the toolbar
-        else if (callNode_button === true && !(selected_shape instanceof CallNode)) {
+        if (callNode_button === true && !(selected_shape instanceof CallNode))
+        {
             let n1 = new CallNode()
             graph.add(n1, mousePoint);
             resetToolBar()
         }
 
-        else if (selected_shape === undefined) {
+        if (selected_shape === undefined)
+        {
             implicitParameterNode_button = false;
             callNode_button = false;
-            addNote = false
         }
 
-        else if (addNote_button === true && selected_shape === undefined) {
+        if(addNote_button === true && selected_shape === undefined)
+        {
+           console.log("I amh ere");
             let n1 = new NoteNode()
             graph.add(n1, mousePoint);
             resetToolBar()
         }
 
-        else if(callEdge_button === true && selected_shape !==undefined)
+        if(callEdge_button === true && selected_shape !==undefined)
         {
           implicitParameterNode_button = false;
           callNode_button = false;
-          addNote = false
+          addNote_button = false
           mouseDown_drawEdge=true;
         }
 
@@ -99,7 +101,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (selected_shape !== undefined) {
             dragStartPoint = mousePoint
             dragStartBounds = selected_shape.getBounds();
-            //popUp(selected_shape.getPropertySheet());
             let something = 1;
         }
         repaint()
@@ -141,9 +142,9 @@ document.addEventListener('DOMContentLoaded', function () {
 /**
 https://www.w3schools.com/howto/howto_css_login_form.asp
 **/
-function createPopUp(propertySheet, g) {
-    let propertyName = Object.getOwnPropertyNames(propertySheet);
-    let propertyValue = Object.values(propertySheet);
+function createPropertySheet(property, g) {
+    let propertyName = Object.getOwnPropertyNames(property);
+    let propertyValue= Object.values(property);
     var div = document.createElement('div');
     div.id = "myForm";
     div.class = "form-popup";
@@ -160,36 +161,91 @@ function createPopUp(propertySheet, g) {
     form.style.maxWidth = "300px";
     form.style.padding = "10px";
     form.style.background = "white";
-
-    for (let i = 0; i < propertyName.length; i++) {
-        // For loop for label
-        if(typeof propertySheet[propertyName[i]] !== 'function')
-        {
+    // Property format : name, editor type, settter method
+    for (let i = 0; i < propertyName.length; i=i+3) {
           var label = document.createElement("Label");
-          label.for = "email"
           label.innerHTML = propertyName[i];
           form.appendChild(label);
-          var input = document.createElement("input");
-          input.placeholder = propertyValue[i];
-          input.name = propertyName[i];
-          input.id = propertyName[i];
-          input.style.width = "100%";
-          input.style.padding = "15px";
-          input.style.margin = "5px 0 22px 0";
-          input.style.border = "none";
-          input.style.background = "#f1f1f1";
-        }
-        else if(typeof propertySheet[propertyName[i]] === 'function')
-        {
-          let setName = propertySheet[propertyName[i]];
-          input.oninput = function()
+
+          // Editor type : input box
+          if(propertyName[i+1] === "inputBox")
           {
-            ctx.clearRect(0, 0, canvas.width, canvas.height)
-            propertySheet[propertyName[i]](input.value)
-            g.draw();
+            var input = document.createElement("input");
+            input.placeholder = propertyValue[i+1]; // Name: current name
+            input.name = propertyName[i];
+            input.id = propertyName[i];
+            input.style.width = "100%";
+            input.style.padding = "15px";
+            input.style.margin = "5px 0 22px 0";
+            input.style.border = "none";
+            input.style.background = "#f1f1f1";
+            input.oninput = function()
+            {
+              ctx.clearRect(0, 0, canvas.width, canvas.height)
+              property[propertyName[i+2]](input.value)
+              g.draw();
+            }
+            form.appendChild(input);
           }
-          form.appendChild(input);
-        }
+
+          // Editor type: select bar
+          else if(propertyName[i+1] === "selectBar")
+          {
+            var select = document.createElement("SELECT");
+            select.id = propertyName[i];
+            select.style.width = "100%";
+            select.style.padding = "15px";
+            select.style.margin = "5px 0 22px 0";
+            select.style.border = "none";
+            select.style.background = "#f1f1f1";
+            let optionList= propertyValue[i+1];
+            for(let i=0; i<optionList.length; i++)
+            {
+              var option = document.createElement("option");
+              option.value = optionList[i];
+              option.text = optionList[i];
+              select.appendChild(option);
+            }
+            select.onchange = function ()
+            {
+              ctx.clearRect(0, 0, canvas.width, canvas.height)
+              console.log(property[propertyName[i+2]])
+              property[propertyName[i+2]](select.value)
+              g.draw();
+            }
+            form.appendChild(select);
+          }
+
+          // Editor type: Color picker
+          else if(propertyName[i+1] === "selectBar")
+          {
+            var select = document.createElement("SELECT");
+            select.id = propertyName[i];
+            select.style.width = "100%";
+            select.style.padding = "15px";
+            select.style.margin = "5px 0 22px 0";
+            select.style.border = "none";
+            select.style.background = "#f1f1f1";
+            let optionList= propertyValue[i+1];
+            for(let i=0; i<optionList.length; i++)
+            {
+              var option = document.createElement("option");
+              option.class ="red";
+              option.value = optionList[i];
+              option.text = optionList[i];
+              select.appendChild(option);
+            }
+            select.onchange = function ()
+            {
+              ctx.clearRect(0, 0, canvas.width, canvas.height)
+              console.log(property[propertyName[i+2]])
+              property[propertyName[i+2]](select.value)
+              option.style.color=select.value;
+              g.draw();
+            }
+            form.appendChild(select);
+          }
+
     }
 
     var submit = document.createElement("button");
