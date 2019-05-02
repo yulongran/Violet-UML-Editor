@@ -15,8 +15,8 @@ var server = http.createServer(function (request, response) {
             response.write(contents);
             response.end();
         });
-    } else if (request.url === "/static/script.js") {
-        fs.readFile('./static/script.js', 'utf8', function (errors, contents) {
+    }  else if (request.url.match(/\.js/) ) {
+        fs.readFile("."+request.url, 'utf8', function (errors, contents) {
             response.writeHead(200, { 'Content-type': 'text/javascript' });
             response.write(contents);
             response.end();

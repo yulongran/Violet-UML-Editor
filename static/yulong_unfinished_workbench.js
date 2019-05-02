@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // If we unselected, the callNode button get reset
         if (selected !== undefined) {
             dragStartPoint = mousePoint
-            dragStartBounds=selected.getBounds();
+            dragStartBounds = selected.getBounds();
             implicitParameterNode_button = false;
             callNode_button = false;
             addNote = false
@@ -355,10 +355,10 @@ class RectangularNode extends AbstractNode {
         this.bounds = new Rectangle2D(0, 0, 0, 0);
     }
     clone() {
-      let myRectangularNode = new RectangularNode();
-      let cloned = {};
-      Object.assign(cloned , myRectangularNode);
-      return cloned;
+        let myRectangularNode = new RectangularNode();
+        let cloned = {};
+        Object.assign(cloned, myRectangularNode);
+        return cloned;
     }
 
     translate(dx, dy) {
@@ -701,10 +701,10 @@ class ImplicitParameterNode extends RectangularNode {
     }
 
     clone() {
-      let myImplicitParameterNode = new ImplicitParameterNode();
-      let cloned = {};
-      Object.assign(cloned , myImplicitParameterNode);
-      return cloned;
+        let myImplicitParameterNode = new ImplicitParameterNode();
+        let cloned = {};
+        Object.assign(cloned, myImplicitParameterNode);
+        return cloned;
     }
 
     addNode(n, p) {

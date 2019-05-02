@@ -38,6 +38,7 @@ class ImplicitParameterNode extends RectangularNode {
     }
 
     drawToolBar(ctx) {
+        console.log("HERE")
         super.getBounds().width = TOOLBAR_WIDTH;
         let top = this.getTopRectangle();
         top.drawToolBar(ctx);

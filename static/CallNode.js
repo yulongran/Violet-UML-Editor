@@ -195,13 +195,11 @@ class CallNode extends RectangularNode {
 
     findEdge(g, start, end) {
         let e = g.getEdges();
-        for (var i = 0; i < e.length; i++)
-        {
-          let edge = e[i];
-          if(edge.getStart() === start && edge.getEnd() === end)
-          {
-            return edge;
-          }
+        for (var i = 0; i < e.length; i++) {
+            let edge = e[i];
+            if (edge.getStart() === start && edge.getEnd() === end) {
+                return edge;
+            }
         }
         return undefined;
     }
@@ -276,13 +274,12 @@ class CallNode extends RectangularNode {
 
     getProperty() {
         let copyOpenBottom = this.openBottom;
-        var myNode= this;
+        var myNode = this;
         return {
             openBottom: copyOpenBottom,
             selectBar: [copyOpenBottom, !copyOpenBottom],
-            setOpenBottom(newValue)
-            {
-              return myNode.setOpenBottom(newValue);
+            setOpenBottom(newValue) {
+                return myNode.setOpenBottom(newValue);
             },
         }
     }

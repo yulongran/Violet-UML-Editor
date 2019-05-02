@@ -98,10 +98,10 @@ class NoteNode extends RectangularNode {
     drawToolBar(ctx) {
         ctx.fillStyle = this.color;
         ctx.fillRect(super.getBounds().getX(), super.getBounds().getY(),
-            TOOLBAR_WIDTH, TOOLBAR_HEIGHT/4);
+            TOOLBAR_WIDTH, TOOLBAR_HEIGHT / 4);
         ctx.strokeRect(super.getBounds().getX(), super.getBounds().getY(),
-            TOOLBAR_WIDTH, TOOLBAR_HEIGHT/4);
-				ctx.beginPath(); //fold
+            TOOLBAR_WIDTH, TOOLBAR_HEIGHT / 4);
+        ctx.beginPath(); //fold
         ctx.clearRect(super.getBounds().getX() + TOOLBAR_WIDTH * 3 / 4,
             super.getBounds().getY(), TOOLBAR_WIDTH / 4, TOOLBAR_HEIGHT / 12);
         ctx.moveTo(super.getBounds().getX() + TOOLBAR_WIDTH * 3 / 4,
@@ -111,9 +111,9 @@ class NoteNode extends RectangularNode {
         ctx.lineTo(super.getBounds().getX() + TOOLBAR_WIDTH * 3 / 4,
             super.getBounds().getY() + TOOLBAR_HEIGHT / 12);
         ctx.closePath();
-				ctx.fillStyle = 'white';
-				ctx.fill();
-				ctx.stroke();
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.stroke();
     }
 
     getShape() {
@@ -136,23 +136,21 @@ class NoteNode extends RectangularNode {
         return cloned;
     }
     getProperty() {
-      let copyText = this.text;
-			let copyColor = this.color;
-			var myNode = this;
+        let copyText = this.text;
+        let copyColor = this.color;
+        var myNode = this;
         return {
             text: copyText,
             inputBox: copyText,
-            setText(n)
-            {
-              myNode.setText(n);
+            setText(n) {
+                myNode.setText(n);
             },
             Color: copyColor,
             selectBar: [copyColor, "AliceBlue", "AntiqueWhite", "Azure", "Beige",
-            "Snow", "Silver", "SeaGreen", "SlateBlue", "Salmon"
-          ,"RoyalBlue", "Pink" ,"PeachPuff",],
-            setColor(c)
-            {
-              myNode.setColor(c);
+                "Snow", "Silver", "SeaGreen", "SlateBlue", "Salmon"
+                , "RoyalBlue", "Pink", "PeachPuff",],
+            setColor(c) {
+                myNode.setColor(c);
             },
         }
     }

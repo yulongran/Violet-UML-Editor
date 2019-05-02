@@ -1,4 +1,8 @@
+// import ImplicitParameterNode from "./ImplicitParameterNode"
+
 //var Graph1 = require("./src/Graph.js")
+// require('/static/ImplicitParameterNode.js');
+
 const canvas = document.getElementById('myCanvas')
 const ctx = canvas.getContext('2d')
 const TOOLBAR_WIDTH = 300
@@ -15,14 +19,14 @@ var callNode_button = false;
 var implicitParameterNode_button = false;
 var addNote_button = false;
 var selected_button = false;
-var callEdge_button=false;
+var callEdge_button = false;
 
 document.addEventListener('DOMContentLoaded', function () {
     const graph = new SequenceDiagramGraph()
     let selected_shape;
     let selected_edge;
     let dragStartPoint
-    let mouseDown_drawEdge=false;
+    let mouseDown_drawEdge = false;
     graph.draw();
 
     function repaint() {
@@ -47,9 +51,9 @@ document.addEventListener('DOMContentLoaded', function () {
     canvas.addEventListener('dblclick', event => {
         let mousePoint = mouseLocation(event)
         selected_shape = graph.findNode(mousePoint);
-        selected_edge  = graph.findEdge(mousePoint);
+        selected_edge = graph.findEdge(mousePoint);
         if (selected_shape !== undefined) {
-            createPropertySheet(selected_shape.getProperty(),graph);
+            createPropertySheet(selected_shape.getProperty(), graph);
             openForm();
         }
     })
@@ -57,44 +61,38 @@ document.addEventListener('DOMContentLoaded', function () {
     canvas.addEventListener('mousedown', event => {
         let mousePoint = mouseLocation(event)
         selected_shape = graph.findNode(mousePoint);
-        selected_edge  = graph.findEdge(mousePoint);
+        selected_edge = graph.findEdge(mousePoint);
 
         // If the implicitParameterNode_button button is pressed in the toolbar
-        if (implicitParameterNode_button === true && selected_shape === undefined)
-        {
+        if (implicitParameterNode_button === true && selected_shape === undefined) {
             let n1 = new ImplicitParameterNode()
             graph.add(n1, mousePoint);
 
             resetToolBar()
         }
         // If the callNode button is pressed in the toolbar
-        if (callNode_button === true && !(selected_shape instanceof CallNode))
-        {
+        if (callNode_button === true && !(selected_shape instanceof CallNode)) {
             let n1 = new CallNode()
             graph.add(n1, mousePoint);
             resetToolBar()
         }
 
-        if (selected_shape === undefined)
-        {
+        if (selected_shape === undefined) {
             implicitParameterNode_button = false;
             callNode_button = false;
         }
 
-        if(addNote_button === true && selected_shape === undefined)
-        {
-           console.log("I amh ere");
+        if (addNote_button === true && selected_shape === undefined) {
             let n1 = new NoteNode()
             graph.add(n1, mousePoint);
             resetToolBar()
         }
 
-        if(callEdge_button === true && selected_shape !==undefined)
-        {
-          implicitParameterNode_button = false;
-          callNode_button = false;
-          addNote_button = false
-          mouseDown_drawEdge=true;
+        if (callEdge_button === true && selected_shape !== undefined) {
+            implicitParameterNode_button = false;
+            callNode_button = false;
+            addNote_button = false
+            mouseDown_drawEdge = true;
         }
 
         // If we unselected, the callNode button get reset
@@ -107,9 +105,8 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     canvas.addEventListener('mousemove', event => {
-        if (dragStartPoint === undefined)
-        {
-          return;
+        if (dragStartPoint === undefined) {
+            return;
         }
         let mousePoint = mouseLocation(event)
         if (selected_shape !== undefined && !callEdge_button) {
@@ -125,14 +122,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     canvas.addEventListener('mouseup', event => {
         mousePoint = mouseLocation(event)
-        if(selected_shape !==undefined && callEdge_button)
-        {
-           let e = new CallEdge();
-           let d=graph.connect(e, dragStartPoint, mousePoint);
+        if (selected_shape !== undefined && callEdge_button) {
+            let e = new CallEdge();
+            let d = graph.connect(e, dragStartPoint, mousePoint);
         }
         dragStartPoint = undefined;
         dragStartBounds = undefined;
-        callEdge_button=false;
+        callEdge_button = false;
         repaint();
     })
 })
@@ -144,7 +140,7 @@ https://www.w3schools.com/howto/howto_css_login_form.asp
 **/
 function createPropertySheet(property, g) {
     let propertyName = Object.getOwnPropertyNames(property);
-    let propertyValue= Object.values(property);
+    let propertyValue = Object.values(property);
     var div = document.createElement('div');
     div.id = "myForm";
     div.class = "form-popup";
@@ -162,16 +158,15 @@ function createPropertySheet(property, g) {
     form.style.padding = "10px";
     form.style.background = "white";
     // Property format : name, editor type, settter method
-    for (let i = 0; i < propertyName.length; i=i+3) {
-          var label = document.createElement("Label");
-          label.innerHTML = propertyName[i];
-          form.appendChild(label);
+    for (let i = 0; i < propertyName.length; i = i + 3) {
+        var label = document.createElement("Label");
+        label.innerHTML = propertyName[i];
+        form.appendChild(label);
 
-          // Editor type : input box
-          if(propertyName[i+1] === "inputBox")
-          {
+        // Editor type : input box
+        if (propertyName[i + 1] === "inputBox") {
             var input = document.createElement("input");
-            input.placeholder = propertyValue[i+1]; // Name: current name
+            input.placeholder = propertyValue[i + 1]; // Name: current name
             input.name = propertyName[i];
             input.id = propertyName[i];
             input.style.width = "100%";
@@ -179,18 +174,16 @@ function createPropertySheet(property, g) {
             input.style.margin = "5px 0 22px 0";
             input.style.border = "none";
             input.style.background = "#f1f1f1";
-            input.oninput = function()
-            {
-              ctx.clearRect(0, 0, canvas.width, canvas.height)
-              property[propertyName[i+2]](input.value)
-              g.draw();
+            input.oninput = function () {
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+                property[propertyName[i + 2]](input.value)
+                g.draw();
             }
             form.appendChild(input);
-          }
+        }
 
-          // Editor type: select bar
-          else if(propertyName[i+1] === "selectBar")
-          {
+        // Editor type: select bar
+        else if (propertyName[i + 1] === "selectBar") {
             var select = document.createElement("SELECT");
             select.id = propertyName[i];
             select.style.width = "100%";
@@ -198,27 +191,24 @@ function createPropertySheet(property, g) {
             select.style.margin = "5px 0 22px 0";
             select.style.border = "none";
             select.style.background = "#f1f1f1";
-            let optionList= propertyValue[i+1];
-            for(let i=0; i<optionList.length; i++)
-            {
-              var option = document.createElement("option");
-              option.value = optionList[i];
-              option.text = optionList[i];
-              select.appendChild(option);
+            let optionList = propertyValue[i + 1];
+            for (let i = 0; i < optionList.length; i++) {
+                var option = document.createElement("option");
+                option.value = optionList[i];
+                option.text = optionList[i];
+                select.appendChild(option);
             }
-            select.onchange = function ()
-            {
-              ctx.clearRect(0, 0, canvas.width, canvas.height)
-              console.log(property[propertyName[i+2]])
-              property[propertyName[i+2]](select.value)
-              g.draw();
+            select.onchange = function () {
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+                console.log(property[propertyName[i + 2]])
+                property[propertyName[i + 2]](select.value)
+                g.draw();
             }
             form.appendChild(select);
-          }
+        }
 
-          // Editor type: Color picker
-          else if(propertyName[i+1] === "selectBar")
-          {
+        // Editor type: Color picker
+        else if (propertyName[i + 1] === "selectBar") {
             var select = document.createElement("SELECT");
             select.id = propertyName[i];
             select.style.width = "100%";
@@ -226,25 +216,23 @@ function createPropertySheet(property, g) {
             select.style.margin = "5px 0 22px 0";
             select.style.border = "none";
             select.style.background = "#f1f1f1";
-            let optionList= propertyValue[i+1];
-            for(let i=0; i<optionList.length; i++)
-            {
-              var option = document.createElement("option");
-              option.class ="red";
-              option.value = optionList[i];
-              option.text = optionList[i];
-              select.appendChild(option);
+            let optionList = propertyValue[i + 1];
+            for (let i = 0; i < optionList.length; i++) {
+                var option = document.createElement("option");
+                option.class = "red";
+                option.value = optionList[i];
+                option.text = optionList[i];
+                select.appendChild(option);
             }
-            select.onchange = function ()
-            {
-              ctx.clearRect(0, 0, canvas.width, canvas.height)
-              console.log(property[propertyName[i+2]])
-              property[propertyName[i+2]](select.value)
-              option.style.color=select.value;
-              g.draw();
+            select.onchange = function () {
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+                console.log(property[propertyName[i + 2]])
+                property[propertyName[i + 2]](select.value)
+                option.style.color = select.value;
+                g.draw();
             }
             form.appendChild(select);
-          }
+        }
 
     }
 
@@ -262,8 +250,8 @@ function createPropertySheet(property, g) {
     submit.style.marginBottom = "10px";
     submit.style.opacity = "0.8";
     submit.onclick = function () {
-    closeForm();
-    g.draw();
+        closeForm();
+        g.draw();
     }
 
     var close = document.createElement('button');
@@ -279,7 +267,7 @@ function createPropertySheet(property, g) {
     close.style.marginBottom = "10px";
     close.style.opacity = "0.8";
     close.onclick = function () {
-      g.draw();
+        g.draw();
         closeForm();
     }
     form.appendChild(close);
@@ -330,7 +318,7 @@ class Point2D {
         this.x = x;
         this.y = y;
     }
-	 getX() {
+    getX() {
         return this.x;
     }
     getY() {
@@ -338,25 +326,25 @@ class Point2D {
     }
 }
 
-class Line2D{
-	constructor(p1,p2){
-		this.p1=p1;
-		this.p2=p2;
-		this.x1=p1.getX();
-		this.y1=p1.getY();
-		this.x2=p2.getX();
-		this.y2=p2.getY();
-	}
-	getP1(){
-		return this.p1;
-	}
-	getP2(){
-		return this.p2;
-	}
-	getPM(){
-		let pm=new Point2D(Math.round((this.getX1()+this.getX2())/2),Math.round((this.getY1()+this.getY2())/2));
-		return pm;
-	}
+class Line2D {
+    constructor(p1, p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+        this.x1 = p1.getX();
+        this.y1 = p1.getY();
+        this.x2 = p2.getX();
+        this.y2 = p2.getY();
+    }
+    getP1() {
+        return this.p1;
+    }
+    getP2() {
+        return this.p2;
+    }
+    getPM() {
+        let pm = new Point2D(Math.round((this.getX1() + this.getX2()) / 2), Math.round((this.getY1() + this.getY2()) / 2));
+        return pm;
+    }
     getX1() {
         return this.x1;
     }
@@ -369,7 +357,7 @@ class Line2D{
     getY2() {
         return this.y2;
     }
-	setX1(x) {
+    setX1(x) {
         this.x1 = x;
     }
     setY1(y) {
@@ -381,25 +369,25 @@ class Line2D{
     setY2(y) {
         this.y2 = y;
     }
-	contains(aPoint){
-		let m=((this.getY2()-this.getY1())/(this.getX2()-this.getX1()));
-		let calculatedY=m*(aPoint.getX()-this.getX1())+this.getY1();
-		if(aPoint.getY()+3>=calculatedY&&aPoint.getY()-3<=calculatedY){
-			if(this.getX1()>this.getX2()){
-				if(aPoint.getX()<=this.getX1()&&aPoint.getX()>=this.getX2()){
-					return true;
-				}
-				return false;
-			}
-			else{
-				if(aPoint.getX()>=this.getX1()&&aPoint.getX()<=this.getX2()){
-					return true;
-				}
-				return false;
-			}
-		}
-		return false;
-	}
+    contains(aPoint) {
+        let m = ((this.getY2() - this.getY1()) / (this.getX2() - this.getX1()));
+        let calculatedY = m * (aPoint.getX() - this.getX1()) + this.getY1();
+        if (aPoint.getY() + 3 >= calculatedY && aPoint.getY() - 3 <= calculatedY) {
+            if (this.getX1() > this.getX2()) {
+                if (aPoint.getX() <= this.getX1() && aPoint.getX() >= this.getX2()) {
+                    return true;
+                }
+                return false;
+            }
+            else {
+                if (aPoint.getX() >= this.getX1() && aPoint.getX() <= this.getX2()) {
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
+    }
 
 }
 
@@ -453,18 +441,16 @@ class Rectangle2D {
     getMaxY() {
         return this.y + this.height;
     }
-    getMinY()
-    {
-      return this.y;
+    getMinY() {
+        return this.y;
     }
-    getMinX()
-    {
-            return this.x;
+    getMinX() {
+        return this.x;
     }
 
     draw() {
         // Top Horizontal line of the rectangle
-        ctx.fillStyle = ('white');
+        ctx.fillStyle = 'white';
         ctx.beginPath();
         ctx.setLineDash([]);
         ctx.moveTo(this.x, this.y);
@@ -479,7 +465,7 @@ class Rectangle2D {
 
     drawToolBar(ctx) {
         // Top Horizontal line of the rectangle
-        ctx.fillStyle = ('white');
+        ctx.fillStyle = 'white';
         ctx.beginPath();
         ctx.setLineDash([]);
         ctx.moveTo(this.x, this.y);
@@ -497,13 +483,12 @@ class Rectangle2D {
     }
 }
 
-class Direction
-{
+class Direction {
 
-   //public static final Direction NORTH = new Direction(0, -1);
-   //public static final Direction SOUTH = new Direction(0, 1);
-   //public static final Direction EAST = new Direction(1, 0);
-   //public static final Direction WEST = new Direction(-1, 0);
+    //public static final Direction NORTH = new Direction(0, -1);
+    //public static final Direction SOUTH = new Direction(0, 1);
+    //public static final Direction EAST = new Direction(1, 0);
+    //public static final Direction WEST = new Direction(-1, 0);
 
 	/**
 
@@ -512,51 +497,47 @@ class Direction
       @param q the ending point
    */
 
-   constructor(dx, dy)
-   {
-     this.x= dx;
-     this.y= dy;
-	   this.length = Math.sqrt(this.x * this.x + this.y * this.y);
-      if (length !== 0){
-	    this.x = Math.round(this.x / length);
-      this.y = Math.round(this.y / length);
-   }
+    constructor(dx, dy) {
+        this.x = dx;
+        this.y = dy;
+        this.length = Math.sqrt(this.x * this.x + this.y * this.y);
+        if (length !== 0) {
+            this.x = Math.round(this.x / length);
+            this.y = Math.round(this.y / length);
+        }
 
-   }
+    }
 
-   /**
-      Turns this direction by an angle.
-      @param angle the angle in degrees
-	*/
-   turn(angle)
-   {
-      let a = angle* Math.PI / 180;
-		  let d= new Direction(
-      Math.round(this.x * Math.cos(a) - this.y * Math.sin(a)),Math.round(
-      this.x * Math.sin(a) + this.y * Math.cos(a)));
-      return d;
+    /**
+       Turns this direction by an angle.
+       @param angle the angle in degrees
+     */
+    turn(angle) {
+        let a = angle * Math.PI / 180;
+        let d = new Direction(
+            Math.round(this.x * Math.cos(a) - this.y * Math.sin(a)), Math.round(
+                this.x * Math.sin(a) + this.y * Math.cos(a)));
+        return d;
 
-   }
+    }
 
-   /**
-      Gets the x-component of this direction
-      @return the x-component (between -1 and 1)
+    /**
+       Gets the x-component of this direction
+       @return the x-component (between -1 and 1)
+ 
+    */
+    getX() {
+        return this.x;
+    }
 
-   */
-   getX()
-   {
-      return this.x;
-   }
-
-   /**
-      Gets the y-component of this direction
-      @return the y-component (between -1 and 1)
-
-   */
-   getY()
-   {
-      return this.y;
-   }
+    /**
+       Gets the y-component of this direction
+       @return the y-component (between -1 and 1)
+ 
+    */
+    getY() {
+        return this.y;
+    }
 }
 
 //******************************************************************************
@@ -614,7 +595,7 @@ $('#callEdge').on('click', function () {
     implicitParameterNode_button = false;
     addNote_button = false;
 
-  //  $("#Select").addClass("active")
+    //  $("#Select").addClass("active")
     $("#ImplicitParameterNode").removeClass("active")
     $("#callNode").removeClass("active")
     $("#addNote").removeClass("active")
@@ -637,7 +618,6 @@ $(document).ready(function () {
     drawNoteNodeToolBar()
 
     function drawSelectToolBarToolBar() {
-        // let n = new ImplicitParameterNode();
         var canvas = document.getElementById("SelectToolBar");
         var ctx = canvas.getContext("2d");
         drawGrabberToolBar(ctx, 0, 0)
@@ -647,7 +627,9 @@ $(document).ready(function () {
     }
 
     function drawImplicitParameterNodeToolBar() {
+        console.log("Test 123")
         let n = new ImplicitParameterNode();
+        console.log("Test 1234")
         var canvas = document.getElementById("ImplicitParameterNodeToolBar");
         var ctx = canvas.getContext("2d");
         n.drawToolBar(ctx)
@@ -657,13 +639,13 @@ $(document).ready(function () {
         let n = new CallNode();
         var canvas = document.getElementById("CallNodeToolBar");
         var ctx = canvas.getContext("2d");
-        n.drawToolBar(ctx)
+        n.drawToolBar()
     }
 
     function drawNoteNodeToolBar() {
         let n = new NoteNode();
         var canvas = document.getElementById("NoteNodeToolBar");
         var ctx = canvas.getContext("2d");
-        n.drawToolBar(ctx)
+        n.drawToolBar()
     }
 });
