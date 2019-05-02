@@ -4,8 +4,6 @@ class NoteNode extends RectangularNode {
         super();
         this.DEFAULT_WIDTH = 60;
         this.DEFAULT_HEIGHT = 40;
-        this.FOLD_X = 8;
-        this.FOLD_Y = 8;
         this.color = "yellow";
         this.text = "Text";
         this.setBounds(new Rectangle2D(0, 0, this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT));
@@ -69,21 +67,6 @@ class NoteNode extends RectangularNode {
     }
 
     draw() {
-        // super.draw();
-        // let textWidth = ctx.measureText(this.text).width;
-        // ctx.beginPath();
-        // ctx.moveTo(0,0);
-        // ctx.lineTo(this.DEFAULT_WIDTH, 0);
-        // ctx.lineTo(this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT);
-        // ctx.lineTo(0, this.DEFAULT_HEIGHT);
-        // ctx.moveTo(this.DEFAULT_WIDTH*3/4, 0); //fold
-        // ctx.lineTo(this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT/4);
-        // ctx.fillStyle = this.color;
-        // ctx.fill();
-        // ctx.stroke();
-        // ctx.font = "8px Arial";
-        // ctx.fillText(this.text, this.DEFAULT_WIDTH, this.DEFAULT_WIDTH);
-
         let ctx = canvas.getContext('2d');
         ctx.fillStyle = this.color;
         ctx.fillRect(super.getBounds().getX(), super.getBounds().getY(),
@@ -118,7 +101,7 @@ class NoteNode extends RectangularNode {
             TOOLBAR_WIDTH, TOOLBAR_HEIGHT/4);
         ctx.strokeRect(super.getBounds().getX(), super.getBounds().getY(),
             TOOLBAR_WIDTH, TOOLBAR_HEIGHT/4);
-	ctx.beginPath(); //fold
+				ctx.beginPath(); //fold
         ctx.clearRect(super.getBounds().getX() + TOOLBAR_WIDTH * 3 / 4,
             super.getBounds().getY(), TOOLBAR_WIDTH / 4, TOOLBAR_HEIGHT / 12);
         ctx.moveTo(super.getBounds().getX() + TOOLBAR_WIDTH * 3 / 4,
@@ -128,9 +111,9 @@ class NoteNode extends RectangularNode {
         ctx.lineTo(super.getBounds().getX() + TOOLBAR_WIDTH * 3 / 4,
             super.getBounds().getY() + TOOLBAR_HEIGHT / 12);
         ctx.closePath();
-	ctx.fillStyle = 'white';
-	ctx.fill();
-	ctx.stroke();
+				ctx.fillStyle = 'white';
+				ctx.fill();
+				ctx.stroke();
     }
 
     getShape() {
@@ -151,5 +134,23 @@ class NoteNode extends RectangularNode {
         let cloned = new NoteNode();
         cloned.text = this.text();
         return cloned;
+    }
+		
+		getPropertySheet() {
+			let copyText = this.text;
+			let copyColor = this.color;
+			var myNode = this;
+        return {
+            Text: copyText,
+            setText(n)
+            {
+              myNode.setText(n);
+            },
+						// Color: copyColor,
+						// setColor(n)
+						// {
+							// myNode.setColor(n);
+						// },
+        }
     }
 }
