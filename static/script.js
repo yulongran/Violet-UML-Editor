@@ -627,9 +627,7 @@ $(document).ready(function () {
     }
 
     function drawImplicitParameterNodeToolBar() {
-        console.log("Test 123")
         let n = new ImplicitParameterNode();
-        console.log("Test 1234")
         var canvas = document.getElementById("ImplicitParameterNodeToolBar");
         var ctx = canvas.getContext("2d");
         n.drawToolBar(ctx)
