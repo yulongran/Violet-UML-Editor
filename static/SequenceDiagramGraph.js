@@ -28,8 +28,8 @@ class SequenceDiagramGraph extends Graph {
         }
     }
 
-    layout() {
-        super.layout();
+    layout(g) {
+        super.layout(g);
         let topLevelCalls = [];
         let objects = [];
         let nodes = super.getNodes();
@@ -44,9 +44,9 @@ class SequenceDiagramGraph extends Graph {
         let edges = super.getEdges();
         for (let edge of edges) {
             if (edge instanceof CallEdge) {
-                let end = e.getEnd();
+                let end = edge.getEnd();
                 if (end instanceof CallNode) {
-                    end.setSignaled(e.isSignal());
+                    end.setSignaled(edge.isSignal());
                 }
             }
         }
@@ -62,7 +62,7 @@ class SequenceDiagramGraph extends Graph {
 
         for (let i = 0; i < topLevelCalls.length; i++) {
             let call = topLevelCalls[i];
-            call.layout();
+            call.layout(this);
         }
         for (let i = 0; i < nodes.length; i++) {
             let n = nodes[i];
@@ -81,7 +81,7 @@ class SequenceDiagramGraph extends Graph {
     }
 
     draw() {
-        this.layout();
+        this.layout(this);
         let nodes = super.getNodes();
         for (let i = 0; i < nodes.length; i++) {
             let n = nodes[i];
@@ -98,6 +98,7 @@ class SequenceDiagramGraph extends Graph {
         }
         let edges = super.getEdges();
         for (let i = 0; i < edges.length; i++) {
+          let e= edges[i];
             e.draw();
         }
     }

@@ -13,12 +13,12 @@ class Graph {
         let n2 = this.findNode(p2);
         if (n1 !== undefined) {
             e.connect(n1, n2);
-            if (n1.addEdge(e, p1, p2) && e.getEnd() !== undefined) {
-                this.edges.add(e);
-                if (!this.nodes.contains(e.getEnd())) {
-                    this.nodes.add(e.getEnd())
+            if (n1.addEdge(e, p1, p2) && (e.getEnd() !== undefined)) {
+                this.edges.push(e);
+                if (!this.nodes.includes(e.getEnd())) {
+                    this.nodes.push(e.getEnd())
                 }
-                needsLayout = true;
+                this.needsLayout = true;
                 return true;
             }
         }
@@ -88,7 +88,7 @@ class Graph {
         needsLayout = true;
     }
 
-    layout() {
+    layout(g) {
         if (!this.needsLayout) {
             return;
         }
@@ -107,7 +107,7 @@ class Graph {
 
         for (let i = 0; i < this.nodes.length; i++) {
             let n = this.nodes[i];
-            n.layout();
+            n.layout(this);
         }
         this.needsLayout = true;
     }

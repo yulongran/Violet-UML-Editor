@@ -4,10 +4,10 @@
 */
 class AbstractEdge
 {
-
-	constructor(){
-   let start;
-   let end;
+	constructor()
+  {
+   this. start;
+   this.end;
 	}
    clone()
    {
@@ -40,22 +40,20 @@ class AbstractEdge
 	//returns bounds as a line since lines are horizontal
    getBounds()
    {
-      let conn = this.getConnectionPoints();
-      let r = conn;
-      return r;
+      let conn = this.getConnectionPoint();
+      let r =new Rectangle2D(conn.getX1(), conn.getY1(),
+        Math.abs(conn.getX2()-conn.getX1()), Math.abs(conn.getY2()-conn.getY1()));
+        return r;
    }
 
-   getConnectionPoints()
+   getConnectionPoint()
    {
-	  let startBounds = this.start.getBounds();
+	    let startBounds = this.start.getBounds();
       let endBounds = this.end.getBounds();
-      let startCenter = new Point2D(
-         startBounds.getCenterX(), startBounds.getCenterY());
-      let endCenter = new Point2D(
-         endBounds.getCenterX(), endBounds.getCenterY());
-      let toEnd = new Direction(startCenter, endCenter);
-      return new Line2D(
-         this.start.getConnectionPoint(toEnd),
-         this.end.getConnectionPoint(toEnd.turn(180)));
+      let startCenter = new Point2D(startBounds.getCenterX(), startBounds.getCenterY());
+      let endCenter = new Point2D(endBounds.getCenterX(), endBounds.getCenterY());
+      let toEnd = new Direction(endCenter.getX()- startCenter.getX(), endCenter.getY()- startCenter.getY());
+      let line =new Line2D(this.start.getConnectionPoint(toEnd),this.end.getConnectionPoint(toEnd.turn(180)));
+      return line;
    }
 }

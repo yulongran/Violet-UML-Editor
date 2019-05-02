@@ -64,15 +64,15 @@ class ImplicitParameterNode extends RectangularNode {
     }
 
     getConnectionPoint(d) {
-        if (d.get() > 0) {
-            return new point(super.getBounds().getMaxX(), super.getBounds().getMinY() + topHeight / 2);
+        if (d.getX() > 0) {
+            return new Point2D(super.getBounds().getMaxX(), super.getBounds().getMinY() + this.topHeight / 2);
         }
         else {
-            return new point(super.getBounds().getX(), super.getBounds().getMinY() + topHeight / 2)
+            return new Point2D(super.getBounds().getX(), super.getBounds().getMinY() + this.topHeight / 2)
         }
     }
 
-    layout() {
+    layout(g) {
         //let b= name.getBounds(g2);
         //b.add(new Rectangle2D(0,0, this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT));
         //let top = new Rectangle2D(super.getBounds().getX(), super.getBounds().getY(), b.getWidth(), b.getHeight());
@@ -105,6 +105,7 @@ class ImplicitParameterNode extends RectangularNode {
         var myNode= this;
         return {
             name: copyName,
+            //editorname
             setName(n)
             {
               myNode.setName(n);

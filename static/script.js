@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let selected_shape;
     let selected_edge;
     let dragStartPoint
+    let mouseDown_drawEdge=false;
     graph.draw();
 
     function repaint() {
@@ -58,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
         selected_shape = graph.findNode(mousePoint);
         selected_edge  = graph.findEdge(mousePoint);
 
+
         // If the implicitParameterNode_button button is pressed in the toolbar
         if (implicitParameterNode_button === true && selected_shape === undefined) {
             let n1 = new ImplicitParameterNode()
@@ -78,10 +80,18 @@ document.addEventListener('DOMContentLoaded', function () {
             addNote = false
         }
 
-        if (addNote_button === true && selected_shape === undefined) {
+        else if (addNote_button === true && selected_shape === undefined) {
             let n1 = new NoteNode()
             graph.add(n1, mousePoint);
             resetToolBar()
+        }
+
+        else if(callEdge_button === true && selected_shape !==undefined)
+        {
+          implicitParameterNode_button = false;
+          callNode_button = false;
+          addNote = false
+          mouseDown_drawEdge=true;
         }
 
         // If we unselected, the callNode button get reset
@@ -95,7 +105,10 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     canvas.addEventListener('mousemove', event => {
-        if (dragStartPoint === undefined) return
+        if (dragStartPoint === undefined)
+        {
+          return;
+        }
         let mousePoint = mouseLocation(event)
         if (selected_shape !== undefined && !callEdge_button) {
             const bounds = selected_shape.getBounds()
@@ -110,14 +123,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     canvas.addEventListener('mouseup', event => {
         mousePoint = mouseLocation(event)
-        if(callEdge_button)
+        if(selected_shape !==undefined && callEdge_button)
         {
            let e = new CallEdge();
            let d=graph.connect(e, dragStartPoint, mousePoint);
-           console.log(d);
         }
         dragStartPoint = undefined;
         dragStartBounds = undefined;
+        callEdge_button=false;
         repaint();
     })
 })
@@ -260,6 +273,77 @@ class Point2D {
         this.x = x;
         this.y = y;
     }
+	 getX() {
+        return this.x;
+    }
+    getY() {
+        return this.y;
+    }
+}
+
+class Line2D{
+	constructor(p1,p2){
+		this.p1=p1;
+		this.p2=p2;
+		this.x1=p1.getX();
+		this.y1=p1.getY();
+		this.x2=p2.getX();
+		this.y2=p2.getY();
+	}
+	getP1(){
+		return this.p1;
+	}
+	getP2(){
+		return this.p2;
+	}
+	getPM(){
+		let pm=new Point2D(Math.round((this.getX1()+this.getX2())/2),Math.round((this.getY1()+this.getY2())/2));
+		return pm;
+	}
+    getX1() {
+        return this.x1;
+    }
+    getY1() {
+        return this.y1;
+    }
+    getX2() {
+        return this.x2;
+    }
+    getY2() {
+        return this.y2;
+    }
+	setX1(x) {
+        this.x1 = x;
+    }
+    setY1(y) {
+        this.y1 = y;
+    }
+    setX2(x) {
+        this.x2 = x;
+    }
+    setY2(y) {
+        this.y2 = y;
+    }
+	contains(aPoint){
+		let m=((this.getY2()-this.getY1())/(this.getX2()-this.getX1()));
+		let calculatedY=m*(aPoint.getX()-this.getX1())+this.getY1();
+		if(aPoint.getY()+3>=calculatedY&&aPoint.getY()-3<=calculatedY){
+			if(this.getX1()>this.getX2()){
+				if(aPoint.getX()<=this.getX1()&&aPoint.getX()>=this.getX2()){
+					return true;
+				}
+				return false;
+			}
+			else{
+				if(aPoint.getX()>=this.getX1()&&aPoint.getX()<=this.getX2()){
+					return true;
+				}
+				return false;
+			}
+		}
+		return false;
+	}
+
 }
 
 /**
@@ -312,6 +396,14 @@ class Rectangle2D {
     getMaxY() {
         return this.y + this.height;
     }
+    getMinY()
+    {
+      return this.y;
+    }
+    getMinX()
+    {
+            return this.x;
+    }
 
     draw() {
         // Top Horizontal line of the rectangle
@@ -346,6 +438,68 @@ class Rectangle2D {
     contains(p) {
         return (this.x < p.x && (this.x + this.width) > p.x && this.y < p.y && (this.y + this.height) > p.y)
     }
+}
+
+class Direction
+{
+
+   //public static final Direction NORTH = new Direction(0, -1);
+   //public static final Direction SOUTH = new Direction(0, 1);
+   //public static final Direction EAST = new Direction(1, 0);
+   //public static final Direction WEST = new Direction(-1, 0);
+
+	/**
+
+      Constructs a direction between two points
+      @param p the starting point
+      @param q the ending point
+   */
+
+   constructor(dx, dy)
+   {
+     this.x= dx;
+     this.y= dy;
+	   this.length = Math.sqrt(this.x * this.x + this.y * this.y);
+      if (length !== 0){
+	    this.x = Math.round(this.x / length);
+      this.y = Math.round(this.y / length);
+   }
+
+   }
+
+   /**
+      Turns this direction by an angle.
+      @param angle the angle in degrees
+	*/
+   turn(angle)
+   {
+      let a = angle* Math.PI / 180;
+		  let d= new Direction(
+      Math.round(this.x * Math.cos(a) - this.y * Math.sin(a)),Math.round(
+      this.x * Math.sin(a) + this.y * Math.cos(a)));
+      return d;
+
+   }
+
+   /**
+      Gets the x-component of this direction
+      @return the x-component (between -1 and 1)
+
+   */
+   getX()
+   {
+      return this.x;
+   }
+
+   /**
+      Gets the y-component of this direction
+      @return the y-component (between -1 and 1)
+
+   */
+   getY()
+   {
+      return this.y;
+   }
 }
 
 //******************************************************************************

@@ -19,7 +19,7 @@ class CallNode extends RectangularNode {
             var x2 = x1 + b.getWidth();
             var y1 = b.getY();
             var y3 = y1 + b.getHeight();
-            var y2 = y3 - CALL_YGAP;
+            var y2 = y3 - this.CALL_YGAP;
 
             // Draw line1
             ctx.beginPath();
@@ -177,7 +177,7 @@ class CallNode extends RectangularNode {
         while (i < calls.length && calls[i].getBounds().getY() <= p1.getY()) {
             i++;
         }
-        super.addChild(i, n);
+        super.addChild2(i, n);
         return true;
     }
 
@@ -194,17 +194,19 @@ class CallNode extends RectangularNode {
     }
 
     findEdge(g, start, end) {
-        // Collection edges = g.getEdges();
-        // Iterator iter = edges.iterator();
-        // while (iter.hasNext())
-        // {
-        //    Edge e = (Edge) iter.next();
-        //    if (e.getStart() == start && e.getEnd() == end) return e;
-        // }
-        // return null;
+        let e = g.getEdges();
+        for (var i = 0; i < e.length; i++)
+        {
+          let edge = e[i];
+          if(edge.getStart() === start && edge.getEnd() === end)
+          {
+            return edge;
+          }
+        }
+        return undefined;
     }
 
-    layout() {
+    layout(g) {
         if (this.implicitParameter === undefined) {
             return;
         }
@@ -212,46 +214,45 @@ class CallNode extends RectangularNode {
 
         for (let c = super.getParent(); c !== undefined; c = c.getParent()) {
             if (c.implicitParameter === this.implicitParameter) {
-                xmid += super.getBounds.getWidth() / 2;
+                xmid += super.getBounds().getWidth() / 2;
             }
         }
 
         super.translate(xmid - super.getBounds().getCenterX(), 0);
 
         var ytop = super.getBounds().getY() + this.CALL_YGAP;
-
         let calls = super.getChildren();
         for (var i = 0; i < calls.length; i++) {
             let n = calls[i];
             if (n instanceof ImplicitParameterNode) {
                 n.translate(0, ytop - n.getTopRectangle().getCenterY());
-                ytop += n.getTopRectangle().getHeight() / 2 + CALL_YGAP;
+                ytop += n.getTopRectangle().getHeight() / 2 + this.CALL_YGAP;
             }
             else if (n instanceof CallNode) {
-                callEdge = findEdge(g, this, n);
+                let callEdge = this.findEdge(g, this, n);
                 if (callEdge !== undefined) {
-                    let edgeBounds = callEdge.getBounds(g2);
-                    ytop += edgeBounds.getHeight() - CALL_YGAP;
+                    let edgeBounds = callEdge.getBounds();
+                    //ytop += edgeBounds.getHeight() - this.CALL_YGAP;
+                    ytop += 15 - this.CALL_YGAP;  // Diffient with the violet source code
                 }
-
-                n.translate(0, ytop - n.getBounds().getY());
-                n.layout(g, g2, grid);
+                n.translate(0, ytop - (n.getBounds().getY()));
+                n.layout(g);
                 if (n.signaled) {
-                    ytop += CALL_YGAP;
+                    ytop += this.CALL_YGAP;
                 }
                 else {
-                    ytop += n.getBounds().getHeight() + CALL_YGAP;
+                    ytop += n.getBounds().getHeight() + this.CALL_YGAP;
                 }
             }
         }
         if (this.openBottom) {
-            tyop += 2 * CALL_YGAP;
+            tyop += 2 * this.CALL_YGAP;
         }
         let b = super.getBounds();
         var minHeight = this.DEFAULT_HEIGHT;
-        let returnEdge = this.findEdge();
+        let returnEdge = this.findEdge(g, this, this.getParent());
         if (returnEdge !== undefined) {
-            let edgeBounds = returnEdge.getBounds(g2);
+            let edgeBounds = returnEdge.getBounds();
             minHeight = Math.max(minHeight, edgeBounds.getHeight());
         }
         super.setBounds(new Rectangle2D(b.getX(), b.getY(), b.getWidth(),

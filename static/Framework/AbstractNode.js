@@ -52,11 +52,11 @@ class AbstractNode {
 
     addChild2(index, node) {
         let oldParent = node.getParent();
-        console.log(node.getParent());
-        if (oldParent === undefined) {
+
+        if (oldParent !== undefined) {
             oldParent.removeChild(node);
         }
-        children.add(index, node);
+        this.children.splice(index+1, 0 , node);
         node.setParent(this);
     }
 
@@ -68,7 +68,7 @@ class AbstractNode {
         if (node.getParent() !== this) {
             return;
         }
-        for (let i = 0; i < children.length; i++) {
+        for (let i = 0; i < this.children.length; i++) {
             if (children[i] === e) {
                 children.splice(i, e);
             }

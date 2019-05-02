@@ -1,3 +1,4 @@
+
 'use strict'
 var LineStyle={SOLID:{"name":"solid",
 "applyStyle":function(){
@@ -343,10 +344,10 @@ class CallEdge extends SegmentedLineEdge
    constructor()
    {
 	super();
-      let signal;
+    this.signal;
 	  this.setSignal(false);
    }
-   isSignal() { return signal; }
+   isSignal() { return this.signal; }
    setSignal(newValue)
    {
       this.signal = newValue;
@@ -363,7 +364,7 @@ class CallEdge extends SegmentedLineEdge
    getPoints()
    {
       let a = [];
-      let n = this.getEnd();
+      let n = super.getEnd();
       let start = this.getStart().getBounds();
       let end = n.getBounds();
 
@@ -378,23 +379,26 @@ class CallEdge extends SegmentedLineEdge
          a.push(s);
          a.push(q);
       }
-      else if (n instanceof PointNode) // show nicely in tool bar
-      {
-         a.push(new Point2D(start.getMaxX(), start.getY()));
-         a.push(new Point2D(end.getX(), start.getY()));
-      }
+      // else if (n instanceof PointNode) // show nicely in tool bar
+      // {
+      //    a.push(new Point2D(start.getMaxX(), start.getY()));
+      //    a.push(new Point2D(end.getX(), start.getY()));
+      // }
       else
       {
          let  d = new Direction(start.getX() - end.getX(), 0);
-         endPoint = getEnd().getConnectionPoint(d);
-
+         let endPoint = super.getEnd().getConnectionPoint(d);
          if (start.getCenterX() < endPoint.getX())
-            a.add(new Point2D.Double(start.getMaxX(),
-                     endPoint.getY()));
+				 {
+					 a.push(new Point2D(start.getMaxX(),
+										endPoint.getY()));
+				 }
          else
-            a.add(new Point2D.Double(start.getX(),
-                     endPoint.getY()));
-         a.add(endPoint);
+				 {
+					 a.push(new Point2D(start.getX(),
+										endPoint.getY()));
+				 }
+         a.push(endPoint);
       }
       return a;
    }
