@@ -1,10 +1,7 @@
-// import ImplicitParameterNode from "./ImplicitParameterNode"
-
 //var Graph1 = require("./src/Graph.js")
-// require('/static/ImplicitParameterNode.js');
-
 const canvas = document.getElementById('myCanvas')
 const ctx = canvas.getContext('2d')
+var editorOpen=false;
 const TOOLBAR_WIDTH = 300
 const TOOLBAR_HEIGHT = 350
 
@@ -20,26 +17,28 @@ var implicitParameterNode_button = false;
 var addNote_button = false;
 var selected_button = false;
 var callEdge_button = false;
+let selected_shape;
+let selected_edge;
+const graph = new SequenceDiagramGraph()
+let dragStartPoint
+let mouseDown_drawEdge = false;
+
+
+function repaint() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    graph.draw();
+    if (selected_shape !== undefined) {
+        const bounds = selected_shape.getBounds()
+        drawGrabber(bounds.x, bounds.y)
+        drawGrabber(bounds.x + bounds.width, bounds.y)
+        drawGrabber(bounds.x, bounds.y + bounds.height)
+        drawGrabber(bounds.x + bounds.width, bounds.y + bounds.height)
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function () {
-    const graph = new SequenceDiagramGraph()
-    let selected_shape;
-    let selected_edge;
-    let dragStartPoint
-    let mouseDown_drawEdge = false;
     graph.draw();
 
-    function repaint() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        graph.draw();
-        if (selected_shape !== undefined) {
-            const bounds = selected_shape.getBounds()
-            drawGrabber(bounds.x, bounds.y)
-            drawGrabber(bounds.x + bounds.width, bounds.y)
-            drawGrabber(bounds.x, bounds.y + bounds.height)
-            drawGrabber(bounds.x + bounds.width, bounds.y + bounds.height)
-        }
-    }
 
     function mouseLocation(event) {
         var rect = canvas.getBoundingClientRect()
@@ -139,8 +138,12 @@ document.addEventListener('DOMContentLoaded', function () {
 https://www.w3schools.com/howto/howto_css_login_form.asp
 **/
 function createPropertySheet(property, g) {
+    if(editorOpen)
+    {
+      closeForm();
+    }
     let propertyName = Object.getOwnPropertyNames(property);
-    let propertyValue = Object.values(property);
+    let propertyValue= Object.values(property);
     var div = document.createElement('div');
     div.id = "myForm";
     div.class = "form-popup";
@@ -158,15 +161,16 @@ function createPropertySheet(property, g) {
     form.style.padding = "10px";
     form.style.background = "white";
     // Property format : name, editor type, settter method
-    for (let i = 0; i < propertyName.length; i = i + 3) {
-        var label = document.createElement("Label");
-        label.innerHTML = propertyName[i];
-        form.appendChild(label);
+    for (let i = 0; i < propertyName.length; i=i+3) {
+          var label = document.createElement("Label");
+          label.innerHTML = propertyName[i];
+          form.appendChild(label);
 
-        // Editor type : input box
-        if (propertyName[i + 1] === "inputBox") {
+          // Editor type : input box
+          if(propertyName[i+1] === "inputBox")
+          {
             var input = document.createElement("input");
-            input.placeholder = propertyValue[i + 1]; // Name: current name
+            input.placeholder = propertyValue[i+1]; // Name: current name
             input.name = propertyName[i];
             input.id = propertyName[i];
             input.style.width = "100%";
@@ -174,16 +178,18 @@ function createPropertySheet(property, g) {
             input.style.margin = "5px 0 22px 0";
             input.style.border = "none";
             input.style.background = "#f1f1f1";
-            input.oninput = function () {
-                ctx.clearRect(0, 0, canvas.width, canvas.height)
-                property[propertyName[i + 2]](input.value)
-                g.draw();
+            input.oninput = function()
+            {
+              ctx.clearRect(0, 0, canvas.width, canvas.height)
+              property[propertyName[i+2]](input.value)
+              g.draw();
             }
             form.appendChild(input);
-        }
+          }
 
-        // Editor type: select bar
-        else if (propertyName[i + 1] === "selectBar") {
+          // Editor type: select bar
+          else if(propertyName[i+1] === "selectBar")
+          {
             var select = document.createElement("SELECT");
             select.id = propertyName[i];
             select.style.width = "100%";
@@ -191,48 +197,45 @@ function createPropertySheet(property, g) {
             select.style.margin = "5px 0 22px 0";
             select.style.border = "none";
             select.style.background = "#f1f1f1";
-            let optionList = propertyValue[i + 1];
-            for (let i = 0; i < optionList.length; i++) {
-                var option = document.createElement("option");
-                option.value = optionList[i];
-                option.text = optionList[i];
-                select.appendChild(option);
+            let optionList= propertyValue[i+1];
+            for(let i=0; i<optionList.length; i++)
+            {
+              var option = document.createElement("option");
+              option.value = optionList[i];
+              option.text = optionList[i];
+              select.appendChild(option);
             }
-            select.onchange = function () {
-                ctx.clearRect(0, 0, canvas.width, canvas.height)
-                console.log(property[propertyName[i + 2]])
-                property[propertyName[i + 2]](select.value)
-                g.draw();
-            }
-            form.appendChild(select);
-        }
+            select.onchange = function ()
+            {
+              ctx.clearRect(0, 0, canvas.width, canvas.height)
+              property[propertyName[i+2]](select.value)
 
-        // Editor type: Color picker
-        else if (propertyName[i + 1] === "selectBar") {
-            var select = document.createElement("SELECT");
-            select.id = propertyName[i];
-            select.style.width = "100%";
-            select.style.padding = "15px";
-            select.style.margin = "5px 0 22px 0";
-            select.style.border = "none";
-            select.style.background = "#f1f1f1";
-            let optionList = propertyValue[i + 1];
-            for (let i = 0; i < optionList.length; i++) {
-                var option = document.createElement("option");
-                option.class = "red";
-                option.value = optionList[i];
-                option.text = optionList[i];
-                select.appendChild(option);
-            }
-            select.onchange = function () {
-                ctx.clearRect(0, 0, canvas.width, canvas.height)
-                console.log(property[propertyName[i + 2]])
-                property[propertyName[i + 2]](select.value)
-                option.style.color = select.value;
-                g.draw();
+              g.draw();
             }
             form.appendChild(select);
-        }
+          }
+
+          // Editor type: Color picker
+          else if(propertyName[i+1] === "colorSelector")
+          {
+            var color = document.createElement("INPUT");
+            color.setAttribute("type", "color");
+            color.disabled=false;
+            color.id= "color"
+            color.style.width = "100%";
+            color.style.padding = "15px";
+            color.style.margin = "5px 0 22px 0";
+            color.style.border = "none";
+            color.value ="#e6e600";
+            color.addEventListener("change", updateColor ,false)
+            function updateColor()
+            {
+              property[propertyName[i+2]](color.value);
+              g.draw();
+            }
+            form.appendChild(color);
+          }
+
 
     }
 
@@ -250,8 +253,8 @@ function createPropertySheet(property, g) {
     submit.style.marginBottom = "10px";
     submit.style.opacity = "0.8";
     submit.onclick = function () {
-        closeForm();
-        g.draw();
+    closeForm();
+    g.draw();
     }
 
     var close = document.createElement('button');
@@ -267,13 +270,15 @@ function createPropertySheet(property, g) {
     close.style.marginBottom = "10px";
     close.style.opacity = "0.8";
     close.onclick = function () {
-        g.draw();
-        closeForm();
+      g.draw();
+    closeForm();
     }
     form.appendChild(close);
     div.appendChild(form);
     document.body.insertBefore(div, canvas);
+    editorOpen=true;
 }
+
 
 function openForm() {
     document.getElementById("myForm").style.display = "block";
@@ -282,6 +287,7 @@ function openForm() {
 function closeForm() {
     var form = document.getElementById('myForm');
     form.remove();
+    editorOpen=false;
     //document.getElementById("myForm").style.display = "none";
 }
 
@@ -450,7 +456,7 @@ class Rectangle2D {
 
     draw() {
         // Top Horizontal line of the rectangle
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = ('white');
         ctx.beginPath();
         ctx.setLineDash([]);
         ctx.moveTo(this.x, this.y);
@@ -465,7 +471,7 @@ class Rectangle2D {
 
     drawToolBar(ctx) {
         // Top Horizontal line of the rectangle
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = ('white');
         ctx.beginPath();
         ctx.setLineDash([]);
         ctx.moveTo(this.x, this.y);
@@ -532,7 +538,7 @@ constructor(p,q)
     /**
        Gets the x-component of this direction
        @return the x-component (between -1 and 1)
- 
+
     */
     getX() {
         return this.x;
@@ -541,7 +547,7 @@ constructor(p,q)
     /**
        Gets the y-component of this direction
        @return the y-component (between -1 and 1)
- 
+
     */
     getY() {
         return this.y;
@@ -603,7 +609,26 @@ $('#callEdge').on('click', function () {
     implicitParameterNode_button = false;
     addNote_button = false;
 
-    //  $("#Select").addClass("active")
+    $("#ImplicitParameterNode").removeClass("active")
+    $("#Select").removeClass("active")
+    $("#callNode").removeClass("active")
+    $("#addNote").removeClass("active")
+})
+
+$('#deleteNode').on('click', function () {
+
+
+    if (selected_shape !== undefined) {
+        // graph.ad
+        selected_shape = undefined
+        graph.removeNode(selected_shape)
+        repaint()
+    } else {
+        alert("nothing delete ")
+    }
+
+
+    $("#Select").removeClass("active")
     $("#ImplicitParameterNode").removeClass("active")
     $("#callNode").removeClass("active")
     $("#addNote").removeClass("active")
@@ -626,6 +651,7 @@ $(document).ready(function () {
     drawNoteNodeToolBar()
 
     function drawSelectToolBarToolBar() {
+        // let n = new ImplicitParameterNode();
         var canvas = document.getElementById("SelectToolBar");
         var ctx = canvas.getContext("2d");
         drawGrabberToolBar(ctx, 0, 0)
