@@ -174,7 +174,7 @@ class CallNode extends RectangularNode {
 
         var i = 0;
         let calls = super.getChildren();
-        while (i < calls.length && calls[i].getBounds().getY() <= p1.getY()) {
+        while (i < calls.length && calls[i].getBounds().getY() <= p1.y) {
             i++;
         }
         super.addChild2(i, n);

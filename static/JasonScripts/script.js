@@ -548,7 +548,7 @@ class Line2D{
 	contains(aPoint){
 		let m=((this.getY2()-this.getY1())/(this.getX2()-this.getX1()));
 		let calculatedY=m*(aPoint.getX()-this.getX1())+this.getY1();
-		if(aPoint.getY()+3>=calculatedY&&aPoint.getY()-3<=calculatedY){
+		if(aPoint.getY()+10>=calculatedY&&aPoint.getY()-10<=calculatedY){
 			if(this.getX1()>this.getX2()){
 				if(aPoint.getX()<=this.getX1()&&aPoint.getX()>=this.getX2()){
 					return true;
@@ -867,7 +867,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 var edge=new CallEdge();
 var p2=new Rectangle2D(100,400,40,40);
-var p1=new Rectangle2D(500,300,40,40);
+var p1=new Rectangle2D(500,400,40,40);
 //edge.draw(p1,p2);
 const c=document.getElementById("myCanvas");
 const ctx = c.getContext("2d");

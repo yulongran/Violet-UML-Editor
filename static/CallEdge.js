@@ -24,10 +24,19 @@ var LineStyle = {
     }
 };
 var ArrowHead = {
-    NONE: "none", V: {
+    NONE: {
+	"name":"none",
+	"drawMethod": function (p1, p2, direction, start) {
+		
+	},
+     "getHeadBounds": function (p1, p2, direction, start) {
+		 return new Rectangle2D(0,0,0,0);
+	 }
+	} 	
+	, V: {
         "name": "V",
         "drawMethod": function (p1, p2, direction, start) {
-            if (start) {
+			if (start) {
                 if (direction.getX() == 1) {
                     const c = document.getElementById("myCanvas");
                     const ctx = c.getContext("2d");
@@ -357,8 +366,6 @@ class CallEdge extends SegmentedLineEdge {
     setSignal(newValue) {
         this.signal = newValue;
         if (this.signal) {
-            //FUCK implement halfV????
-
             //super.setEndArrowHead(ArrowHead.HALF_V);
             this.setEndArrowHead(ArrowHead.V);
         }

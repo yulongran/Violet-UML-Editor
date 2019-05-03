@@ -374,23 +374,28 @@ class SegmentedLineEdge extends AbstractEdge
 
 	draw()
    {
-	let line=this.getPoints();
-	let p1=line[0];
-	let p2=line[1];
+
+
+	let line=this.getConnectionPoints();
+	let p1=line.getP1();
+	let p2=line.getP2();
 	const c=document.getElementById("myCanvas");
 	const ctx = c.getContext("2d");
 	ctx.beginPath();
 	ctx.moveTo(p1.getX(),p1.getY());
 	let style=this.getLineStyle();
+	if(style!==undefined){
 	style.applyStyle();
+	}
 	ctx.lineTo(p2.getX(),p2.getY());
-	ctx.stroke();
+	ctx.stroke();	
+	if(style!==undefined){
 	style.revertStyle();
-	var direction=new Direction(p1.getX()-p2.getX(),p1.getY()-p2.getY());
+	}
+	var direction=new Direction(p1,p2);
 	this.drawArrowHeads(p1,p2,direction);
 	this.drawPositionedStrings();
-	}
-
+   }
 	drawArrowHeads(p1,p2,direction){
 
 		if(this.getStartArrowHead().drawMethod!==undefined)
@@ -437,32 +442,37 @@ getBounds()
   getConnectionPoints()
 	{
 		let points = this.getPoints();
-		return new Lin2D(points[0], points[points.length-1]);
+		return new Line2D(points[0], points[points.length-1]);
 
 	}
 
 contains(aPoint)
 {
-	   let line=this.getConnectionPoint();
+	   let line=this.getConnectionPoints();
 	   let p1=line.getP1();
 	   let p2=line.getP2();
-	 	var direction=new Direction(p1.getX()-p2.getX(),p1.getY()-p2.getY());
+		var direction=new Direction(p1,p2);
+		if(this.getStartArrowHead()!==undefined&&this.getStartArrowHead()==ArrowHead.NONE){
+			if(this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).contains(aPoint)){
+				console.log("true");return true;
+			}
+		}
+		
+		if(this.getEndArrowHead()!==undefined){
+			if(this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).contains(aPoint)){
+				console.log("true");return true;
+			}
+		}
 
-	    if(this.getBounds().contains(aPoint))
-			{
-				return true;
-			}
-			else if(this.getStartArrowHead() !== ArrowHead.NONE &&	this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).contains(aPoint))
-			{
-				console.log("Should not be here");
-				return true;
-			}
-			else if(this.getEndArrowHead() !== ArrowHead.NONE &&	this.getEndArrowHead().getHeadBounds(p1,p2,direction,true).contains(aPoint))
-			{
-								console.log("Should not be here");
-				return true;
-			}
+	if(this.getBounds().contains(aPoint)||this.getStartArrowHead().getHeadBounds(p1,p2,direction,true).contains(aPoint)||this.getEndArrowHead().getHeadBounds(p1,p2,direction,false).contains(aPoint)){
+		console.log("true");return true;
+	}
+	console.log("false");
 return false;
 }
 
 }
+
+
+
+

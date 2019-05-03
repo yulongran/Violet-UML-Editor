@@ -497,16 +497,24 @@ class Direction {
       @param q the ending point
    */
 
-    constructor(dx, dy) {
-        this.x = dx;
-        this.y = dy;
-        this.length = Math.sqrt(this.x * this.x + this.y * this.y);
-        if (length !== 0) {
-            this.x = Math.round(this.x / length);
-            this.y = Math.round(this.y / length);
-        }
-
-    }
+constructor(p,q)
+   {
+	   let x;
+	   let y;
+	   if(p instanceof Point2D &&q instanceof Point2D){
+		this.x=q.getX() - p.getX();
+		this.y=q.getY() - p.getY();
+	   }
+	   else{
+		   this.x=p;
+		   this.y=q;
+	   }
+	let length = Math.sqrt(this.x * this.x + this.y * this.y);
+      if (length !== 0){
+	  this.x = Math.round(this.x / length);
+      this.y = Math.round(this.y / length);
+   }
+  }
 
     /**
        Turns this direction by an angle.
