@@ -146,12 +146,14 @@ class NoteNode extends RectangularNode {
                 myNode.setText(n);
             },
             Color: copyColor,
-            selectBar: [copyColor, "AliceBlue", "AntiqueWhite", "Azure", "Beige",
-                "Snow", "Silver", "SeaGreen", "SlateBlue", "Salmon"
-                , "RoyalBlue", "Pink", "PeachPuff",],
-            setColor(c) {
+            colorSelector: copyColor,
+            setColor(c)
+            {
                 myNode.setColor(c);
             },
+
+
+
         }
     }
 }
