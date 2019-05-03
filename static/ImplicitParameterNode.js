@@ -16,7 +16,9 @@ class ImplicitParameterNode extends RectangularNode {
             p.x <= bounds.getX() + bounds.getWidth();
     }
 
-    draw() {
+    draw(newCtx = undefined) {
+        var curr_ctx = (newCtx != undefined) ? newCtx : ctx
+
         let top = this.getTopRectangle();
         let textWidth = ctx.measureText(this.name).width;
         let copyBounds = super.getBounds();
@@ -24,16 +26,16 @@ class ImplicitParameterNode extends RectangularNode {
             super.getBounds().width = textWidth + 30;
             top = this.getTopRectangle();
         }
-        top.draw();
+        top.draw(curr_ctx);
         let xmid = super.getBounds().getCenterX();
-        ctx.beginPath();
-        ctx.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
-        ctx.moveTo(xmid, top.getMaxY());
-        ctx.lineTo(xmid, super.getBounds().getMaxY());
-        ctx.stroke()
-        ctx.fillStyle = 'black'
-        ctx.font = "12px Arial";
-        ctx.fillText(this.name, top.x + 10, top.y + 30)
+        curr_ctx.beginPath();
+        curr_ctx.setLineDash([5, 3]);/*dashes are 5px and spaces are 3px*/
+        curr_ctx.moveTo(xmid, top.getMaxY());
+        curr_ctx.lineTo(xmid, super.getBounds().getMaxY());
+        curr_ctx.stroke()
+        curr_ctx.fillStyle = 'black'
+        curr_ctx.font = "12px Arial";
+        curr_ctx.fillText(this.name, top.x + 10, top.y + 30)
 
     }
 

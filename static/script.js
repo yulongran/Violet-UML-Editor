@@ -1,8 +1,4 @@
-// import ImplicitParameterNode from "./ImplicitParameterNode"
-
 //var Graph1 = require("./src/Graph.js")
-// require('/static/ImplicitParameterNode.js');
-
 const canvas = document.getElementById('myCanvas')
 const ctx = canvas.getContext('2d')
 const TOOLBAR_WIDTH = 300
@@ -20,26 +16,28 @@ var implicitParameterNode_button = false;
 var addNote_button = false;
 var selected_button = false;
 var callEdge_button = false;
+let selected_shape;
+let selected_edge;
+const graph = new SequenceDiagramGraph()
+let dragStartPoint
+let mouseDown_drawEdge = false;
+
+
+function repaint() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    graph.draw();
+    if (selected_shape !== undefined) {
+        const bounds = selected_shape.getBounds()
+        drawGrabber(bounds.x, bounds.y)
+        drawGrabber(bounds.x + bounds.width, bounds.y)
+        drawGrabber(bounds.x, bounds.y + bounds.height)
+        drawGrabber(bounds.x + bounds.width, bounds.y + bounds.height)
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function () {
-    const graph = new SequenceDiagramGraph()
-    let selected_shape;
-    let selected_edge;
-    let dragStartPoint
-    let mouseDown_drawEdge = false;
     graph.draw();
 
-    function repaint() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        graph.draw();
-        if (selected_shape !== undefined) {
-            const bounds = selected_shape.getBounds()
-            drawGrabber(bounds.x, bounds.y)
-            drawGrabber(bounds.x + bounds.width, bounds.y)
-            drawGrabber(bounds.x, bounds.y + bounds.height)
-            drawGrabber(bounds.x + bounds.width, bounds.y + bounds.height)
-        }
-    }
 
     function mouseLocation(event) {
         var rect = canvas.getBoundingClientRect()
@@ -450,7 +448,7 @@ class Rectangle2D {
 
     draw() {
         // Top Horizontal line of the rectangle
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = ('white');
         ctx.beginPath();
         ctx.setLineDash([]);
         ctx.moveTo(this.x, this.y);
@@ -465,7 +463,7 @@ class Rectangle2D {
 
     drawToolBar(ctx) {
         // Top Horizontal line of the rectangle
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = ('white');
         ctx.beginPath();
         ctx.setLineDash([]);
         ctx.moveTo(this.x, this.y);
@@ -595,7 +593,26 @@ $('#callEdge').on('click', function () {
     implicitParameterNode_button = false;
     addNote_button = false;
 
-    //  $("#Select").addClass("active")
+    $("#ImplicitParameterNode").removeClass("active")
+    $("#Select").removeClass("active")
+    $("#callNode").removeClass("active")
+    $("#addNote").removeClass("active")
+})
+
+$('#deleteNode').on('click', function () {
+
+
+    if (selected_shape !== undefined) {
+        // graph.ad
+        selected_shape = undefined
+        graph.removeNode(selected_shape)
+        repaint()
+    } else {
+        alert("nothing delete ")
+    }
+
+
+    $("#Select").removeClass("active")
     $("#ImplicitParameterNode").removeClass("active")
     $("#callNode").removeClass("active")
     $("#addNote").removeClass("active")
@@ -618,6 +635,7 @@ $(document).ready(function () {
     drawNoteNodeToolBar()
 
     function drawSelectToolBarToolBar() {
+        // let n = new ImplicitParameterNode();
         var canvas = document.getElementById("SelectToolBar");
         var ctx = canvas.getContext("2d");
         drawGrabberToolBar(ctx, 0, 0)

@@ -76,16 +76,25 @@ class Graph {
         }
     }
 
-    removeNode(n) {
-        if (this.nodesToBeRemoved.contains(n)) {
-            return;
+    removeNode(node) {
+        this.nodes.pop()
+
+        var newNodes = []
+        for (const n of this.nodes) {
+            if (n !== node)
+                newNodes.push(n)
         }
-        this.nodesToBeRemoved.add(n);
-        for (let i = this.nodes.length - 1; i >= 0; i--) {
-            let n = this.nodes[i];
-            n.removeEdge(this, e);
-        }
-        needsLayout = true;
+
+        this.nodes = newNodes
+        // if (this.nodesToBeRemoved.contains(n)) {
+        //     return;
+        // }
+        // this.nodesToBeRemoved.add(n);
+        // for (let i = this.nodes.length - 1; i >= 0; i--) {
+        //     let n = this.nodes[i];
+        //     n.removeEdge(this, e);
+        // }
+        // needsLayout = true;
     }
 
     layout(g) {
