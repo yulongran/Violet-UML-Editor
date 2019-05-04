@@ -14,20 +14,20 @@
       @return the point at which to draw the string
    */
    //dimension d Ignore it I guess?
-/*   private static Point2D getAttachmentPoint(Graphics2D g2, 
+/*   private static Point2D getAttachmentPoint(Graphics2D g2,
       Point2D p, Point2D q, ArrowHead arrow, Dimension d, boolean center)
-   {    
+   {
       let GAP = 3;
       let xoff = GAP;
       let yoff = -GAP - d.getHeight();
       let attach = q;
       if (center)
       {
-         if (p.getX() > q.getX()) 
-         { 
-            return getAttachmentPoint(g2, q, p, arrow, d, center); 
+         if (p.getX() > q.getX())
+         {
+            return getAttachmentPoint(g2, q, p, arrow, d, center);
          }
-         attach = new Point2D.Double((p.getX() + q.getX()) / 2, 
+         attach = new Point2D.Double((p.getX() + q.getX()) / 2,
             (p.getY() + q.getY()) / 2);
          if (p.getY() < q.getY())
             yoff =  - GAP - d.getHeight();
@@ -36,7 +36,7 @@
          else
             yoff = GAP;
       }
-      else 
+      else
       {
          if (p.getX() < q.getX())
          {
@@ -75,7 +75,7 @@
       @return the rectangle enclosing the string
    */
    /*//ignore:
-   private static Rectangle2D getStringBounds(Graphics2D g2, 
+   private static Rectangle2D getStringBounds(Graphics2D g2,
       Point2D p, Point2D q, ArrowHead arrow, String s, boolean center)
    {
       if (g2 == null) return new Rectangle2D.Double();
@@ -93,16 +93,16 @@
    {
       ArrayList points = getPoints();
       Rectangle2D r = super.getBounds(g2);
-      r.add(getStringBounds(g2, 
-               (Point2D) points.get(1), (Point2D) points.get(0), 
+      r.add(getStringBounds(g2,
+               (Point2D) points.get(1), (Point2D) points.get(0),
                startArrowHead, startLabel, false));
-      r.add(getStringBounds(g2, 
+      r.add(getStringBounds(g2,
                (Point2D) points.get(points.size() / 2 - 1),
-               (Point2D) points.get(points.size() / 2), 
+               (Point2D) points.get(points.size() / 2),
                null, middleLabel, true));
-      r.add(getStringBounds(g2, 
+      r.add(getStringBounds(g2,
                (Point2D) points.get(points.size() - 2),
-               (Point2D) points.get(points.size() - 1), 
+               (Point2D) points.get(points.size() - 1),
                endArrowHead, endLabel, false));
       return r;
    }
@@ -124,7 +124,7 @@
    private GeneralPath getSegmentPath()
    {
       ArrayList points = getPoints();
-      
+
       GeneralPath path = new GeneralPath();
       Point2D p = (Point2D) points.get(points.size() - 1);
       path.moveTo((float) p.getX(), (float) p.getY());
@@ -135,7 +135,7 @@
       }
       return path;
    }
-*/   
+*/
    /*getConnectionPoints()
    {
       let points = getPoints();
@@ -155,7 +155,7 @@
       // the end points may contain small nodes, so don't
       // match them
       let conn = getConnectionPoints();
-      if (aPoint.distance(conn.getP1()) <= MAX_DIST 
+      if (aPoint.distance(conn.getP1()) <= MAX_DIST
          || aPoint.distance(conn.getP2()) <= MAX_DIST)
          return false;
 //idk
@@ -165,9 +165,9 @@
          (float)(2 * MAX_DIST));
       let fatPath = fatStroke.createStrokedShape(p);
       return fatPath.contains(aPoint);
-  
+
 }
-*/ 
+*/
 /*
 class Direction
 {
@@ -182,7 +182,7 @@ class Direction
       Constructs a direction between two points
       @param p the starting point
       @param q the ending point
-   
+
    constructor(p,q)
    {
 	   let x;
@@ -196,15 +196,15 @@ class Direction
 		   y=q;
 	   }
 	let length = Math.sqrt(x * x + y * y);
-      if (length !== 0) 
+      if (length !== 0)
       x = x / length;
-      y = y / length; 
+      y = y / length;
    }
 
    /**
       Turns this direction by an angle.
       @param angle the angle in degrees
-   
+
    turn(angle)
    {
       let a = Math.toRadians(angle);
@@ -216,7 +216,7 @@ class Direction
    /**
       Gets the x-component of this direction
       @return the x-component (between -1 and 1)
-   
+
    getX()
    {
       return x;
@@ -225,7 +225,7 @@ class Direction
    /**
       Gets the y-component of this direction
       @return the y-component (between -1 and 1)
-   
+
    getY()
    {
       return y;
@@ -240,8 +240,8 @@ draw methods
 
 
 /*if(this.getStartArrowHead()=="V"){
-			
-			if(direction.getX()==1){			
+
+			if(direction.getX()==1){
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
                     ctx.beginPath();
@@ -261,11 +261,11 @@ draw methods
 					ctx.lineTo(p1.getX()-10,p1.getY()+10);
 					ctx.moveTo(p1.getX(),p1.getY());
 					ctx.lineTo(p1.getX()-10,p1.getY()-10);
-					ctx.stroke();					
+					ctx.stroke();
 				}
-		}		
+		}
 		if(this.getEndArrowHead()=="V"){
-					if(direction.getX()==-1){			
+					if(direction.getX()==-1){
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
                     ctx.beginPath();
@@ -285,11 +285,11 @@ draw methods
 					ctx.lineTo(p2.getX()-10,p2.getY()+10);
 					ctx.moveTo(p2.getX(),p2.getY());
 					ctx.lineTo(p2.getX()-10,p2.getY()-10);
-					ctx.stroke();					
+					ctx.stroke();
 				}
 		}
 		if(this.getStartArrowHead()=="triangle"){
-				if(direction.getX()==1){			
+				if(direction.getX()==1){
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
                     ctx.beginPath();
@@ -310,11 +310,11 @@ draw methods
 					ctx.moveTo(p1.getX(),p1.getY());
 					ctx.lineTo(p1.getX()-10,p1.getY()-10);
 					ctx.lineTo(p1.getX()-10,p1.getY()+10);
-					ctx.stroke();					
+					ctx.stroke();
 				}
 		}
 		if(this.getEndArrowHead()=="triangle"){
-				if(direction.getX()==-1){			
+				if(direction.getX()==-1){
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
                     ctx.beginPath();
@@ -335,15 +335,15 @@ draw methods
 					ctx.moveTo(p2.getX(),p2.getY());
 					ctx.lineTo(p2.getX()-10,p2.getY()-10);
 					ctx.lineTo(p2.getX()-10,p2.getY()+10);
-					ctx.stroke();					
+					ctx.stroke();
 				}
 		}
 		if(this.getStartArrowHead()=="diamond"||this.getStartArrowHead()=="blackdiamond"){
 					const c=document.getElementById("myCanvas");
 					const ctx = c.getContext("2d");
-					
+
 					if(direction.getX()==1){
-					
+
 					ctx.setLineDash([]);
 					ctx.beginPath();
 					ctx.moveTo(p1.getX(),p1.getY());
@@ -361,7 +361,7 @@ draw methods
 					ctx.moveTo(p1.getX(),p1.getY());
 					ctx.lineTo(p1.getX()-10,p1.getY()-10);
 					ctx.lineTo(p1.getX()-20,p1.getY());
-					ctx.lineTo(p1.getX()-10,p1.getY()+10);	
+					ctx.lineTo(p1.getX()-10,p1.getY()+10);
 					}
 					if(this.getStartArrowHead()=="diamond"){
 						ctx.fillStyle="white";
@@ -391,7 +391,7 @@ draw methods
 					ctx.moveTo(p2.getX(),p2.getY());
 					ctx.lineTo(p2.getX()-10,p2.getY()-10);
 					ctx.lineTo(p2.getX()-20,p2.getY());
-					ctx.lineTo(p2.getX()-10,p2.getY()+10);	
+					ctx.lineTo(p2.getX()-10,p2.getY()+10);
 					}
 					if(this.getEndArrowHead()=="diamond"){
 						ctx.fillStyle="white";
@@ -401,7 +401,5 @@ draw methods
 						ctx.stroke();
 		}
 		else{}
-		
+
 		*/
-
-

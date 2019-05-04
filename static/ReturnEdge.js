@@ -13,12 +13,12 @@ class ReturnEdge extends SegmentedLineEdge {
         let n = this.getEnd();
         let start = this.getStart().getBounds();
         let end = this.getEnd().getBounds();
-        if (n instanceof PointNode) // show nicely in tool bar
-        {
-            a.push(new Point2D(end.getX(), end.getY()));
-            a.push(new Point2D(start.getMaxX(), end.getY()));
-        }
-        else if (start.getCenterX() < end.getCenterX()) {
+        // if (n instanceof PointNode) // show nicely in tool bar
+        // {
+        //     a.push(new Point2D(end.getX(), end.getY()));
+        //     a.push(new Point2D(start.getMaxX(), end.getY()));
+        // }
+        if (start.getCenterX() < end.getCenterX()) {
             a.push(new Point2D(start.getMaxX(), start.getMaxY()));
             a.push(new Point2D(end.getX(), start.getMaxY()));
         }

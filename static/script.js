@@ -142,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
         else if (selected_shape !== undefined && returnEdge_button) {
             let e = new ReturnEdge();
             let d = graph.connect(e, dragStartPoint, mousePoint);
-            console.log(graph);
         }
         dragStartPoint = undefined;
         dragStartBounds = undefined;

@@ -20,7 +20,6 @@ class ImplicitParameterNode extends RectangularNode {
         var curr_ctx = (newCtx != undefined) ? newCtx : ctx
         let top = this.getTopRectangle();
         let textWidth = ctx.measureText(this.name).width;
-        console.log(ctx.measureText(this.name).width)
         let copyBounds = super.getBounds();
         if (textWidth + 10 > top.width) {
             super.getBounds().width = textWidth+15;

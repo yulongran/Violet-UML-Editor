@@ -42,7 +42,12 @@ class AbstractEdge
    {
       let conn = this.getConnectionPoint();
       let r =new Rectangle2D(conn.getX1(), conn.getY1()+5,
-        Math.abs(conn.getX2()-conn.getX1()), Math.abs(conn.getY2()-conn.getY1())+5);
+        conn.getX2()-conn.getX1(), Math.abs(conn.getY2()-conn.getY1())+5);
+      if(this instanceof ReturnEdge)
+      {
+        r =new Rectangle2D(conn.getX2(), conn.getY2()+35,
+          conn.getX1()-conn.getX2(), Math.abs(conn.getY2()-conn.getY1())+5);
+      }
         return r;
    }
 
