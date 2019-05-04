@@ -41,8 +41,8 @@ class AbstractEdge
    getBounds()
    {
       let conn = this.getConnectionPoint();
-      let r =new Rectangle2D(conn.getX1(), conn.getY1(),
-        Math.abs(conn.getX2()-conn.getX1()), Math.abs(conn.getY2()-conn.getY1()));
+      let r =new Rectangle2D(conn.getX1(), conn.getY1()+5,
+        Math.abs(conn.getX2()-conn.getX1()), Math.abs(conn.getY2()-conn.getY1())+5);
         return r;
    }
 

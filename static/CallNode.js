@@ -137,7 +137,7 @@ class CallNode extends RectangularNode {
             return false;
         }
         if (e instanceof ReturnEdge) {
-            return end == super.getParent();
+            return end === super.getParent();
         }
         if (!(e instanceof CallEdge)) {
             return false;

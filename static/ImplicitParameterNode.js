@@ -2,7 +2,7 @@
 class ImplicitParameterNode extends RectangularNode {
     constructor() {
         super();
-        this.name = "Hello World" // MultiLineString
+        this.name = "" // MultiLineString
         this.DEFAULT_WIDTH = 80;
         this.DEFAULT_HEIGHT = 120;
         this.DEFAULT_TOP_HEIGHT = 60;
@@ -18,12 +18,12 @@ class ImplicitParameterNode extends RectangularNode {
 
     draw(newCtx = undefined) {
         var curr_ctx = (newCtx != undefined) ? newCtx : ctx
-
         let top = this.getTopRectangle();
         let textWidth = ctx.measureText(this.name).width;
+        console.log(ctx.measureText(this.name).width)
         let copyBounds = super.getBounds();
         if (textWidth + 10 > top.width) {
-            super.getBounds().width = textWidth + 30;
+            super.getBounds().width = textWidth+15;
             top = this.getTopRectangle();
         }
         top.draw(curr_ctx);

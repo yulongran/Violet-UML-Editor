@@ -17,6 +17,7 @@ var implicitParameterNode_button = false;
 var addNote_button = false;
 var selected_button = false;
 var callEdge_button = false;
+var returnEdge_button=false;
 let selected_shape;
 let selected_edge;
 const graph = new SequenceDiagramGraph()
@@ -27,8 +28,15 @@ let mouseDown_drawEdge = false;
 function repaint() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     graph.draw();
-    if (selected_shape !== undefined) {
-        const bounds = selected_shape.getBounds()
+    let bounds= undefined;
+    if (selected_shape !== undefined || selected_edge !== undefined) {
+      if(selected_edge !== undefined)
+      {
+        bounds= selected_edge.getBounds();
+      }
+      else {
+        bounds=selected_shape.getBounds();
+      }
         drawGrabber(bounds.x, bounds.y)
         drawGrabber(bounds.x + bounds.width, bounds.y)
         drawGrabber(bounds.x, bounds.y + bounds.height)
@@ -93,6 +101,12 @@ document.addEventListener('DOMContentLoaded', function () {
             addNote_button = false
             mouseDown_drawEdge = true;
         }
+        if (returnEdge_button === true && selected_shape !== undefined) {
+            implicitParameterNode_button = false;
+            callNode_button = false;
+            addNote_button = false
+            mouseDown_drawEdge = true;
+        }
 
         // If we unselected, the callNode button get reset
         if (selected_shape !== undefined) {
@@ -108,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         let mousePoint = mouseLocation(event)
-        if (selected_shape !== undefined && !callEdge_button) {
+        if (selected_shape !== undefined && !callEdge_button && !returnEdge_button) {
             const bounds = selected_shape.getBounds()
             selected_shape.translate(
                 dragStartBounds.x - bounds.x +
@@ -125,9 +139,15 @@ document.addEventListener('DOMContentLoaded', function () {
             let e = new CallEdge();
             let d = graph.connect(e, dragStartPoint, mousePoint);
         }
+        else if (selected_shape !== undefined && returnEdge_button) {
+            let e = new ReturnEdge();
+            let d = graph.connect(e, dragStartPoint, mousePoint);
+            console.log(graph);
+        }
         dragStartPoint = undefined;
         dragStartBounds = undefined;
         callEdge_button = false;
+        returnEdge_button=false;
         repaint();
     })
 })
@@ -180,8 +200,8 @@ function createPropertySheet(property, g) {
             input.style.background = "#f1f1f1";
             input.oninput = function()
             {
-              ctx.clearRect(0, 0, canvas.width, canvas.height)
               property[propertyName[i+2]](input.value)
+              ctx.clearRect(0, 0, canvas.width, canvas.height)
               g.draw();
             }
             form.appendChild(input);
@@ -209,7 +229,6 @@ function createPropertySheet(property, g) {
             {
               ctx.clearRect(0, 0, canvas.width, canvas.height)
               property[propertyName[i+2]](select.value)
-
               g.draw();
             }
             form.appendChild(select);
@@ -253,8 +272,9 @@ function createPropertySheet(property, g) {
     submit.style.marginBottom = "10px";
     submit.style.opacity = "0.8";
     submit.onclick = function () {
-    closeForm();
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     g.draw();
+    closeForm();
     }
 
     var close = document.createElement('button');
@@ -613,6 +633,20 @@ $('#callEdge').on('click', function () {
     $("#Select").removeClass("active")
     $("#callNode").removeClass("active")
     $("#addNote").removeClass("active")
+})
+
+// Set all other button to false
+$('#returnEdge').on('click', function () {
+    returnEdge_button = true;
+    callEdge_button = false;
+    callNode_button = false;
+    implicitParameterNode_button = false;
+    addNote_button = false;
+    $("#ImplicitParameterNode").removeClass("active")
+    $("#Select").removeClass("active")
+    $("#callNode").removeClass("active")
+    $("#addNote").removeClass("active")
+    //$("#returnEdge").removeClass("active")
 })
 
 $('#deleteNode').on('click', function () {
