@@ -37,23 +37,22 @@ class AbstractEdge
    {
       return this.end;
    }
-	//returns bounds as a line since lines are horizontal
-   getBounds()
+	//returns bounds as a line
+getBounds()
    {
-      let conn = this.getConnectionPoint();
-      let r =new Rectangle2D(conn.getX1(), conn.getY2()-10,
-        conn.getX2()-conn.getX1(), 20);
-      if(this instanceof ReturnEdge)
-      {
-        return new Rectangle2D(conn.getX2(), conn.getY1()+20,
-          conn.getX1()-conn.getX2(), 20);
-      }
-        return r;
+      let conn = this.getConnectionPoints();
+      let r = conn;
+      return r;
    }
+   
+   
+   
+   
+   
 
    getConnectionPoint()
    {
-	    let startBounds = this.start.getBounds();
+	  let startBounds = this.start.getBounds();
       let endBounds = this.end.getBounds();
       let startCenter = new Point2D(startBounds.getCenterX(), startBounds.getCenterY());
       let endCenter = new Point2D(endBounds.getCenterX(), endBounds.getCenterY());

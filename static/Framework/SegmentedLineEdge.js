@@ -432,12 +432,6 @@ class SegmentedLineEdge extends AbstractEdge
 	ctx.fillText(s, p.getX(),p.getY());
    }
 
-getBounds()
-   {
-      return super.getBounds();
-   }
-
-
   getConnectionPoints()
 	{
 		let points = this.getPoints();

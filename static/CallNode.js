@@ -249,10 +249,10 @@ class CallNode extends RectangularNode {
         let b = super.getBounds();
         var minHeight = this.DEFAULT_HEIGHT;
         let returnEdge = this.findEdge(g, this, this.getParent());
-        if (returnEdge !== undefined) {
-            let edgeBounds = returnEdge.getBounds();
-            minHeight = Math.max(minHeight, edgeBounds.getHeight());
-        }
+        //if (returnEdge !== undefined) {
+            //let edgeBounds = returnEdge.getBounds();
+            //minHeight = Math.max(minHeight, edgeBounds.getHeight());
+        //}
         super.setBounds(new Rectangle2D(b.getX(), b.getY(), b.getWidth(),
             Math.max(minHeight, ytop - b.getY())));
     }

@@ -33,14 +33,19 @@ function repaint() {
       if(selected_edge !== undefined)
       {
         bounds= selected_edge.getBounds();
+		let line=selected_edge.getBounds();
+		
+		console.log(selected_edge.getBounds);
+		drawGrabber(line.getX1(),line.getY1());
+		drawGrabber(line.getX2(),line.getY2());
       }
       else {
         bounds=selected_shape.getBounds();
-      }
         drawGrabber(bounds.x, bounds.y)
         drawGrabber(bounds.x + bounds.width, bounds.y)
         drawGrabber(bounds.x, bounds.y + bounds.height)
         drawGrabber(bounds.x + bounds.width, bounds.y + bounds.height)
+      }
     }
 }
 
@@ -367,7 +372,7 @@ class Line2D {
         return this.p2;
     }
     getPM() {
-        let pm = new Point2D(Math.round((this.getX1() + this.getX2()) / 2), Math.round((this.getY1() + this.getY2()) / 2));
+        let pm = new Point2D(Math.round((this.getX1() + this.getX2()) / 2), this.getY2());
         return pm;
     }
     getX1() {
@@ -396,16 +401,16 @@ class Line2D {
     }
     contains(aPoint) {
         let m = ((this.getY2() - this.getY1()) / (this.getX2() - this.getX1()));
-        let calculatedY = m * (aPoint.getX() - this.getX1()) + this.getY1();
-        if (aPoint.getY() + 3 >= calculatedY && aPoint.getY() - 3 <= calculatedY) {
+        let calculatedY = m * (aPoint.x - this.getX1()) + this.getY1();
+        if (aPoint.y + 3 >= calculatedY && aPoint.y - 3 <= calculatedY) {
             if (this.getX1() > this.getX2()) {
-                if (aPoint.getX() <= this.getX1() && aPoint.getX() >= this.getX2()) {
+                if (aPoint.x <= this.getX1() && aPoint.x >= this.getX2()) {
                     return true;
                 }
                 return false;
             }
             else {
-                if (aPoint.getX() >= this.getX1() && aPoint.getX() <= this.getX2()) {
+                if (aPoint.x >= this.getX1() && aPoint.x <= this.getX2()) {
                     return true;
                 }
                 return false;
