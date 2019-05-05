@@ -6,6 +6,7 @@ class ImplicitParameterNode extends RectangularNode {
         this.DEFAULT_WIDTH = 80;
         this.DEFAULT_HEIGHT = 120;
         this.DEFAULT_TOP_HEIGHT = 60;
+				this.children = [];
         super.setBounds(new Rectangle2D(0, 0, this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT));
         this.topHeight = this.DEFAULT_TOP_HEIGHT;
     }
@@ -89,7 +90,11 @@ class ImplicitParameterNode extends RectangularNode {
     getName() {
         return name;
     }
-
+		
+		getChildren(){
+			return this.children;
+		}
+		
     clone() {
         let myImplicitParameterNode = new ImplicitParameterNode();
         let cloned = {};
@@ -98,19 +103,21 @@ class ImplicitParameterNode extends RectangularNode {
     }
 
     addNode(n, p) {
-        return n instanceof CallNode //|| typeof n === PointNode;
+			this.children.push(n);
+      return n instanceof CallNode //|| typeof n === PointNode;
     }
 
     getProperty() {
         let copyName = this.name;
         var myNode= this;
         return {
+          Name: {
             name: copyName,
             inputBox: [copyName],
             setName(n)
             {
-              myNode.setName(n);
-            },
+                myNode.setName(n);
+            },}
         }
     }
 }

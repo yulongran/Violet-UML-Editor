@@ -140,20 +140,21 @@ class NoteNode extends RectangularNode {
         let copyColor = this.color;
         var myNode = this;
         return {
+          Text:{
             text: copyText,
             inputBox: copyText,
             setText(n) {
                 myNode.setText(n);
             },
+          },
+          Color:{
             Color: copyColor,
             colorSelector: copyColor,
             setColor(c)
             {
                 myNode.setColor(c);
             },
-
-
-
+          }
         }
     }
 }
