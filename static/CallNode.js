@@ -276,11 +276,20 @@ class CallNode extends RectangularNode {
         let copyOpenBottom = this.openBottom;
         var myNode = this;
         return {
+          OpenBottom:{
             openBottom: copyOpenBottom,
             selectBar: [copyOpenBottom, !copyOpenBottom],
             setOpenBottom(newValue) {
-                return myNode.setOpenBottom(newValue);
+              if(newValue === "false")
+              {
+                myNode.setOpenBottom(false);
+              }
+              else if(newValue ==="true")
+              {
+                myNode.setOpenBottom(true);
+              }
             },
+          }
         }
     }
 
