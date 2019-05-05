@@ -111,7 +111,15 @@ class Graph {
         // }
         // needsLayout = true;
     }
-
+		
+		removeEdge(edge) {
+			var newEdges = []
+			for (const e of this.edges) {
+					if (e !== edge)
+							newEdges.push(e)
+			}
+			this.edges = newEdges
+		}
     layout(g) {
         if (!this.needsLayout) {
             return;
