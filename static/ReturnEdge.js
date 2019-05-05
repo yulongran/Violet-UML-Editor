@@ -71,11 +71,11 @@ class ReturnEdge extends SegmentedLineEdge {
          {
            if(n === "NONE")
            {
-             myEdge.setStartArrowHead(ArrowHead.NONE);
+             myEdge.setEndArrowHead(ArrowHead.NONE);
            }
            else if(n === "V")
            {
-             myEdge.setStartArrowHead(ArrowHead.V);
+             myEdge.setEndArrowHead(ArrowHead.V);
            }
          },
        },

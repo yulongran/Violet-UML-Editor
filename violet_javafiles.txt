@@ -1,15 +1,15 @@
 Sequence Diagram:
 
-ArrowHead
-ArrowHeadEditor
-CallEdge
+ArrowHead: Jason
+ArrowHeadEditor: Jason
+CallEdge: Jason
 CallEdgeBeanInfo
 CallNode : Yulong
 CallNodeBeanInfo : Yulong
-NoteEdge
+NoteEdge: Jason
 NoteNode
 PointNode
-ReturnEdge
+ReturnEdge: Jason
 ImplicitParameterNode : Yulong
 SequenceDiagramGraph : Yulong
 
@@ -22,10 +22,10 @@ SequenceDiagramGraph : Yulong
 Framework:
 
 SeriablizableEnumeration ?
-SegmentedLineEdge
+SegmentedLineEdge: Jason
 RectangularNode : Yulong
 SimpleBeanInfo
-ShapeEdge
+ShapeEdge: Jason
 AbstractNode : Yulong
 Graph : Yulong
 TooBar : Kim Do
