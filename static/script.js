@@ -34,8 +34,6 @@ function repaint() {
       {
         bounds= selected_edge.getBounds();
 				let line=selected_edge.getBounds();
-
-				console.log(selected_edge.getBounds);
 				drawGrabber(line.getX1(),line.getY1());
 				drawGrabber(line.getX2(),line.getY2());
       }
