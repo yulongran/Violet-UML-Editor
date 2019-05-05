@@ -412,7 +412,7 @@ class SegmentedLineEdge extends AbstractEdge
 	}
 
 	drawPositionedStrings(){
-		let line=super.getConnectionPoint();
+		let line=this.getConnectionPoints();
 		if(this.getStartLabel()!==undefined){
 		this.drawString(this.getStartLabel(),line.getP1());
 		}
