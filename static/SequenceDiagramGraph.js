@@ -23,8 +23,8 @@ class SequenceDiagramGraph extends Graph {
 
     removeEdge(e) {
         super.removeEdge(e);
-        if (e instanceof CallEdge && e.getEnd().getChildren().size() == 0) {
-            removeNode(e.getEnd());
+        if (e instanceof CallEdge && e.getEnd().getChildren().length == 0) {
+            super.removeNode(e.getEnd());
         }
     }
 

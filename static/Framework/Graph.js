@@ -77,63 +77,66 @@ class Graph {
     }
 
     removeNode(node) {
-				// let tempArr = [];
-				// for (const n of this.nodes) {
-					// if (n !== node)
-            // tempArr.push(this.nodes.pop());
-					// else
-						// this.nodes.pop()
-        // }
-				// for (i = 0; i < tempArr.length; i++) {
-					// this.nodes.push(tempArr.pop())
-        // }
-				
-        // var newNodes = []
-        // for (const n of this.nodes) {
-            // if (n !== node)
-                // newNodes.push(n)
-        // }
-				
-				//this.nodes.pop()
-				var newNodes = []
-        for (const n of this.nodes) {
-            if (n !== node)
-                newNodes.push(n)
-        }
-        this.nodes = newNodes
-        // if (this.nodesToBeRemoved.contains(n)) {
-        //     return;
-        // }
-        // this.nodesToBeRemoved.add(n);
-        // for (let i = this.nodes.length - 1; i >= 0; i--) {
-        //     let n = this.nodes[i];
-        //     n.removeEdge(this, e);
-        // }
-        // needsLayout = true;
+       if(this.nodesToBeRemoved.includes((node)))
+       {
+         return;
+       }
+       this.nodesToBeRemoved.push(node);
+       for(let i=0; i<this.nodes.length; i++)
+    {
+      let n2= this.nodes[i];
+      n2.removeNode(this, node);
     }
-		
+    for(let i=0; i<this.edges.length; i++)
+    {
+      let e= this.edges[i];
+      if(e.getStart() === node || e.getEnd() === node)
+      {
+        this.removeEdge(e);
+      }
+    }
+    this.needsLayout=true;
+
+    }
+
 		removeEdge(edge) {
-			var newEdges = []
-			for (const e of this.edges) {
-					if (e !== edge)
-							newEdges.push(e)
-			}
-			this.edges = newEdges
-		}
+      if(this.edgesToBeRemoved.includes(edge))
+      {
+        return;
+      }
+      this.edgesToBeRemoved.push(edge);
+      for(let i=this.nodes.length-1; i>=0; i--)
+      {
+        let n= this.nodes[i];
+        n.removeEdge(this,edge);
+      }
+      this.needsLayout=true;
+    }
+
     layout(g) {
         if (!this.needsLayout) {
             return;
         }
-        //https://stackoverflow.com/questions/19957348/javascript-arrays-remove-all-elements-contained-in-another-array
-        // this.nodes=this.nodes.filter(function (e)
-        // {
-        //   return this.nodesToBeRemoved.indexOf(e)<0;
-        // })
-        //
-        // this.edges=this.edges.filter(function (e)
-        // {
-        //   return this.edgesToBeRemoved.indexOf(e)<0;
-        // })
+        for(let i=0; i<this.nodesToBeRemoved.length; i++)
+    {
+      for(let k=0; k<this.nodes.length; k++)
+      {
+        if(this.nodes[k] === this.nodesToBeRemoved[i])
+        {
+          this.nodes.splice(k,1);
+        }
+      }
+    }
+    for(let i=0; i<this.edgesToBeRemoved.length; i++)
+    {
+      for(let k=0; k<this.edges.length; k++)
+      {
+        if(this.edges[k] === this.edgesToBeRemoved[i])
+        {
+          this.edges.splice(k,1);
+        }
+      }
+    }
         this.nodesToBeRemoved = [];
         this.edgesToBeRemoved = [];
 

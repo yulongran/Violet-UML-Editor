@@ -183,14 +183,14 @@ class CallNode extends RectangularNode {
 
     removeEdge(g, e) {
         if (e.getStart() === this) {
-            removeChild(e.getEnd());
+            super.removeChild(e.getEnd());
         }
         super.removeEdge(g, e);
     }
 
     removeNode(g, n) {
-			
-        if (n === getParent() || n === this.implicitParameter)
+
+        if (n === super.getParent() || n === this.implicitParameter)
             g.removeNode(this);
     }
 

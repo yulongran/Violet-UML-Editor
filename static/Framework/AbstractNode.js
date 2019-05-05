@@ -22,13 +22,13 @@ class AbstractNode {
     }
 
     removeNode(g, e) {
-        if (e === parent) {
+        if (e === this.parent) {
             parent = undefined;
         }
-        if (e.getParenet() === this) {
-            for (let i = 0; i < children.length; i++) {
-                if (children[i] === e) {
-                    children.splice(i, e);
+        if (e.getParent() === this) {
+            for (let i = 0; i < this.children.length; i++) {
+                if (this.children[i] === e) {
+                    this.children.splice(i, e);
                 }
             }
         }
@@ -69,8 +69,8 @@ class AbstractNode {
             return;
         }
         for (let i = 0; i < this.children.length; i++) {
-            if (children[i] === e) {
-                children.splice(i, e);
+            if (this.children[i] === node) {
+                this.children.splice(i, 1);
             }
         }
         node.setParent(undefined);

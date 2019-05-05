@@ -90,11 +90,11 @@ class ImplicitParameterNode extends RectangularNode {
     getName() {
         return name;
     }
-		
+
 		getChildren(){
 			return this.children;
 		}
-		
+
     clone() {
         let myImplicitParameterNode = new ImplicitParameterNode();
         let cloned = {};
