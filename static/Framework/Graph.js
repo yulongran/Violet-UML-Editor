@@ -77,14 +77,29 @@ class Graph {
     }
 
     removeNode(node) {
-        this.nodes.pop()
-
-        var newNodes = []
+				// let tempArr = [];
+				// for (const n of this.nodes) {
+					// if (n !== node)
+            // tempArr.push(this.nodes.pop());
+					// else
+						// this.nodes.pop()
+        // }
+				// for (i = 0; i < tempArr.length; i++) {
+					// this.nodes.push(tempArr.pop())
+        // }
+				
+        // var newNodes = []
+        // for (const n of this.nodes) {
+            // if (n !== node)
+                // newNodes.push(n)
+        // }
+				
+				//this.nodes.pop()
+				var newNodes = []
         for (const n of this.nodes) {
             if (n !== node)
                 newNodes.push(n)
         }
-
         this.nodes = newNodes
         // if (this.nodesToBeRemoved.contains(n)) {
         //     return;

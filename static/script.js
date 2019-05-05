@@ -649,17 +649,18 @@ $('#returnEdge').on('click', function () {
 })
 
 $('#deleteNode').on('click', function () {
-
-
     if (selected_shape !== undefined) {
-        // graph.ad
-        selected_shape = undefined
+        if(selected_shape instanceof ImplicitParameterNode) {
+					for(const n of selected_shape.getChildren()){
+						graph.removeNode(n)
+					}
+				}
         graph.removeNode(selected_shape)
+				selected_shape = undefined;
         repaint()
     } else {
         alert("nothing delete ")
     }
-
 
     $("#Select").removeClass("active")
     $("#ImplicitParameterNode").removeClass("active")

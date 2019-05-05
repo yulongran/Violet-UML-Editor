@@ -189,6 +189,7 @@ class CallNode extends RectangularNode {
     }
 
     removeNode(g, n) {
+			
         if (n === getParent() || n === this.implicitParameter)
             g.removeNode(this);
     }
