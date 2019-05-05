@@ -372,7 +372,6 @@ class CallEdge extends SegmentedLineEdge {
         else
             this.setEndArrowHead(ArrowHead.V);
     }
-
     getPoints() {
         let a = [];
         let n = super.getEnd();

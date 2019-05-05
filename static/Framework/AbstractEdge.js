@@ -45,11 +45,6 @@ getBounds()
       return r;
    }
    
-   
-   
-   
-   
-
    getConnectionPoint()
    {
 	  let startBounds = this.start.getBounds();
