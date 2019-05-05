@@ -9,19 +9,33 @@ var server = http.createServer(function (request, response) {
             response.write(contents);
             response.end();
         });
-    } else if (request.url === "/static/style.css") {
-        fs.readFile('./static/style.css', 'utf8', function (errors, contents) {
+    } else if (request.url === '/presentation') {
+        fs.readFile('presentation.html', 'utf8', function (errors, contents) {
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            response.write(contents);
+            response.end();
+        });
+    } else if (request.url.match(/\.css$/)) {
+        fs.readFile("." + request.url, 'utf8', function (errors, contents) {
             response.writeHead(200, { 'Content-type': 'text/css' });
             response.write(contents);
             response.end();
         });
-    }  else if (request.url.match(/\.js/) ) {
-        fs.readFile("."+request.url, 'utf8', function (errors, contents) {
+    } else if (request.url.match(/\.js$/)) {
+        fs.readFile("." + request.url, 'utf8', function (errors, contents) {
             response.writeHead(200, { 'Content-type': 'text/javascript' });
             response.write(contents);
             response.end();
         });
-    } else {
+    }else if (request.url.match(/\.jpg$/)) {
+        console.log("Image")
+        fs.readFile("." + request.url, function (errors, contents) {
+            response.writeHead(200, { 'Content-type': 'image/jpg' });
+            response.write(contents);
+            response.end();
+        });
+    } 
+    else {
         response.end('File not found!!!');
     }
 });
