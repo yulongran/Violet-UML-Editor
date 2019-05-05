@@ -63,6 +63,12 @@ document.addEventListener('DOMContentLoaded', function () {
             createPropertySheet(selected_shape.getProperty(), graph);
             openForm();
         }
+        else if(selected_shape=== undefined && selected_edge !==undefined)
+          {
+            createPropertySheet(selected_edge.getProperty(), graph);
+            openForm();
+          }
+
     })
 
     canvas.addEventListener('mousedown', event => {
@@ -161,8 +167,7 @@ function createPropertySheet(property, g) {
     {
       closeForm();
     }
-    let propertyName = Object.getOwnPropertyNames(property);
-    let propertyValue= Object.values(property);
+    let propertyObject = Object.getOwnPropertyNames(property);  // Array of object
     var div = document.createElement('div');
     div.id = "myForm";
     div.class = "form-popup";
@@ -179,81 +184,85 @@ function createPropertySheet(property, g) {
     form.style.maxWidth = "300px";
     form.style.padding = "10px";
     form.style.background = "white";
-    // Property format : name, editor type, settter method
-    for (let i = 0; i < propertyName.length; i=i+3) {
-          var label = document.createElement("Label");
-          label.innerHTML = propertyName[i];
-          form.appendChild(label);
-
-          // Editor type : input box
-          if(propertyName[i+1] === "inputBox")
-          {
-            var input = document.createElement("input");
-            input.placeholder = propertyValue[i+1]; // Name: current name
-            input.name = propertyName[i];
-            input.id = propertyName[i];
-            input.style.width = "100%";
-            input.style.padding = "15px";
-            input.style.margin = "5px 0 22px 0";
-            input.style.border = "none";
-            input.style.background = "#f1f1f1";
-            input.oninput = function()
-            {
-              property[propertyName[i+2]](input.value)
-              ctx.clearRect(0, 0, canvas.width, canvas.height)
-              g.draw();
+    for(let k=0; k<propertyObject.length; k++)
+    {
+      let propertyN=property[propertyObject[k]] // Kth object
+      let propertyName = Object.getOwnPropertyNames(propertyN); // Property Name within the object : object, typeof editor, setter
+      let propertyValue= Object.values(propertyN); // Acutally value within each property name
+      // Property format : name, editor type, settter method
+      var label = document.createElement("Label");
+      label.innerHTML = propertyName[0];
+      form.appendChild(label);
+     // Editor type : input box
+      if(propertyName[1] === "inputBox")
+      {
+              var input = document.createElement("input");
+              input.placeholder = propertyValue[1]; // Name: current name
+              input.name = propertyName[0];
+              input.id = propertyName[0];
+              input.style.width = "100%";
+              input.style.padding = "15px";
+              input.style.height="20px";
+              input.style.margin = "5px 0 22px 0";
+              input.style.border = "none";
+              input.style.background = "#f1f1f1";
+              input.oninput = function()
+              {
+                propertyN[propertyName[2]](document.getElementById(propertyName[0]).value)
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+                g.draw();
+              }
+              form.appendChild(input);
             }
-            form.appendChild(input);
-          }
 
-          // Editor type: select bar
-          else if(propertyName[i+1] === "selectBar")
-          {
-            var select = document.createElement("SELECT");
-            select.id = propertyName[i];
-            select.style.width = "100%";
-            select.style.padding = "15px";
-            select.style.margin = "5px 0 22px 0";
-            select.style.border = "none";
-            select.style.background = "#f1f1f1";
-            let optionList= propertyValue[i+1];
-            for(let i=0; i<optionList.length; i++)
+            // Editor type: select bar
+            else if(propertyName[1] === "selectBar")
             {
-              var option = document.createElement("option");
-              option.value = optionList[i];
-              option.text = optionList[i];
-              select.appendChild(option);
+              var select = document.createElement("SELECT");
+              select.id = propertyName[0];
+              select.value="";
+              select.style.width = "100%";
+              select.style.padding = "15px";
+              select.style.margin = "5px 0 22px 0";
+              select.style.border = "none";
+              select.style.background = "#f1f1f1";
+              let optionList= propertyValue[1];
+              for(let i=0; i<optionList.length; i++)
+              {
+                var option = document.createElement("option");
+                option.value = optionList[i];
+                option.text = optionList[i];
+                select.appendChild(option);
+              }
+              select.onchange = function ()
+              {
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+                propertyN[propertyName[2]](document.getElementById(propertyName[0]).value)
+                g.draw();
+              }
+              form.appendChild(select);
             }
-            select.onchange = function ()
-            {
-              ctx.clearRect(0, 0, canvas.width, canvas.height)
-              property[propertyName[i+2]](select.value)
-              g.draw();
-            }
-            form.appendChild(select);
-          }
 
-          // Editor type: Color picker
-          else if(propertyName[i+1] === "colorSelector")
-          {
-            var color = document.createElement("INPUT");
-            color.setAttribute("type", "color");
-            color.disabled=false;
-            color.id= "color"
-            color.style.width = "100%";
-            color.style.padding = "15px";
-            color.style.margin = "5px 0 22px 0";
-            color.style.border = "none";
-            color.value ="#e6e600";
-            color.addEventListener("change", updateColor ,false)
-            function updateColor()
+            // Editor type: Color picker
+            else if(propertyName[1] === "colorSelector")
             {
-              property[propertyName[i+2]](color.value);
-              g.draw();
+              var color = document.createElement("INPUT");
+              color.setAttribute("type", "color");
+              color.disabled=false;
+              color.id= "color"
+              color.style.width = "100%";
+              color.style.padding = "15px";
+              color.style.margin = "5px 0 22px 0";
+              color.style.border = "none";
+              color.value ="#e6e600";
+              color.addEventListener("change", updateColor ,false)
+              function updateColor()
+              {
+                propertyN[propertyName[2]](color.value)
+                g.draw();
+              }
+              form.appendChild(color);
             }
-            form.appendChild(color);
-          }
-
 
     }
 

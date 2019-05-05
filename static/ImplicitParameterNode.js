@@ -111,12 +111,13 @@ class ImplicitParameterNode extends RectangularNode {
         let copyName = this.name;
         var myNode= this;
         return {
+          Name: {
             name: copyName,
             inputBox: [copyName],
             setName(n)
             {
-              myNode.setName(n);
-            },
+                myNode.setName(n);
+            },}
         }
     }
 }

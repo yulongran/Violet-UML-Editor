@@ -1,7 +1,9 @@
 'use strict'
 var LineStyle={SOLID:{"name":"solid",
 "applyStyle":function(){
-
+	const c=document.getElementById("myCanvas");
+	const ctx = c.getContext("2d");
+	ctx.setLineDash([]);
 },
 "revertStyle":function(){
 
