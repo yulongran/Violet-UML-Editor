@@ -1,0 +1,311 @@
+@font-face {
+  font-family: "MonoCondensed";
+  src: local("DejaVu Sans Mono Condensed"), url("DejaVuSansMonoCondensed.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Handwriting";
+  src: local("MarkingPen"), url("http://horstmann.com/MySlidy/MarkingPen.otf") format("opentype");
+}
+
+@import url(http://fonts.googleapis.com/css?family=Cabin:400,700,400italic,700italic);
+
+.license { 
+   font-size: 0.7em;
+   position:absolute;
+   bottom: 3em;
+   height: 3em;
+}
+
+.attribution {
+   font-size: 0.5em;
+}
+
+@page { size: A4 landscape }
+
+@media print {
+   h1, div.slide { 
+      page-break-before: always; page-break-inside: avoid; 
+   }
+}
+
+blockquote {
+    font-size: 0.8em;
+    line-height: 1.2em;
+}
+
+code, pre { 
+  font-family: "MonoCondensed", monospace, Courier;
+  color: black;
+  font-weight: normal;
+  font-style: normal;
+}
+
+code { 
+  font-size: 1.05em;
+}
+
+code del, pre del {
+    color: #555;
+}
+
+body {
+   font-family: sans-serif; /* so that entities come out ok */
+}
+
+.u {
+  text-decoration: underline;
+}
+
+samp, .pseudo, .pseudocode, .hand {
+  font-style: normal;
+  font-family: "Handwriting", "Comic Sans MS", serif
+}
+
+
+h1 { 
+  border-bottom-style: solid;
+  border-bottom-color: #00008B /* darkblue */;
+  border-bottom-width: 0.15em; 
+  clear: both; 
+}
+
+h1, h2, h3, h4 {
+  font-family: "Cabin", sans-serif;
+  font-weight: bold;
+}
+
+pre .comment, pre cite, pre .rm, pre .c { 
+  font-family: roman;
+  font-style: normal;
+  font-weight: normal;
+  color: black;
+}
+
+pre strong .comment, pre strong cite, pre strong .rm, pre strong .c, pre b .comment, pre b cite, pre b .rm, pre b .c {
+    color: red;
+}
+
+.var, var { 
+  font-family: roman;
+  font-style: italic;
+  color: black;
+}
+
+pre b var, pre strong var {
+    color: red;
+}
+
+acronym, .black {  /* white on black */
+  color: white;
+  background: black;
+}
+
+pre {  
+  background-color: #FFFEED;
+}
+
+blockquote { 
+  background-color: #EDFEFF;
+}
+
+pre, blockquote { 
+  clear: none;
+  border-color: #EEEDDC;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  border-style: solid;
+  border-width: 1px;
+}
+
+
+.sideimage {
+  width: 30%;
+  margin-right: 3em;
+  float: left;
+}
+
+.rightimage {
+  width: 30%;
+  margin-left: 3em;
+  float: right;
+}
+
+.halfimage {
+  width: 40%;
+  margin-right: 1em;
+  float: left;
+}
+
+.horizhalfimage {
+  text-align: center;
+  height: 40%;
+}
+
+.sideimage img, .rightimage img, .halfimage img {
+  width: 100%  !important; /* 90% is hack for Amaya */
+  height: auto !important; 
+  // replace with object-fit once IE supports that
+}
+
+.fullimage { 
+  text-align: center;
+}
+
+.fullimage img, .horizhalfimage img {
+    /*
+  height: 100%  !important; 
+  width: auto !important; 
+   */
+    width: 80vw;
+    height: 80vh;
+    object-fit: contain;
+}
+
+.fullportrait img {
+  width: 100%  !important; 
+  height: auto !important;
+}
+
+@media print { 
+  .fullimage {
+    width: 25em;
+  } 
+}
+
+ul li, ol li { margin-top: 0.25em; margin-bottom: 0.25em; }
+
+li ul, li ol { margin-left: 2em; font-size: 0.9em; }
+
+li ul li, li ol li { color: #333; font-style: normal }
+
+@media print {
+   ul {
+      font-size: 1.2em;
+   }
+}
+
+@page {
+   size: 8in 6in; 
+   margin: 0.25in;
+}
+
+/*
+code a { 
+   font-family: monospace;
+   font-size: 1em;
+}
+*/
+
+a {
+   text-decoration: underline;   
+}
+
+a:visited { color: purple }
+
+.strike {
+   text-decoration: line-through;
+}
+
+.poll li {
+  list-style-type: decimal;
+}
+
+pre strong, code strong, pre b, code b { 
+  color: red;
+  font-weight: normal;
+}
+
+table { 
+  border-collapse: collapse;
+  border-style: none;
+  font-size: 0.8em;
+  margin-left: 2em;
+}
+
+table caption, table caption code {
+    background: firebrick;
+    color: white;
+    padding: .4em;
+    margin-bottom: .4em;
+}
+
+tr { 
+  background: #eee;
+  border-bottom-style: solid;
+  border-bottom-width: thin;   
+  border-bottom-color: white;
+}
+
+tr:hover { 
+  background: #ccc;
+}
+
+th { 
+  border-style: none;
+  background: firebrick;
+  color: white;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+td { 
+  border-style: solid thin white;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  margin: 1em;
+}
+
+td.selected { 
+   background: #7cccc8;
+}
+
+td.gray { 
+  background: #bde4e1;
+}
+
+/* A td preceded by a td */
+
+table.stack tr.alt > td + td { 
+  background: blue;
+}
+
+table.stack tr > td + td { 
+  text-align: left;
+  background: lightsteelblue;
+}
+
+table.stack tr > td { 
+  text-align: right;
+}
+
+.lower-alpha > li, .la > li { 
+  list-style-type: lower-alpha;
+}
+
+.highlight { 
+  background: lightsteelblue;
+}
+
+.todo {
+    color: red;
+}
+
+.clicker {
+  background-repeat: no-repeat; 
+  padding-left: 120px;
+  min-height: 50px;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  background-image: url(clicker.png)
+}
+
+.clicker > li {
+  list-style-type: upper-alpha;
+}
+
