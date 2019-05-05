@@ -33,11 +33,11 @@ function repaint() {
       if(selected_edge !== undefined)
       {
         bounds= selected_edge.getBounds();
-		let line=selected_edge.getBounds();
-		
-		console.log(selected_edge.getBounds);
-		drawGrabber(line.getX1(),line.getY1());
-		drawGrabber(line.getX2(),line.getY2());
+				let line=selected_edge.getBounds();
+				
+				console.log(selected_edge.getBounds);
+				drawGrabber(line.getX1(),line.getY1());
+				drawGrabber(line.getX2(),line.getY2());
       }
       else {
         bounds=selected_shape.getBounds();
@@ -672,10 +672,13 @@ $('#deleteNode').on('click', function () {
         graph.removeNode(selected_shape)
 				selected_shape = undefined;
         repaint()
-    } else {
-        alert("nothing delete ")
     }
-
+		
+		if(selected_edge !== undefined) {
+			graph.removeEdge(selected_edge)
+			selected_edge = undefined;
+			repaint()
+		}
     $("#Select").removeClass("active")
     $("#ImplicitParameterNode").removeClass("active")
     $("#callNode").removeClass("active")
