@@ -518,6 +518,10 @@ class Rectangle2D {
     contains(p) {
         return (this.x < p.x && (this.x + this.width) > p.x && this.y < p.y && (this.y + this.height) > p.y)
     }
+	
+	getConnectionPoint(toEnd){
+		return new Point2D(this.getX(),this.getY());
+	}
 }
 
 class Direction {

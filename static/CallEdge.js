@@ -487,4 +487,16 @@ class CallEdge extends SegmentedLineEdge {
         },
        }
     }
+	
+	/**
+	* Draws the CallEdge found in the 
+	* @param {canvas.getContext}ctx the context of the canvas
+	*/
+	drawToolBar(ctx) {
+		var edge=new CallEdge();
+		var p1=new Rectangle2D(20,TOOLBAR_HEIGHT/2,1,1);
+		var p2=new Rectangle2D(TOOLBAR_WIDTH-20,TOOLBAR_HEIGHT/2,1,1);
+		edge.connect(p1,p2);
+		edge.draw();
+	}
 }
