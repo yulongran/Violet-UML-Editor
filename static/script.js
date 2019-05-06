@@ -180,13 +180,18 @@ document.addEventListener('DOMContentLoaded', function () {
             let n1 = new ImplicitParameterNode()
             graph.add(n1, mousePoint)
 
-            resetToolBar()
+            //resetToolBar()
         }
         // If the callNode button is pressed in the toolbar
-        if (callNode_button === true && !(selected_shape instanceof CallNode)) {
-            let n1 = new CallNode()
-            graph.add(n1, mousePoint)
-            resetToolBar()
+        if (callNode_button === true) {
+						if((selected_shape === undefined))
+							return;
+						if(!(selected_shape instanceof CallNode)) {
+							let n1 = new CallNode()
+							graph.add(n1, mousePoint)
+						}
+            
+            //resetToolBar()
         }
 
         if (selected_shape === undefined) {
@@ -197,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (addNote_button === true && selected_shape === undefined) {
             let n1 = new NoteNode()
             graph.add(n1, mousePoint)
-            resetToolBar()
+            //resetToolBar()
         }
 
         if (callEdge_button === true && selected_shape !== undefined) {
@@ -883,7 +888,11 @@ class Direction {
 // Action listener for jquery
 $('#ImplicitParameterNode').on('click', function () {
     implicitParameterNode_button = true
-
+		callNode_button = false
+		addNote_button = false
+		selected_button = false
+		callEdge_button = false
+		returnEdge_button = false
     $('#ImplicitParameterNode').addClass('active')
     $('#callNode').removeClass('active')
     $('#addNote').removeClass('active')
@@ -895,7 +904,10 @@ $('#ImplicitParameterNode').on('click', function () {
 $('#callNode').on('click', function () {
     callNode_button = true
     implicitParameterNode_button = false
-
+		addNote_button = false
+		selected_button = false
+		callEdge_button = false
+		returnEdge_button = false
     $('#callNode').addClass('active')
     $('#ImplicitParameterNode').removeClass('active')
     $('#addNote').removeClass('active')
@@ -906,7 +918,11 @@ $('#callNode').on('click', function () {
 
 $('#addNote').on('click', function () {
     addNote_button = true
-    implicitParameterNode_button = false
+    callNode_button = false
+		implicitParameterNode_button = false
+		selected_button = false
+		callEdge_button = false
+		returnEdge_button = false
 
     $('#addNote').addClass('active')
     $('#ImplicitParameterNode').removeClass('active')
@@ -933,9 +949,11 @@ $('#Select').on('click', function () {
 // Set all other button to false
 $('#callEdge').on('click', function () {
     callEdge_button = true
-    callNode_button = false
-    implicitParameterNode_button = false
-    addNote_button = false
+		callNode_button = false
+		implicitParameterNode_button = false
+		addNote_button = false
+		selected_button = false
+		returnEdge_button = false
 
     $("#callEdge").addClass("active")
     $('#ImplicitParameterNode').removeClass('active')
@@ -948,10 +966,12 @@ $('#callEdge').on('click', function () {
 // Set all other button to false
 $('#returnEdge').on('click', function () {
     returnEdge_button = true
-    callEdge_button = false
     callNode_button = false
-    implicitParameterNode_button = false
-    addNote_button = false
+		implicitParameterNode_button = false
+		addNote_button = false
+		selected_button = false
+		callEdge_button = false
+
 
     $("#returnEdge").addClass("active")
     $('#ImplicitParameterNode').removeClass('active')

@@ -15,7 +15,7 @@ class NoteNode extends RectangularNode {
     this.DEFAULT_WIDTH = 60
     this.DEFAULT_HEIGHT = 40
     this.color = 'yellow'
-    this.text = 'Text'
+    this.text = ''
     this.setBounds(new Rectangle2D(0, 0, this.DEFAULT_WIDTH, this.DEFAULT_HEIGHT))
         // text.setJustification(MultiLineString.LEFT);
   }
