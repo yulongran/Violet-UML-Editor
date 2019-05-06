@@ -16,7 +16,7 @@ class Point2D {
 
 class Line2D{
 	constructor(p1,p2){
-		
+
 		this.x1=p1.getX();
 		this.y1=p1.getY();
 		this.x2=p2.getX();
@@ -46,7 +46,7 @@ class Line2D{
     setY2(y) {
         this.y2 = y;
     }
-    
+
 
 }
 
@@ -79,7 +79,7 @@ class Direction
 	let length = Math.sqrt(x * x + y * y);
       if (length == 0) return;
       x = x / length;
-      y = y / length; 
+      y = y / length;
    }
 
    /**
@@ -142,7 +142,7 @@ class Direction
 */
 class AbstractEdge
 {
-	
+
 	constructor(){
    let start;
    let end;
@@ -202,7 +202,7 @@ class AbstractEdge
    An edge that is composed of multiple line segments
 */
 class SegmentedLineEdge
-{ 
+{
 //   private static JLabel label = new JLabel();
 
    /**
@@ -229,11 +229,11 @@ class SegmentedLineEdge
    public String getMiddleLabel() { return middleLabel; }
    setEndLabel(newValue) { endLabel = newValue; }
    getEndLabel() { return endLabel; }
-//idk ctx shit 
+//idk ctx shit
 draw()
    {
       let points = getPoints();
-      
+
       Stroke oldStroke = g2.getStroke();
       g2.setStroke(lineStyle.getStroke());
       g2.draw(getSegmentPath());
@@ -243,13 +243,13 @@ draw()
       endArrowHead.draw(g2, (Point2D)points.get(points.size() - 2),
          (Point2D)points.get(points.size() - 1));
 
-      drawString(g2, (Point2D)points.get(1), (Point2D)points.get(0), 
+      drawString(g2, (Point2D)points.get(1), (Point2D)points.get(0),
             startArrowHead, startLabel, false);
       drawString(g2, (Point2D)points.get(points.size() / 2 - 1),
             (Point2D)points.get(points.size() / 2),
             null, middleLabel, true);
       drawString(g2, (Point2D)points.get(points.size() - 2),
-            (Point2D)points.get(points.size() - 1), 
+            (Point2D)points.get(points.size() - 1),
             endArrowHead, endLabel, false);
    }
 
@@ -265,25 +265,25 @@ draw()
       along the segment
    */
 //idk ctx shit
-   private static void drawString(Graphics2D g2, 
+   private static void drawString(Graphics2D g2,
       Point2D p, Point2D q, ArrowHead arrow, String s, boolean center)
    {
       if (s == null || s.length() == 0) return;
       label.setText("<html>" + s + "</html>");
       label.setFont(g2.getFont());
-      Dimension d = label.getPreferredSize();      
+      Dimension d = label.getPreferredSize();
       label.setBounds(0, 0, d.width, d.height);
 
       Rectangle2D b = getStringBounds(g2, p, q, arrow, s, center);
-      
+
       Color oldColor = g2.getColor();
       g2.setColor(g2.getBackground());
       g2.fill(b);
       g2.setColor(oldColor);
-      
+
       g2.translate(b.getX(), b.getY());
       label.paint(g2);
-      g2.translate(-b.getX(), -b.getY());        
+      g2.translate(-b.getX(), -b.getY());
    }
 
    /**
@@ -299,20 +299,20 @@ draw()
       @return the point at which to draw the string
    */
    //dimension d Ignore it I guess?
-/*   private static Point2D getAttachmentPoint(Graphics2D g2, 
+/*   private static Point2D getAttachmentPoint(Graphics2D g2,
       Point2D p, Point2D q, ArrowHead arrow, Dimension d, boolean center)
-   {    
+   {
       let GAP = 3;
       let xoff = GAP;
       let yoff = -GAP - d.getHeight();
       let attach = q;
       if (center)
       {
-         if (p.getX() > q.getX()) 
-         { 
-            return getAttachmentPoint(g2, q, p, arrow, d, center); 
+         if (p.getX() > q.getX())
+         {
+            return getAttachmentPoint(g2, q, p, arrow, d, center);
          }
-         attach = new Point2D.Double((p.getX() + q.getX()) / 2, 
+         attach = new Point2D.Double((p.getX() + q.getX()) / 2,
             (p.getY() + q.getY()) / 2);
          if (p.getY() < q.getY())
             yoff =  - GAP - d.getHeight();
@@ -321,7 +321,7 @@ draw()
          else
             yoff = GAP;
       }
-      else 
+      else
       {
          if (p.getX() < q.getX())
          {
@@ -360,7 +360,7 @@ draw()
       @return the rectangle enclosing the string
    */
    /*//ignore:
-   private static Rectangle2D getStringBounds(Graphics2D g2, 
+   private static Rectangle2D getStringBounds(Graphics2D g2,
       Point2D p, Point2D q, ArrowHead arrow, String s, boolean center)
    {
       if (g2 == null) return new Rectangle2D.Double();
@@ -378,16 +378,16 @@ draw()
    {
       ArrayList points = getPoints();
       Rectangle2D r = super.getBounds(g2);
-      r.add(getStringBounds(g2, 
-               (Point2D) points.get(1), (Point2D) points.get(0), 
+      r.add(getStringBounds(g2,
+               (Point2D) points.get(1), (Point2D) points.get(0),
                startArrowHead, startLabel, false));
-      r.add(getStringBounds(g2, 
+      r.add(getStringBounds(g2,
                (Point2D) points.get(points.size() / 2 - 1),
-               (Point2D) points.get(points.size() / 2), 
+               (Point2D) points.get(points.size() / 2),
                null, middleLabel, true));
-      r.add(getStringBounds(g2, 
+      r.add(getStringBounds(g2,
                (Point2D) points.get(points.size() - 2),
-               (Point2D) points.get(points.size() - 1), 
+               (Point2D) points.get(points.size() - 1),
                endArrowHead, endLabel, false));
       return r;
    }
@@ -409,7 +409,7 @@ draw()
    private GeneralPath getSegmentPath()
    {
       ArrayList points = getPoints();
-      
+
       GeneralPath path = new GeneralPath();
       Point2D p = (Point2D) points.get(points.size() - 1);
       path.moveTo((float) p.getX(), (float) p.getY());
@@ -420,7 +420,7 @@ draw()
       }
       return path;
    }
-*/   
+*/
    getConnectionPoints()
    {
       let points = getPoints();
@@ -445,7 +445,7 @@ getHeadBounds(){
       // the end points may contain small nodes, so don't
       // match them
       let conn = getConnectionPoints();
-      if (aPoint.distance(conn.getP1()) <= MAX_DIST 
+      if (aPoint.distance(conn.getP1()) <= MAX_DIST
          || aPoint.distance(conn.getP2()) <= MAX_DIST)
          return false;
 //idk
@@ -455,9 +455,9 @@ getHeadBounds(){
          (float)(2 * MAX_DIST));
       let fatPath = fatStroke.createStrokedShape(p);
       return fatPath.contains(aPoint);
-  
+
 }
-*/ 
+*/
   contains(aPoint)
    {
 if(getBounds().contains(aPoint)||getHeadBounds().contains(aPoint)){

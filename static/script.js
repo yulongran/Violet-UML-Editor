@@ -799,6 +799,16 @@ class Rectangle2D {
   contains (p) {
     return (this.x < p.x && (this.x + this.width) > p.x && this.y < p.y && (this.y + this.height) > p.y)
   }
+
+  /**
+  * Gets the connection point of the rectangle
+  * @param {Point2D} toEnd A point
+  * @return {Point2D} the connection point of the rectangle
+  */
+
+  getConnectionPoint(toEnd){
+    return new Point2D(this.getX(),this.getY());
+  }
 }
 
 /**

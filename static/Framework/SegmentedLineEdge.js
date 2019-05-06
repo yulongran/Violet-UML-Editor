@@ -1,14 +1,14 @@
 'use strict'
-/** 
+/**
  *  @fileOverview SegmentedLineEdge that implementes AbstractEdge
  *
  *  @author       Jason Tang
  *  @requires     static/SegmentedLineEdge.js
  */
- 
+
 /**
  * The types of lines the SegmentedLineEdge can draw stored as a JSON
- * LineStyle's Attributes represent the JSONs that have the functions 
+ * LineStyle's Attributes represent the JSONs that have the functions
  * to apply styles and are used by the LineSegment Draw Method
  * @type {JSON}
  */
@@ -37,7 +37,7 @@ var LineStyle={SOLID:{"name":"solid",
 
 /**
  * The types of ArrowHeads the SegmentedLineEdge can draw stored as a JSON
- * ArrowHeads's Attributes represent the JSONs that have the functions 
+ * ArrowHeads's Attributes represent the JSONs that have the functions
  * to draw the  ArrowHeads and are used by the LineSegment Draw Method
  * @type {JSON}
  */
@@ -374,7 +374,7 @@ class SegmentedLineEdge extends AbstractEdge
 	* @property endArrowHead the ArrowHead on the end of the edge
 	* @property startLabel the label on the start of the edge
 	* @property middleLabel the label in the middle of the edge
-	* @property endLabel the label of end of the edge	
+	* @property endLabel the label of end of the edge
 	*/
 	constructor()
 	{
@@ -386,73 +386,73 @@ class SegmentedLineEdge extends AbstractEdge
 		this.middleLabel = "";
 		this.endLabel = "";
 	}
-	
+
 	/**
 	* Sets the LineStyle of the SegmentedLineEdge
 	* @param {Rectangle2D} newValue the new LineStyle of the SegmentedLineEdge
 	*/
    setLineStyle(newValue) { this.lineStyle = newValue; }
-   
+
    	/**
 	* Returns the LineStyle of the SegmentedLineEdge
 	* @returns {LineStyle} bounds the bounds of the SegmentedLineEdge
 	*/
    getLineStyle() { return this.lineStyle; }
-   
+
 	/**
 	* Sets the startArrowHead of the SegmentedLineEdge
 	* @param {ArrowHead} newValue the new ArrowHead of the SegmentedLineEdge
 	*/
    setStartArrowHead(newValue) { this.startArrowHead = newValue; }
-   
+
      /**
 	* Returns the startArrowHead of the SegmentedLineEdge
 	* @returns {ArrowHead} startArrowHead the starting ArrowHead of the SegmentedLineEdge
 	*/
    getStartArrowHead() { return this.startArrowHead; }
-   
+
    	/**
 	* Sets the endArrowHead of the SegmentedLineEdge
 	* @param {ArrowHead} newValue the new end ArrowHead of the SegmentedLineEdge
 	*/
    setEndArrowHead(newValue) { this.endArrowHead = newValue; }
-   
+
       	/**
 	* Returns the endArrowHead of the SegmentedLineEdge
 	* @returns {ArrowHead} endArrowHead the ending ArrowHead of the SegmentedLineEdge
 	*/
    getEndArrowHead() { return this.endArrowHead; }
-   
+
    	/**
 	* Sets the startLabel of the SegmentedLineEdge
 	* @param {String} newValue the new starting String of the SegmentedLineEdge
 	*/
    setStartLabel(newValue) { this.startLabel = newValue; }
-   
+
 	/**
 	* Returns the startLabel of the SegmentedLineEdge
 	* @returns {String} startLabel the starting Label of the SegmentedLineEdge
 	*/
    getStartLabel() { return this.startLabel;}
-   
+
    	/**
 	* Sets the middleLabel of the SegmentedLineEdge
 	* @param {String} newValue the new middle label of the SegmentedLineEdge
 	*/
    setMiddleLabel(newValue) { this.middleLabel = newValue; }
-   
+
 	/**
 	* Returns the middleLabel of the SegmentedLineEdge
 	* @returns {String} middleLabel the middle label of the SegmentedLineEdge
 	*/
    getMiddleLabel() { return this.middleLabel; }
-   
+
    	/**
 	* Sets the endLabel of the SegmentedLineEdge
 	* @param {String} newValue the new ending label of the SegmentedLineEdge
 	*/
    setEndLabel(newValue) { this.endLabel = newValue; }
-   
+
 	/**
 	* Returns the endLabel of the SegmentedLineEdge
 	* @returns {String} endLabel the ending Label of the SegmentedLineEdge
@@ -484,7 +484,7 @@ class SegmentedLineEdge extends AbstractEdge
 		this.drawArrowHeads(p1,p2,direction);
 		this.drawPositionedStrings();
    }
-	
+
 	/**
 	*Draws the Arrowheads of the SegmentedLineEdge
 	* @param {Point2D}p1 Start point of the SegmentedLineEdge
@@ -503,7 +503,7 @@ class SegmentedLineEdge extends AbstractEdge
 		}
 
 	}
-	
+
 	/**
 	* Draws the all labels set for the SegmentedLineEdge
 	*/
@@ -531,7 +531,7 @@ class SegmentedLineEdge extends AbstractEdge
 	{
 		const c=document.getElementById("myCanvas");
 		const ctx = c.getContext("2d");
-		ctx.fillStyle = 'black'	
+		ctx.fillStyle = 'black'
 		ctx.fillText(s, p.getX(),p.getY());
 	}
 
