@@ -1,15 +1,15 @@
 
 'use strict'
-/** 
+/**
  *  @fileOverview CallEdge that implementes SegmentedLineEdge
  *
  *  @author       Jason Tang
  *  @requires     CallEdge.js
  */
- 
+
  /**
  * The types of lines the SegmentedLineEdge can draw stored as a JSON
- * LineStyle's Attributes represent the JSONs that have the functions 
+ * LineStyle's Attributes represent the JSONs that have the functions
  * to apply styles and are used by the LineSegment Draw Method
  * @type {JSON}
  */
@@ -39,7 +39,7 @@ var LineStyle = {
 
 /**
  * The types of ArrowHeads the SegmentedLineEdge can draw stored as a JSON
- * ArrowHeads's Attributes represent the JSONs that have the functions 
+ * ArrowHeads's Attributes represent the JSONs that have the functions
  * to draw the  ArrowHeads and are used by the LineSegment Draw Method
  * @type {JSON}
  */
@@ -379,25 +379,25 @@ var ArrowHead = {
 * @class
 */
 class CallEdge extends SegmentedLineEdge {
-    
+
 	/**
 	* Constructor for the SegmentedLineEdge class
 	* @constructor
 	*
-	* @property signal determines whether or not the CallEdge is a signal 
-	*/	
+	* @property signal determines whether or not the CallEdge is a signal
+	*/
 	constructor() {
         super();
         this.signal;
         this.setSignal(false);
     }
-	
+
    	/**
 	* Returns the LineStyle of the SegmentedLineEdge
 	* @returns {LineStyle} bounds the bounds of the SegmentedLineEdge
-	*/	
+	*/
     isSignal() { return this.signal; }
-	
+
 	/**
 	* Sets the Signal of the CallEdge
 	* @param {Boolean} newValue the new value of Signal in the CallEdge
@@ -411,7 +411,7 @@ class CallEdge extends SegmentedLineEdge {
         else
             this.setEndArrowHead(ArrowHead.V);
     }
-    
+
 	/**
 	* Gets the array of Points of the Call Edge
 	* @returns {Array} Points of the CallEdge
@@ -452,7 +452,7 @@ class CallEdge extends SegmentedLineEdge {
         }
         return a;
     }
-    
+
 	/**
 	* Gets the peropertySheet of the CallEdge
 	* @returns {JSON} Properties of the CallEdge

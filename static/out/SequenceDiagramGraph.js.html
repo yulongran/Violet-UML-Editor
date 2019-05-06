@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SequenceDiagramGraph.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SequenceDiagramGraph.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ *  @fileOverview An SequenceDiagram Graph
+ *
+ *  @author       Yulong Ran
+ */
+/**
+* An SequenceDiagram Graph
+*/
+class SequenceDiagramGraph extends Graph {
+  add (n, p) {
+    if (n instanceof CallNode) {
+      let nodes = super.getNodes()
+      var inside = false
+      while (!inside) {
+        for (let node of nodes) {
+          if (node instanceof ImplicitParameterNode &amp;&amp; node.contains(p)) {
+            inside = true
+            n.setImplicitParameter(node)
+          }
+        }
+      }
+      if (!inside) {
+        return false
+      }
+    }
+    if (!super.add(n, p)) {
+      return false
+    }
+    return true
+  }
+
+    /**
+    * Remove an edge from the graph
+    * @param  {Edge}  e - The edge to be remmoved
+    */
+  removeEdge (e) {
+    super.removeEdge(e)
+    if (e instanceof CallEdge &amp;&amp; e.getEnd().getChildren().length == 0) {
+      super.removeNode(e.getEnd())
+    }
+  }
+
+    /**
+    * Adjust the layout of the graph
+    * @param  {Graph}  g - An instance of the SequenceDiagramGraph
+    */
+  layout (g) {
+    super.layout(g)
+    let topLevelCalls = []
+    let objects = []
+    let nodes = super.getNodes()
+    for (let node of nodes) {
+      if (node instanceof CallNode &amp;&amp; node.getParent() === undefined) {
+        topLevelCalls.push(node)
+      } else if (node instanceof ImplicitParameterNode) {
+        objects.push(node)
+      }
+    }
+    let edges = super.getEdges()
+    for (let edge of edges) {
+      if (edge instanceof CallEdge) {
+        let end = edge.getEnd()
+        if (end instanceof CallNode) {
+          end.setSignaled(edge.isSignal())
+        }
+      }
+    }
+
+    var left = 0
+    var top = 0
+
+    for (let i = 0; i &lt; objects.length; i++) {
+      let n = objects[i]
+      n.translate(0, -n.getBounds().getY())
+      top = Math.max(top, n.getTopRectangle().getHeight())
+    }
+
+    for (let i = 0; i &lt; topLevelCalls.length; i++) {
+      let call = topLevelCalls[i]
+      call.layout(this)
+    }
+    for (let i = 0; i &lt; nodes.length; i++) {
+      let n = nodes[i]
+      if (n instanceof CallNode) {
+        top = Math.max(top, n.getBounds().getY() + n.getBounds().getHeight())
+      }
+    }
+
+    top += 20
+    for (let i = 0; i &lt; objects.length; i++) {
+      let n = objects[i]
+      let b = n.getBounds()
+      n.setBounds(new Rectangle2D(b.getX(), b.getY(), b.getWidth(), top - b.getY()))
+    }
+  }
+
+    /**
+    * Draws the SequenceDiagram graph on canvas
+    */
+  draw () {
+    this.layout(this)
+    let nodes = super.getNodes()
+    for (let i = 0; i &lt; nodes.length; i++) {
+      let n = nodes[i]
+      if (!(n instanceof CallNode)) {
+        n.draw()
+      }
+    }
+
+    for (let i = 0; i &lt; nodes.length; i++) {
+      let n = nodes[i]
+      if ((n instanceof CallNode)) {
+        n.draw()
+      }
+    }
+    let edges = super.getEdges()
+    for (let i = 0; i &lt; edges.length; i++) {
+      let e = edges[i]
+      e.draw()
+    }
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CallNode.html">CallNode</a></li><li><a href="Direction.html">Direction</a></li><li><a href="ImplicitParameterNode.html">ImplicitParameterNode</a></li><li><a href="Line2D.html">Line2D</a></li><li><a href="NoteNode.html">NoteNode</a></li><li><a href="Point2D.html">Point2D</a></li><li><a href="Rectangle2D.html">Rectangle2D</a></li><li><a href="SequenceDiagramGraph.html">SequenceDiagramGraph</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addNote_button">addNote_button</a></li><li><a href="global.html#callEdge_button">callEdge_button</a></li><li><a href="global.html#callNode_button">callNode_button</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#center">center</a></li><li><a href="global.html#closeForm">closeForm</a></li><li><a href="global.html#createPropertySheet">createPropertySheet</a></li><li><a href="global.html#ctx">ctx</a></li><li><a href="global.html#dragStartPoint">dragStartPoint</a></li><li><a href="global.html#drawGrabber">drawGrabber</a></li><li><a href="global.html#drawGrabberToolBar">drawGrabberToolBar</a></li><li><a href="global.html#editorOpen">editorOpen</a></li><li><a href="global.html#graph">graph</a></li><li><a href="global.html#implicitParameterNode_button">implicitParameterNode_button</a></li><li><a href="global.html#mouseDown_drawEdge">mouseDown_drawEdge</a></li><li><a href="global.html#openForm">openForm</a></li><li><a href="global.html#repaint">repaint</a></li><li><a href="global.html#resetToolBar">resetToolBar</a></li><li><a href="global.html#returnEdge_button">returnEdge_button</a></li><li><a href="global.html#selected_button">selected_button</a></li><li><a href="global.html#selected_edge">selected_edge</a></li><li><a href="global.html#selected_shape">selected_shape</a></li><li><a href="global.html#TOOLBAR_HEIGHT">TOOLBAR_HEIGHT</a></li><li><a href="global.html#TOOLBAR_WIDTH">TOOLBAR_WIDTH</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.0</a> on Sun May 05 2019 18:35:41 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

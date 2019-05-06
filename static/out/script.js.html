@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: script.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: script.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  *  @fileOverview Main script for SequenceDiagram handles tool bar, click listener and button listener
  *
  *  @author Do Hong Kimpy, Yulong Ran, Jason Tang, Jiehong Yu
@@ -161,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (selected_shape !== undefined) {
       createPropertySheet(selected_shape.getProperty(), graph)
       openForm()
-    } else if (selected_shape === undefined && selected_edge !== undefined) {
+    } else if (selected_shape === undefined &amp;&amp; selected_edge !== undefined) {
       createPropertySheet(selected_edge.getProperty(), graph)
       openForm()
     }
@@ -176,14 +204,14 @@ document.addEventListener('DOMContentLoaded', function () {
     selected_edge = graph.findEdge(mousePoint)
 
         // If the implicitParameterNode_button button is pressed in the toolbar
-    if (implicitParameterNode_button === true && selected_shape === undefined) {
+    if (implicitParameterNode_button === true &amp;&amp; selected_shape === undefined) {
       let n1 = new ImplicitParameterNode()
       graph.add(n1, mousePoint)
 
       resetToolBar()
     }
         // If the callNode button is pressed in the toolbar
-    if (callNode_button === true && !(selected_shape instanceof CallNode)) {
+    if (callNode_button === true &amp;&amp; !(selected_shape instanceof CallNode)) {
       let n1 = new CallNode()
       graph.add(n1, mousePoint)
       resetToolBar()
@@ -194,19 +222,19 @@ document.addEventListener('DOMContentLoaded', function () {
       callNode_button = false
     }
 
-    if (addNote_button === true && selected_shape === undefined) {
+    if (addNote_button === true &amp;&amp; selected_shape === undefined) {
       let n1 = new NoteNode()
       graph.add(n1, mousePoint)
       resetToolBar()
     }
 
-    if (callEdge_button === true && selected_shape !== undefined) {
+    if (callEdge_button === true &amp;&amp; selected_shape !== undefined) {
       implicitParameterNode_button = false
       callNode_button = false
       addNote_button = false
       mouseDown_drawEdge = true
     }
-    if (returnEdge_button === true && selected_shape !== undefined) {
+    if (returnEdge_button === true &amp;&amp; selected_shape !== undefined) {
       implicitParameterNode_button = false
       callNode_button = false
       addNote_button = false
@@ -230,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return
     }
     let mousePoint = mouseLocation(event)
-    if (selected_shape !== undefined && !callEdge_button && !returnEdge_button) {
+    if (selected_shape !== undefined &amp;&amp; !callEdge_button &amp;&amp; !returnEdge_button) {
       const bounds = selected_shape.getBounds()
       selected_shape.translate(
                 dragStartBounds.x - bounds.x +
@@ -246,10 +274,10 @@ document.addEventListener('DOMContentLoaded', function () {
     */
   canvas.addEventListener('mouseup', event => {
     mousePoint = mouseLocation(event)
-    if (selected_shape !== undefined && callEdge_button) {
+    if (selected_shape !== undefined &amp;&amp; callEdge_button) {
       let e = new CallEdge()
       let d = graph.connect(e, dragStartPoint, mousePoint)
-    } else if (selected_shape !== undefined && returnEdge_button) {
+    } else if (selected_shape !== undefined &amp;&amp; returnEdge_button) {
       let e = new ReturnEdge()
       let d = graph.connect(e, dragStartPoint, mousePoint)
     }
@@ -291,7 +319,7 @@ function createPropertySheet (property, g) {
   form.style.maxWidth = '300px'
   form.style.padding = '10px'
   form.style.background = 'white'
-  for (let k = 0; k < propertyObject.length; k++) {
+  for (let k = 0; k &lt; propertyObject.length; k++) {
     let propertyN = property[propertyObject[k]] // Kth object
     let propertyName = Object.getOwnPropertyNames(propertyN) // Property Name within the object : object, typeof editor, setter
     let propertyValue = Object.values(propertyN) // Acutally value within each property name
@@ -330,7 +358,7 @@ function createPropertySheet (property, g) {
       select.style.border = 'none'
       select.style.background = '#f1f1f1'
       let optionList = propertyValue[1]
-      for (let i = 0; i < optionList.length; i++) {
+      for (let i = 0; i &lt; optionList.length; i++) {
         var option = document.createElement('option')
         option.value = optionList[i]
         option.text = optionList[i]
@@ -367,7 +395,7 @@ function createPropertySheet (property, g) {
   var submit = document.createElement('button')
   submit.type = 'button'
   submit.class = 'btn btn-danger'
-  submit.innerHTML = '&check; Update'
+  submit.innerHTML = '&amp;check; Update'
   form.appendChild(submit)
   submit.style.backgroundColor = '#4CAF50'
   submit.style.color = 'white'
@@ -386,7 +414,7 @@ function createPropertySheet (property, g) {
   var close = document.createElement('button')
   close.type = 'button'
   close.class = 'btn cancel'
-  close.innerHTML = '&#120; Cancel'
+  close.innerHTML = '&amp;#120; Cancel'
   close.style.backgroundColor = '#ff0000'
   close.style.color = 'white'
   close.style.padding = '16px 20px'
@@ -608,14 +636,14 @@ class Line2D {
   contains (aPoint) {
     let m = ((this.getY2() - this.getY1()) / (this.getX2() - this.getX1()))
     let calculatedY = m * (aPoint.x - this.getX1()) + this.getY1()
-    if (aPoint.y + 3 >= calculatedY && aPoint.y - 3 <= calculatedY) {
+    if (aPoint.y + 3 >= calculatedY &amp;&amp; aPoint.y - 3 &lt;= calculatedY) {
       if (this.getX1() > this.getX2()) {
-        if (aPoint.x <= this.getX1() && aPoint.x >= this.getX2()) {
+        if (aPoint.x &lt;= this.getX1() &amp;&amp; aPoint.x >= this.getX2()) {
           return true
         }
         return false
       } else {
-        if (aPoint.x >= this.getX1() && aPoint.x <= this.getX2()) {
+        if (aPoint.x >= this.getX1() &amp;&amp; aPoint.x &lt;= this.getX2()) {
           return true
         }
         return false
@@ -797,7 +825,7 @@ class Rectangle2D {
   * @return {boolean} true if the rectangle contains the point ; false if the rectangle does not contains the point
   */
   contains (p) {
-    return (this.x < p.x && (this.x + this.width) > p.x && this.y < p.y && (this.y + this.height) > p.y)
+    return (this.x &lt; p.x &amp;&amp; (this.x + this.width) > p.x &amp;&amp; this.y &lt; p.y &amp;&amp; (this.y + this.height) > p.y)
   }
 }
 
@@ -821,7 +849,7 @@ class Direction {
   constructor (p, q) {
 	   let x
 	   let y
-	   if (p instanceof Point2D && q instanceof Point2D) {
+	   if (p instanceof Point2D &amp;&amp; q instanceof Point2D) {
      this.x = q.getX() - p.getX()
      this.y = q.getY() - p.getY()
 	   } else {
@@ -1024,3 +1052,26 @@ $(document).ready(function () {
     n.drawToolBar(ctx)
   }
 })
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CallNode.html">CallNode</a></li><li><a href="Direction.html">Direction</a></li><li><a href="ImplicitParameterNode.html">ImplicitParameterNode</a></li><li><a href="Line2D.html">Line2D</a></li><li><a href="NoteNode.html">NoteNode</a></li><li><a href="Point2D.html">Point2D</a></li><li><a href="Rectangle2D.html">Rectangle2D</a></li><li><a href="SequenceDiagramGraph.html">SequenceDiagramGraph</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addNote_button">addNote_button</a></li><li><a href="global.html#callEdge_button">callEdge_button</a></li><li><a href="global.html#callNode_button">callNode_button</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#center">center</a></li><li><a href="global.html#closeForm">closeForm</a></li><li><a href="global.html#createPropertySheet">createPropertySheet</a></li><li><a href="global.html#ctx">ctx</a></li><li><a href="global.html#dragStartPoint">dragStartPoint</a></li><li><a href="global.html#drawGrabber">drawGrabber</a></li><li><a href="global.html#drawGrabberToolBar">drawGrabberToolBar</a></li><li><a href="global.html#editorOpen">editorOpen</a></li><li><a href="global.html#graph">graph</a></li><li><a href="global.html#implicitParameterNode_button">implicitParameterNode_button</a></li><li><a href="global.html#mouseDown_drawEdge">mouseDown_drawEdge</a></li><li><a href="global.html#openForm">openForm</a></li><li><a href="global.html#repaint">repaint</a></li><li><a href="global.html#resetToolBar">resetToolBar</a></li><li><a href="global.html#returnEdge_button">returnEdge_button</a></li><li><a href="global.html#selected_button">selected_button</a></li><li><a href="global.html#selected_edge">selected_edge</a></li><li><a href="global.html#selected_shape">selected_shape</a></li><li><a href="global.html#TOOLBAR_HEIGHT">TOOLBAR_HEIGHT</a></li><li><a href="global.html#TOOLBAR_WIDTH">TOOLBAR_WIDTH</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.0</a> on Sun May 05 2019 18:35:41 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

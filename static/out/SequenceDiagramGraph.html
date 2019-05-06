@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Class: SequenceDiagramGraph</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,35 +17,9 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Class: SequenceDiagramGraph</h1>
 
     
-
-
-
-    
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
 
 
 
@@ -54,7 +28,9 @@
 
 <header>
     
-        <h2>CallNode.js</h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>SequenceDiagramGraph<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">An SequenceDiagram Graph</div>
         
     
 </header>
@@ -63,10 +39,29 @@
     <div class="container-overview">
     
         
-            <div class="description">Call Node for the SequenceDiagram</div>
-        
 
-        
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="SequenceDiagramGraph"><span class="type-signature"></span>new SequenceDiagramGraph<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <dl class="details">
@@ -88,13 +83,6 @@
     
 
     
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Yulong Ran</li>
-        </ul>
-    </dd>
-    
 
     
 
@@ -105,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="CallNode.js.html">CallNode.js</a>, <a href="CallNode.js.html#line1">line 1</a>
+        <a href="SequenceDiagramGraph.js.html">SequenceDiagramGraph.js</a>, <a href="SequenceDiagramGraph.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -117,7 +105,24 @@
 </dl>
 
 
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     </div>
 
@@ -136,37 +141,35 @@
     
 
     
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>ImplicitParameterNode.js</h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">ImplicitParameterNode for the SequenceDiagram</div>
-        
+        <h3 class="subsection-title">Methods</h3>
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Draws the SequenceDiagram graph on canvas
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 <dl class="details">
@@ -188,13 +191,6 @@
     
 
     
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Yulong Ran</li>
-        </ul>
-    </dd>
-    
 
     
 
@@ -205,7 +201,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ImplicitParameterNode.js.html">ImplicitParameterNode.js</a>, <a href="ImplicitParameterNode.js.html#line1">line 1</a>
+        <a href="SequenceDiagramGraph.js.html">SequenceDiagramGraph.js</a>, <a href="SequenceDiagramGraph.js.html#line100">line 100</a>
     </li></ul></dd>
     
 
@@ -217,32 +213,6 @@
 </dl>
 
 
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
 
 
 
@@ -250,23 +220,93 @@
 
 
 
-<section>
 
-<header>
-    
-        <h2>NoteNode.js</h2>
-        
-    
-</header>
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">Note Node for the SequenceDiagram</div>
-        
+
+
+
+
+
+
+
+
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="layout"><span class="type-signature"></span>layout<span class="signature">(g)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Adjust the layout of the graph
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>g</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Graph</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An instance of the SequenceDiagramGraph</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
 
 
 <dl class="details">
@@ -288,13 +328,6 @@
     
 
     
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>YuJie Hong</li>
-        </ul>
-    </dd>
-    
 
     
 
@@ -305,7 +338,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="NoteNode.js.html">NoteNode.js</a>, <a href="NoteNode.js.html#line1">line 1</a>
+        <a href="SequenceDiagramGraph.js.html">SequenceDiagramGraph.js</a>, <a href="SequenceDiagramGraph.js.html#line47">line 47</a>
     </li></ul></dd>
     
 
@@ -317,32 +350,6 @@
 </dl>
 
 
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
 
 
 
@@ -350,23 +357,93 @@
 
 
 
-<section>
 
-<header>
-    
-        <h2>script.js</h2>
-        
-    
-</header>
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">Main script for SequenceDiagram handles tool bar, click listener and button listener</div>
-        
+
+
+
+
+
+
+
+
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="removeEdge"><span class="type-signature"></span>removeEdge<span class="signature">(e)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Remove an edge from the graph
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Edge</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The edge to be remmoved</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
 
 
 <dl class="details">
@@ -388,13 +465,6 @@
     
 
     
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Do Hong Kimpy, Yulong Ran, Jason Tang, Jiehong Yu</li>
-        </ul>
-    </dd>
-    
 
     
 
@@ -405,7 +475,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line1">line 1</a>
+        <a href="SequenceDiagramGraph.js.html">SequenceDiagramGraph.js</a>, <a href="SequenceDiagramGraph.js.html#line36">line 36</a>
     </li></ul></dd>
     
 
@@ -417,32 +487,6 @@
 </dl>
 
 
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
 
 
 
@@ -450,91 +494,18 @@
 
 
 
-<section>
-
-<header>
-    
-        <h2>SequenceDiagramGraph.js</h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">An SequenceDiagram Graph</div>
-        
-
-        
 
 
-<dl class="details">
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Yulong Ran</li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SequenceDiagramGraph.js.html">SequenceDiagramGraph.js</a>, <a href="SequenceDiagramGraph.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
 
 
         
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
