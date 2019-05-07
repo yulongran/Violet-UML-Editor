@@ -3,6 +3,7 @@ var express = require("express");
 var fs = require('fs');
 var app = express();
 app.use(express.static('public'));
+app.use(express.static(__dirname + "/static"));
 
 var server = http.createServer(function (request, response) {
     console.log('client request URL: ', request.url);
