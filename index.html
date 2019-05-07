@@ -35,23 +35,18 @@
                 <!-- Select Button -->
                 <button class="btn btn-outline-success" id='Select' type="button" data-toggle="tooltip"
                     data-placement="bottom" title="Select">
-                    <!-- <i class="fas fa-vector-square"></i> -->
                     <canvas id="SelectToolBar" class="mx-auto toolbar-canvas"></canvas>
                 </button>
 
                 <!-- TBD Button -->
                 <button class="btn btn-outline-success mx-auto" id='ImplicitParameterNode' type="button"
                     data-toggle="tooltip" data-placement="bottom" title="ImplicitParameterNode">
-
-                    <!-- <i class="fas fa-ruler-vertical"></i> -->
                     <canvas id="ImplicitParameterNodeToolBar" class="mx-auto toolbar-canvas"></canvas>
-
                 </button>
 
                 <!-- Block -->
                 <button class="btn btn-outline-success" type="button" id='callNode' data-toggle="tooltip"
                     data-placement="bottom" title="CallNode">
-
                     <canvas id="CallNodeToolBar" class="mx-auto toolbar-canvas"></canvas>
                 </button>
 
@@ -63,29 +58,32 @@
 
                 <!-- Right Arrow -->
                 <button class="btn btn-outline-success " id='callEdge' type="button" data-toggle="tooltip"
-                    data-placement="bottom" title="Call Edge"><i class="fas fa-arrow-right toolbar-canvas"
-                        style="font-size: 50pt; padding-top:5px;"></i></button>
+                    data-placement="bottom" title="Call Edge">
+                    <i class="fas fa-arrow-right toolbar-canvas" style="font-size: 50pt; padding-top:5px;"></i>
+                </button>
 
                 <!-- Left Arrow -->
                 <button class="btn btn-outline-success " id='returnEdge' type="button" data-toggle="tooltip"
                     data-placement="bottom" title="Return Edge">
-                    <i class="fas fa-arrow-left toolbar-canvas" style="font-size: 50pt; padding-top:5px;"></i></button>
+                    <i class="fas fa-arrow-left toolbar-canvas" style="font-size: 50pt; padding-top:5px;"></i>
+                </button>
 
                 <!-- Delete  -->
                 <button class="btn btn-outline-success text-danger" type="button" data-toggle="tooltip"
-                    data-placement="bottom" title="Delete" id="deleteNode"><i class="fas fa-trash-alt toolbar-canvas "
-                        style="font-size: 50pt; padding-top:5px;"></i></button>
+                    data-placement="bottom" title="Delete" id="deleteNode">
+                    <i class="fas fa-trash-alt toolbar-canvas " style="font-size: 50pt; padding-top:5px;"></i>
+                </button>
 
                 <!-- Reset  -->
                 <a href="/" class="btn btn-outline-success text-danger" type="button" data-toggle="tooltip"
-                    data-placement="bottom" title="Reset"><i class="fas fa-redo-alt toolbar-canvas "
-                        style="font-size: 50pt; padding-top:5px;"></i></a>
+                    data-placement="bottom" title="Reset">
+                    <i class="fas fa-redo-alt toolbar-canvas " style="font-size: 50pt; padding-top:5px;"></i>
+                </a>
             </form>
         </form>
-    </nav>
-    <!-- End of Nav bar -->
+        <!-- End of Nav bar -->
 
-    <canvas id="myCanvas" class="w-100" height="100" style="border:1px solid #000000;">
+        <canvas id="myCanvas" class="w-100" height="100" style="border:1px solid #000000;"></canvas>
         <script type="text/javascript" src="static/Framework/AbstractNode.js"></script>
         <script type="text/javascript" src="static/Framework/RectangularNode.js"></script>
         <script type="text/javascript" src="static/Framework/AbstractEdge.js"></script>
