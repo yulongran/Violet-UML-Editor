@@ -17,5 +17,7 @@
     "url": "https://github.com/kimdo7/cs151_project/issues"
   },
   "homepage": "https://github.com/kimdo7/cs151_project#readme",
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }

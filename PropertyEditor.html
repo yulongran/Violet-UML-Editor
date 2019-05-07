@@ -3,50 +3,58 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-  <title>Property Editor</title>
-  <meta name="copyright" content="Copyright  2019 Cay S. Horstmann">
-  <link type="text/css" rel="stylesheet" media="screen, projection, print" href="./Lecture1_files/slidy.css">
-  <link type="text/css" rel="stylesheet" media="screen, projection, print" href="./Lecture1_files/style.css">
-  <!-- custom style rules below -->
-  <style type="text/css">
-    div.slide {
-      background-image: url("../../../images/sjsu_logo.gif");
-      background-position: top right;
-      background-repeat: no-repeat;
-    }
-  </style>
-  <script src="./Lecture1_files/slidy.js" charset="utf-8" type="text/javascript"></script>
-  <script src="./Lecture1_files/slidy1.js" charset="utf-8" type="text/javascript"></script>
+    <title>Property Editor</title>
+    <meta name="copyright" content="Copyright  2019 Cay S. Horstmann">
+    <link type="text/css" rel="stylesheet" media="screen, projection, print" href="./Lecture1_files/slidy.css">
+    <link type="text/css" rel="stylesheet" media="screen, projection, print" href="./Lecture1_files/style.css">
+    <!-- custom style rules below -->
+    <style type="text/css">
+        div.slide {
+            background-image: url("../../../images/sjsu_logo.gif");
+            background-position: top right;
+            background-repeat: no-repeat;
+        }
+    </style>
+    <script src="./Lecture1_files/slidy.js" charset="utf-8" type="text/javascript"></script>
+    <script src="./Lecture1_files/slidy1.js" charset="utf-8" type="text/javascript"></script>
 </head>
 
 <body class=" single_slide" style="visibility: visible; font-size: 22pt;">
-  <div class=" slidy_toc hidden">
-    <div class=" toc-heading">Table of Contents</div>1. <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(1)">CS 151 - Lecture 1</a><br>2. <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(2)">CS 151</a><br>3. <a
-      href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(3)">The Textbook</a><br>4. <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(4)">What? No Lectures?</a><br>5. <a
-      href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(5)">What You Need to Succeed</a><br>6. <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(6)">Questions</a><br>7. <a
-      href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(7)">Plagiarism and Cheating</a><br>8. <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(8)">Git</a><br>9. <a
-      href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(9)">Adding</a><br>10. <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(10)">Things To Do Today</a><br>11. <a
-      href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(11)">Lab</a><br>12. <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(12)">A Simple Programming
-      Problem</a><br>13. <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(13)">Bash</a><br>14.
-    <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(14)">Git</a><br>15. <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(15)">Adding to the Repository</a><br>16.
-    <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(16)">Be The Grader</a>
-  </div>
+    <div class=" slidy_toc hidden">
+        <div class=" toc-heading">Table of Contents</div>1. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(1)">CS 151 - Lecture 1</a><br>2. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(2)">CS 151</a><br>3. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(3)">The Textbook</a><br>4. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(4)">What? No Lectures?</a><br>5. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(5)">What You Need to Succeed</a><br>6. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(6)">Questions</a><br>7. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(7)">Plagiarism and Cheating</a><br>8. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(8)">Git</a><br>9. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(9)">Adding</a><br>10. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(10)">Things To Do Today</a><br>11. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(11)">Lab</a><br>12. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(12)">A Simple Programming
+            Problem</a><br>13. <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(13)">Bash</a><br>14.
+        <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(14)">Git</a><br>15. <a
+            href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(15)">Adding to the Repository</a><br>16.
+        <a href="http://horstmann.com/sjsu/spring2019/cs151/day1/index.html#(16)">Be The Grader</a>
+    </div>
 
-  <div class=" slide first-slide hidden">
-    <h1>Property Sheet</h1>
-    <p class="fullimage">
-      <img src="./Lecture1_files/tower-hall.jpg" alt="Cover page image"></p>
-    <p><a href="http://horstmann.com/">Cay S. Horstmann</a></p>
+    <div class=" slide first-slide hidden">
+        <h1>Property Sheet</h1>
+        <p class="fullimage">
+            <img src="./Lecture1_files/tower-hall.jpg" alt="Cover page image"></p>
+        <p><a href="http://horstmann.com/">Cay S. Horstmann</a></p>
 
-    <br><br>
-  </div>
-  <div class=" slide">
-    <h1>CS 151</h1>
-    <ul>
-      <li>Create Property Sheet
-        <pre>function createPropertySheet (property, g) {
+        <br><br>
+    </div>
+    <div class=" slide">
+        <h1>CS 151</h1>
+        <ul>
+            <li>Create Property Sheet
+                <pre>function createPropertySheet (property, g) {
  if (editorOpen) {
    closeForm()
  }
@@ -60,18 +68,18 @@
  div.style.right = '15px'
  div.style.border = '3px solid #f1f1f1'
  div.style.zIndex = '9'</pre>
-      </li>
-      <li>The property sheet takes two parameters :</li>
-      <li> property: property object ; g: graph</li>
-      <li>PropertyObject: Returns an array of object; each object is a property</li>
-    </ul>
+            </li>
+            <li>The property sheet takes two parameters :</li>
+            <li> property: property object ; g: graph</li>
+            <li>PropertyObject: Returns an array of object; each object is a property</li>
+        </ul>
 
-    <br><br>
-  </div>
-  <div class=" slide hidden">
-    <h1>Get Property</h1>
-    <ul>
-      <pre>
+        <br><br>
+    </div>
+    <div class=" slide hidden">
+        <h1>Get Property</h1>
+        <ul>
+            <pre>
  **
  * Gets the property of the note node
  * @return {Object} - Object contains the propery of note node, editor type and setter method for the propery
@@ -97,17 +105,18 @@
      }
  }</pre>
 
-      <li>Each node or edge must have a getProperty method, for every property that you want edit, you will wrap it in an object with : the name of the property, the editor type, and setter method for this property.
-      </li>
+            <li>Each node or edge must have a getProperty method, for every property that you want edit, you will wrap
+                it in an object with : the name of the property, the editor type, and setter method for this property.
+            </li>
 
-    </ul>
+        </ul>
 
-    <br><br>
-  </div>
-  <div class=" slide hidden">
-    <h1>Form inside a div</h1>
-    <ul>
-      <pre>
+        <br><br>
+    </div>
+    <div class=" slide hidden">
+        <h1>Form inside a div</h1>
+        <ul>
+            <pre>
  var form = document.createElement('form')
  form.action = '/action_page.php'
  form.class = 'form-container'
@@ -125,27 +134,28 @@
    label.innerHTML = propertyName[0]
    form.appendChild(label)
         </pre>
-      <li>The property sheet creates a html form inside the div, it reads every objects, then again, it reads every property inside that specific property object
-      </li>
+            <li>The property sheet creates a html form inside the div, it reads every objects, then again, it reads
+                every property inside that specific property object
+            </li>
 
-      <p class="sideimage">
-        <img alt="" src="./Lecture1_files/noteNode_example.png">
+            <p class="sideimage">
+                <img alt="" src="./Lecture1_files/noteNode_example.png">
 
-      </p>
-      <li>It creates a label for the name of propery - propertyName[0]
-
-
-      </li>
-    </ul>
+            </p>
+            <li>It creates a label for the name of propery - propertyName[0]
 
 
+            </li>
+        </ul>
 
-    <br><br>
-  </div>
-  <div class=" slide hidden">
-    <h1>Editor type</h1>
 
-    <pre>
+
+        <br><br>
+    </div>
+    <div class=" slide hidden">
+        <h1>Editor type</h1>
+
+        <pre>
      // Editor type : input box
      if (propertyName[1] === 'inputBox') {
      var input = document.createElement('input')
@@ -168,14 +178,15 @@
 
         </pre>
 
-    <li> Since the note ndoe takes an input,the editor typpe would be input box</li>
-    <li> "propertyN[propertyName[2]]" gets the setter method for this property </li>
-    <li> For each time input gets change, graph need to repaint, that's why we need to pass in graph as one of the parameter</li>
-    <dl>
-      <dt>selectBar</dt>
-      <dd>
-        <ul>
-          <pre>
+        <li> Since the note ndoe takes an input,the editor typpe would be input box</li>
+        <li> "propertyN[propertyName[2]]" gets the setter method for this property </li>
+        <li> For each time input gets change, graph need to repaint, that's why we need to pass in graph as one of the
+            parameter</li>
+        <dl>
+            <dt>selectBar</dt>
+            <dd>
+                <ul>
+                    <pre>
 // Editor type: select bar
 else if (propertyName[1] === 'selectBar') {
 var select = document.createElement('SELECT')
@@ -201,17 +212,17 @@ g.draw()
 form.appendChild(select)
 }
 </pre>
-          <p class="fullimage">
-            <img src="./Lecture1_files/selectBar_example.png"></p>
-        </ul>
-      </dd>
-    </dl>
+                    <p class="fullimage">
+                        <img src="./Lecture1_files/selectBar_example.png"></p>
+                </ul>
+            </dd>
+        </dl>
 
-    <br><br>
-  </div>
-  <div class=" slide hidden">
-    <h1>Color Selector</h1>
-    <pre>
+        <br><br>
+    </div>
+    <div class=" slide hidden">
+        <h1>Color Selector</h1>
+        <pre>
 // Editor type: Color picker
 else if (propertyName[1] === 'colorSelector') {
 var color = document.createElement('INPUT')
@@ -232,194 +243,200 @@ form.appendChild(color)
 }
 }
   </pre>
-    <ul>
-      <li>Special form of input</li>
-    </ul>
-    <br><br>
-  </div>
-  <div class=" slide hidden">
-    <h1>What makes it framework</h1>
-    <ul>
-      <li>Each node or edge don’t have to make the property editor by themselves, the framework will make it for them</li>
-      <li>Each node or edge only have to specific their property with the format, the framework is responsible for the action listener and update the graph</li>
-      <li>If you have a new type of node or edge, as long as you supply the correct format getProperty(), the property sheet will work
-    </ul>
-    <br><br>
-  </div>
-  <div class=" slide hidden">
-    <h1>Patterns</h1>
-    <p class="fullimage">
-      <img src="./Lecture1_files/property_pattern.png" alt="Octocat"></p>
+        <ul>
+            <li>Special form of input</li>
+        </ul>
+        <br><br>
+    </div>
+    <div class=" slide hidden">
+        <h1>What makes it framework</h1>
+        <ul>
+            <li>Each node or edge don’t have to make the property editor by themselves, the framework will make it for
+                them</li>
+            <li>Each node or edge only have to specific their property with the format, the framework is responsible for
+                the action listener and update the graph</li>
+            <li>If you have a new type of node or edge, as long as you supply the correct format getProperty(), the
+                property sheet will work
+        </ul>
+        <br><br>
+    </div>
+    <div class=" slide hidden">
+        <h1>Patterns</h1>
+        <p class="fullimage">
+            <img src="./Lecture1_files/property_pattern.png" alt="Octocat"></p>
 
-    <br><br>
-  </div>
-
-  
-  <div class=" slide hidden">
-    <h1>Adding</h1>
-    <p class="sideimage">
-      <!-- <img alt="" src="./Lecture1_files/adding_large.jpg"></p> -->
-      <ul>
-        <li>Do <a href="http://horstmann.com/sjsu/spring2019/cs151/hw1.html">homework 1</a> and send me your
-          answers. </li>
-        <li>I will send you an add code <strong>when space becomes available</strong>. Use it within 24 hours,
-          or it
-          will become invalid</li>
-        <li>Show up for all classes/labs even if you haven't received your code</li>
-      </ul>
+        <br><br>
+    </div>
 
 
-      <br><br>
-  </div>
-  <div class=" slide hidden">
-    <h1>Things To Do Today</h1>
-    <p class="sideimage">
-      <img alt="" src="./Lecture1_files/today.jpg"></p>
-    <ul>
-      <li>Log into Piazza</li>
-      <li>Start reading the textbook</li>
-      <li>Install Java 11 and Git on your laptop</li>
-      <li>You need bash. If you run Windows, install <a href="http://horstmann.com/sjsu/spring2019/cs151/vm.html">VirtualBox and a Linux VM</a>.</li>
-      <li>Complete Homework 1 and send me your Git repo URL</li>
-      <li><strong>Important:</strong> In lieu of a roll call today, you <em>must</em> turn in homework 1, or I
-        will <em>drop you</em> from this course for lack of presence/prerequisites. </li>
-    </ul>
+    <div class=" slide hidden">
+        <h1>Adding</h1>
+        <p class="sideimage">
+            <!-- <img alt="" src="./Lecture1_files/adding_large.jpg"></p> -->
+            <ul>
+                <li>Do <a href="http://horstmann.com/sjsu/spring2019/cs151/hw1.html">homework 1</a> and send me your
+                    answers. </li>
+                <li>I will send you an add code <strong>when space becomes available</strong>. Use it within 24 hours,
+                    or it
+                    will become invalid</li>
+                <li>Show up for all classes/labs even if you haven't received your code</li>
+            </ul>
 
-    <br><br>
-  </div>
-  <div class=" slide hidden">
-    <h1>Lab</h1>
-    <p class="sideimage">
-      <img src="./Lecture1_files/lab.jpg" alt="lab"></p>
-    <ul>
-      <li>Solving a simple programming problem</li>
-      <li>Getting going with Git</li>
-    </ul>
 
-    <br><br>
-  </div>
-  <div class=" slide hidden">
-    <h1>A Simple Programming Problem</h1>
-    <ol>
-      <li>Solve this simple problem: In Java, implement the method
-        <code>Arrays.swapLargestAndSmallest(int[] a)</code> that swaps the largest and smallest element in a. If
-        there are multiple largest or smallest elements, pick the first one.</li>
-      <li>Check your answer in <a href="http://codecheck.it/files/170130245366elkvf42249mfrwvsy43r0r0">CodeCheck</a>.</li>
-    </ol>
+            <br><br>
+    </div>
+    <div class=" slide hidden">
+        <h1>Things To Do Today</h1>
+        <p class="sideimage">
+            <img alt="" src="./Lecture1_files/today.jpg"></p>
+        <ul>
+            <li>Log into Piazza</li>
+            <li>Start reading the textbook</li>
+            <li>Install Java 11 and Git on your laptop</li>
+            <li>You need bash. If you run Windows, install <a
+                    href="http://horstmann.com/sjsu/spring2019/cs151/vm.html">VirtualBox and a Linux VM</a>.</li>
+            <li>Complete Homework 1 and send me your Git repo URL</li>
+            <li><strong>Important:</strong> In lieu of a roll call today, you <em>must</em> turn in homework 1, or I
+                will <em>drop you</em> from this course for lack of presence/prerequisites. </li>
+        </ul>
 
-    <br><br>
-  </div>
+        <br><br>
+    </div>
+    <div class=" slide hidden">
+        <h1>Lab</h1>
+        <p class="sideimage">
+            <img src="./Lecture1_files/lab.jpg" alt="lab"></p>
+        <ul>
+            <li>Solving a simple programming problem</li>
+            <li>Getting going with Git</li>
+        </ul>
 
-  <div class=" slide hidden">
-    <h1>Bash</h1>
-    <p class="sideimage">
-      <img src="./Lecture1_files/Gnu-bash-logo.svg" alt="Gnu-bash-logo"></p>
+        <br><br>
+    </div>
+    <div class=" slide hidden">
+        <h1>A Simple Programming Problem</h1>
+        <ol>
+            <li>Solve this simple problem: In Java, implement the method
+                <code>Arrays.swapLargestAndSmallest(int[] a)</code> that swaps the largest and smallest element in a. If
+                there are multiple largest or smallest elements, pick the first one.</li>
+            <li>Check your answer in <a
+                    href="http://codecheck.it/files/170130245366elkvf42249mfrwvsy43r0r0">CodeCheck</a>.</li>
+        </ol>
 
-    <ul>
-      <li>You must be able to run Bash commands</li>
-      <li>This was supposed to have been covered in CS46B</li>
-      <li>If not, consider working through <a href="https://cs46labs.bitbucket.io/cs46b/lab2/part1.html">this
-          lab</a></li>
-      <li>If you run Windows, you can install the Windows subsystem for Linux, use Cygwin, or whatever, <em>if you
-          know what you are doing</em></li>
-      <li>If you use Mac OS, you can use bash, and make the occasional adjustments from Linux to BSD commands,
-        <em>if you know what you are doing</em></li>
-      <li>If you want any support from me, run Linux, either dual boot (<em>if you know what you are doing</em>),
-        or install a <a href="http://horstmann.com/sjsu/spring2019/cs151/vm.html">Linux virtual machine</a>.
-      </li>
-    </ul>
-    <br><br>
-  </div>
-  <div class=" slide hidden">
-    <h1>Git</h1>
-    <p class="sideimage">
-      <img src="./Lecture1_files/2color-lightbg.png" alt="2color-lightbg"></p>
-    <ul>
-      <li>Make an account on <a href="http://bitbucket.org/">BitBucket</a>, or if you prefer (<em>and you know
-          what you are doing</em>), on GitHub or GitLab. I give instructions for BitBucket.</li>
-      <li>Make a repository on BitBucket. Be sure it is a private repo. Call it <code>cs151</code>. Add me
-        (<code>cayhorstmann</code>) as a collaborator with Write access (in Settings → Access Management →
-        Users).</li>
-      <li>Start a Bash shell.</li>
-      <li>Clone the repo:
-        <pre>git clone git@bitbucket.org:yourname/cs151.git cs151</pre>
-      </li>
-      <p>where you replace <code>yourname</code> with your BitBucket user name.</p>
-    </ul>
-    <br><br>
-  </div>
-  <div class=" slide hidden">
-    <h1>Adding to the Repository</h1>
-    <ol>
-      <li>Open a terminal and change to the directory into which you cloned the repo:
-        <pre>cd cs151
+        <br><br>
+    </div>
+
+    <div class=" slide hidden">
+        <h1>Bash</h1>
+        <p class="sideimage">
+            <img src="./Lecture1_files/Gnu-bash-logo.svg" alt="Gnu-bash-logo"></p>
+
+        <ul>
+            <li>You must be able to run Bash commands</li>
+            <li>This was supposed to have been covered in CS46B</li>
+            <li>If not, consider working through <a href="https://cs46labs.bitbucket.io/cs46b/lab2/part1.html">this
+                    lab</a></li>
+            <li>If you run Windows, you can install the Windows subsystem for Linux, use Cygwin, or whatever, <em>if you
+                    know what you are doing</em></li>
+            <li>If you use Mac OS, you can use bash, and make the occasional adjustments from Linux to BSD commands,
+                <em>if you know what you are doing</em></li>
+            <li>If you want any support from me, run Linux, either dual boot (<em>if you know what you are doing</em>),
+                or install a <a href="http://horstmann.com/sjsu/spring2019/cs151/vm.html">Linux virtual machine</a>.
+            </li>
+        </ul>
+        <br><br>
+    </div>
+    <div class=" slide hidden">
+        <h1>Git</h1>
+        <p class="sideimage">
+            <img src="./Lecture1_files/2color-lightbg.png" alt="2color-lightbg"></p>
+        <ul>
+            <li>Make an account on <a href="http://bitbucket.org/">BitBucket</a>, or if you prefer (<em>and you know
+                    what you are doing</em>), on GitHub or GitLab. I give instructions for BitBucket.</li>
+            <li>Make a repository on BitBucket. Be sure it is a private repo. Call it <code>cs151</code>. Add me
+                (<code>cayhorstmann</code>) as a collaborator with Write access (in Settings → Access Management →
+                Users).</li>
+            <li>Start a Bash shell.</li>
+            <li>Clone the repo:
+                <pre>git clone git@bitbucket.org:yourname/cs151.git cs151</pre>
+            </li>
+            <p>where you replace <code>yourname</code> with your BitBucket user name.</p>
+        </ul>
+        <br><br>
+    </div>
+    <div class=" slide hidden">
+        <h1>Adding to the Repository</h1>
+        <ol>
+            <li>Open a terminal and change to the directory into which you cloned the repo:
+                <pre>cd cs151
 </pre>
-      </li>
-      <li>Make a subdirectory <code>lab1</code>:
-        <pre>mkdir lab1</pre>
-      </li>
-      <li>In that directory, make a file <code>Arrays.java</code>:
-        <pre>touch lab1/Arrays.java
+            </li>
+            <li>Make a subdirectory <code>lab1</code>:
+                <pre>mkdir lab1</pre>
+            </li>
+            <li>In that directory, make a file <code>Arrays.java</code>:
+                <pre>touch lab1/Arrays.java
 </pre>
-      </li>
-      <li>Open the file with your favorite text editor and paste in the solution to the simple programming
-        problem. If you couldn't solve the problem, just put in the outline from CodeCheck.</li>
-      <li><b>Add the file</b>: Type
-        <pre>git add lab1/Arrays.java</pre>
-      </li>
-      <li><b>Commit all changes</b>: Type
-        <pre>git commit -a -m "Added lab1"</pre>
-      </li>
-      <li><b>Push to BitBucket</b>: Type
-        <pre>git push origin master</pre>
-      </li>
-      <li>In the BitBucket web interface, locate <code>Arrays.java</code></li>
-      <li>Did you find it? Hooray—you have just reached level 2.</li>
-      <li>Those three commands—add, commit, push—are all you need to know about Git to complete homework 1.</li>
-    </ol>
-    <br><br>
-  </div>
-  <div class=" slide hidden">
-    <h1>Be The Grader</h1>
-    <p class="sideimage">
-      <img src="./Lecture1_files/be-the-computer.png" alt="be-the-computer"></p>
-    <ol>
-      <li>Check out your repo into a temporary location (which we'll call the grader repo). Replace
-        <code>yourname</code> with your BitBucket user name.
-        <pre>cd /tmp
+            </li>
+            <li>Open the file with your favorite text editor and paste in the solution to the simple programming
+                problem. If you couldn't solve the problem, just put in the outline from CodeCheck.</li>
+            <li><b>Add the file</b>: Type
+                <pre>git add lab1/Arrays.java</pre>
+            </li>
+            <li><b>Commit all changes</b>: Type
+                <pre>git commit -a -m "Added lab1"</pre>
+            </li>
+            <li><b>Push to BitBucket</b>: Type
+                <pre>git push origin master</pre>
+            </li>
+            <li>In the BitBucket web interface, locate <code>Arrays.java</code></li>
+            <li>Did you find it? Hooray—you have just reached level 2.</li>
+            <li>Those three commands—add, commit, push—are all you need to know about Git to complete homework 1.</li>
+        </ol>
+        <br><br>
+    </div>
+    <div class=" slide hidden">
+        <h1>Be The Grader</h1>
+        <p class="sideimage">
+            <img src="./Lecture1_files/be-the-computer.png" alt="be-the-computer"></p>
+        <ol>
+            <li>Check out your repo into a temporary location (which we'll call the grader repo). Replace
+                <code>yourname</code> with your BitBucket user name.
+                <pre>cd /tmp
 rm -rf cs151
 git clone git@bitbucket.org:yourname/cs151.git cs151
 </pre>
-      </li>
-      <li>Do what the grader would: Compile and run the program on the command line.
-        <pre>cd /tmp/cs151/lab1
+            </li>
+            <li>Do what the grader would: Compile and run the program on the command line.
+                <pre>cd /tmp/cs151/lab1
 curl -O http://horstmann.com/sjsu/spring2019/cs151/day1/Tester.java
 javac Tester.java
 java Tester
 </pre>
-      </li>
-      <li>Did it work? If not, why not? Ponder what the grader will do when it doesn't work the first try.
-        (Hint:
-        Nothing.)</li>
-      <li>If it didn't work at the outset, fix your issues in your student repo. In another terminal, push the
-        changes to your student repo. In the terminal in which you are the grader, run
-        <code>git pull</code>.
-        Try compiling and running again. </li>
-      <li>Add the compiler and tester output to a file <code>lab1/report.txt</code> in your student repo (not
-        the
-        grader repo). Put in your and your buddy's name. </li>
-      <li>Add the file, commit, and push.</li>
-    </ol>
+            </li>
+            <li>Did it work? If not, why not? Ponder what the grader will do when it doesn't work the first try.
+                (Hint:
+                Nothing.)</li>
+            <li>If it didn't work at the outset, fix your issues in your student repo. In another terminal, push the
+                changes to your student repo. In the terminal in which you are the grader, run
+                <code>git pull</code>.
+                Try compiling and running again. </li>
+            <li>Add the compiler and tester output to a file <code>lab1/report.txt</code> in your student repo (not
+                the
+                grader repo). Put in your and your buddy's name. </li>
+            <li>Add the file, commit, and push.</li>
+        </ol>
 
 
-    <div class="toolbar" tabindex="0" style="display: block;">
-      <div style="float: right; text-align: right"><span>slide 2/16</span></div>
-      <div style="text-align: left"><span style="color: rgb(240, 240, 240);">* </span><a href="http://www.w3.org/Talks/Tools/Slidy2/help/help.html"
-          title="Navigate with mouse click, space bar, Cursor Left/Right, or Pg Up and Pg Dn. Use S and B to change font size.">help?</a>
-        <a href="javascript:w3c_slidy.toggle_table_of_contents()" title="table of contents">contents?</a>
-        <span class="copyright">Copyright 2019 Cay S. Horstmann</span></div>
-    </div><br><br>
-  </div>
+        <div class="toolbar" tabindex="0" style="display: block;">
+            <div style="float: right; text-align: right"><span>slide 2/16</span></div>
+            <div style="text-align: left"><span style="color: rgb(240, 240, 240);">* </span><a
+                    href="http://www.w3.org/Talks/Tools/Slidy2/help/help.html"
+                    title="Navigate with mouse click, space bar, Cursor Left/Right, or Pg Up and Pg Dn. Use S and B to change font size.">help?</a>
+                <a href="javascript:w3c_slidy.toggle_table_of_contents()" title="table of contents">contents?</a>
+                <span class="copyright">Copyright 2019 Cay S. Horstmann</span></div>
+        </div><br><br>
+    </div>
 </body>
 
 </html>

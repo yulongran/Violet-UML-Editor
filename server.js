@@ -1,5 +1,8 @@
 var http = require('http');
+var express = require("express");
 var fs = require('fs');
+var app = express();
+app.use(express.static('public'));
 
 var server = http.createServer(function (request, response) {
     console.log('client request URL: ', request.url);
